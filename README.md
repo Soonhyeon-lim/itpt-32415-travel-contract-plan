@@ -32,6 +32,14 @@ src/
     tabs.js · subtabs.js · ct-tabs.js · scrollspy.js · xref.js
   embeds/
     sc02-contract.html          SC-02 mqatour 실화면 임베드 (전체의 44.9%)
+  content/
+    plan/improve/               IM-01 배경목적 · IM-02 범위 · IM-03 정책확정요약
+                                IM-04 개선항목상세 · IM-05 기대효과AC
+    plan/logic/                 LG-01 변경내역도출로직 · LG-02 항목별구현로직
+                                LG-03 변경지점 · LG-04 개발확인
+    plan/existing/              AS-01 교부라이프사이클 · AS-02 문구차수규칙
+    screens/                    SC-01 조회진입 · SC-02 계약서조회동의 · SC-03 하나허브교부내역
+    history.html · refs.html
 build/
   build.py                      조립 + 자기완결 점검 + 원본 대조
   split_step1.py                1단계 분리에 쓴 일회성 스크립트 (이력 보존용)
@@ -55,7 +63,9 @@ dist/
 
 - [x] **1단계 — 실화면 임베드 격리** (44.9% 분리, 원본과 바이트 동일 검증 통과)
 - [x] **2단계 — CSS·JS 분리** (CSS 4개 · JS 5개, 바이트 동일 검증 통과)
-- [ ] 3단계 — 콘텐츠 섹션 분리 (IM/LG/AS·SC·history·refs)
+- [x] **3단계 — 콘텐츠 섹션 분리** (16개 조각, 바이트 동일 검증 통과)
+      → `src/index.html` 이 5,855자 순수 셸이 됐다. 섹션 한 곳을 고치면
+        diff 도 `1 file changed, 1 insertion(+)` 로 그 파일에만 잡힌다(실측 확인).
 - [ ] 4단계 — `meta.json` + 버전 스냅샷 빌드(`dist/v1.1/`), 히스토리 탭 버전 링크
 - [ ] (보안 검토 후) 공개용 축약 빌드 `dist/shared/` — 내부 API명·관리자 화면·개발확인 제외
 

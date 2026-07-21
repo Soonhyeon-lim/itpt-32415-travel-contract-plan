@@ -1,0 +1,47 @@
+<!-- ═══ 2. 범위 ═══ -->
+<section id="imp2">
+  <span class="sec-num">IM-02</span>
+  <h2>범위</h2>
+
+  <h3>In-scope 5</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:34px">#</th><th>내용</th><th style="width:120px">대상</th></tr></thead>
+      <tbody>
+        <tr><td class="tc"><b>①</b></td><td>계약서 <b>차수·변경 내역 표기</b> — 상단 문구(요약) + <b>변경 내역 탭</b>(상세 표, 변경점 있을 때만)</td><td><span class="mini">하나투어 닷컴</span></td></tr>
+        <tr><td class="tc"><b>②</b></td><td><b>개인추가경비 N원</b> 합산 한 줄</td><td><span class="mini">하나투어 닷컴</span></td></tr>
+        <tr><td class="tc"><b>③</b></td><td>일정표 <b>선택관광·쇼핑 단순 표기</b></td><td><span class="mini">하나투어 닷컴</span></td></tr>
+        <tr><td class="tc"><b>④</b></td><td>하나허브 <b>여행계약서 교부내역</b>에 <b>개인추가경비 동일 합산값</b> + <b>변경 내역</b> 표시(①의 변경 내역과 동일)</td><td><span class="mini">하나허브</span></td></tr>
+        <tr><td class="tc"><b>⑤</b></td><td><span class="mini warn">검토 필요</span><b>여행계약서 조회 진입 페이지</b> — 딥링크 진입 시 비회원조회 페이지 재사용 + <b>타이틀 동적 전환 · 패키지 탭 단독</b></td><td><span class="mini">하나투어 닷컴</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-block">
+    <h4>대상 화면</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:30px">#</th><th style="width:70px">구분</th><th>경로</th></tr></thead>
+        <tbody>
+          <tr><td class="tc">1</td><td class="tc"><span class="mini">고객용</span></td><td>하나투어 닷컴(PC/MO) &gt; 마이페이지 &gt; 예약/결제 상세 &gt; <b>여행계약서 팝업</b></td></tr>
+          <tr><td class="tc">2</td><td class="tc"><span class="mini n">관리용</span></td><td>하나허브 &gt; 패키지 &gt; 판매예약 &gt; 예약관리 &gt; 예약조회 &gt; 예약상세 내 <b>계약서 확인 버튼 영역</b></td></tr>
+          <tr><td class="tc">3</td><td class="tc"><span class="mini n">관리용</span></td><td>하나허브 &gt; 패키지 &gt; 판매예약 &gt; 여행자관리 &gt; <b>여행계약서 교부내역</b></td></tr>
+          <tr><td class="tc">4</td><td class="tc"><span class="mini n">관리용</span></td><td>파트너포탈 &gt; 판매예약 &gt; 예약관리 &gt; 예약관리 &gt; 예약내역 내 <b>계약서 확인 버튼 영역</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3>Out-of-scope</h3>
+  <div class="tbl-wrap">
+    <table class="tbl-key">
+      <thead><tr><th style="width:210px">제외 항목</th><th>이유</th></tr></thead>
+      <tbody>
+        <tr><td>조회 진입·인증 흐름 재설계</td><td>딥링크·예약코드 자동주입 = 기조치(ITPT-24104). <b>⑤는 타이틀만 동적 전환</b>(In-scope)</td></tr>
+        <tr><td>대표예약자 일괄관리</td><td>대표 권한·별도 로직이 실재하지 않으며 만들 계획 없음</td></tr>
+        <tr><td>영문 계약서 · 개인정보 마스킹</td><td>공수 과다 / 기존 정책 승계</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>

@@ -1,0 +1,67 @@
+<!-- ═══ 4. 개선 항목 상세 ═══ -->
+<section id="imp4">
+  <span class="sec-num">IM-04</span>
+  <h2>개선 항목 상세</h2>
+  
+
+  <h3>① 계약서 차수·변경 내역 표기</h3>
+  <div class="card">
+    <p style="margin:0 0 8px"><em><b>D-2 및 계약서 내 항목 변경으로 인한 재교부 가능성 안내. + 이전 계약서와 다른 항목 탭으로 분리하여 안내</b></em></p>
+    <p style="margin:0 0 10px"><b>① 상단 문구</b> — 계약서 상단에 <b>[N차 여행계약서]</b>와 함께 발송 상황에 따라 문구 3가지(최초 발송 / 출발 확정 / 변경 재교부)로 안내. <b>변경 재교부일 때는 “변경된 항목은 [변경 내역] 탭에서 확인해 주세요”로 유도</b>하고, <b>상단에 변경 항목을 나열하지는 않는다</b>.</p>
+    <p style="margin:0 0 10px"><b>② 변경 내역 탭</b> — 직전 계약서 대비 <b>바뀐 항목이 있을 때만</b> [계약서 / 변경 내역] 탭이 생기고, 표로 <b>어떤 항목이 무엇에서 무엇으로</b> 바뀌었는지 표기.<br> <b>내용 변경 없이 차수만 변경된 경우 '변경 내역' 탭 미노출</b>.</p>
+    <p style="margin:0;font-size:13px">고객이 “또 왔네”가 아니라 “이게 바뀌어서 왔구나”로 읽히게 하는 것이 목적. </p>
+  </div>
+
+  <h3>② 개인추가경비 합산 한 줄</h3>
+  <p style="font-size:13px">상품가 외에 추가로 낸 금액을 <b>“개인추가경비 N원” 한 줄로 전부 합산</b>해서 표기.</p>
+
+  <div class="concept">
+    <div class="cats">
+      <div class="cat"><span class="k">항공</span><span class="v">유류할증료 · 제세공과금 · 리턴변경 · Add-On · 업그레이드 · 스페셜밀</span></div>
+      <div class="cat"><span class="k">호텔</span><span class="v">객실업그레이드 · 1인사용료 · 엑스트라배드 · 연장 · 유아배드 · 기타</span></div>
+      <div class="cat"><span class="k">지상</span><span class="v">선택관광 · 현지서비스</span></div>
+      <div class="cat"><span class="k">기타</span><span class="v">샌딩 · 여행자보험 · 팁 · 비자 · 기타</span></div>
+      <div class="cat discount"><span class="k">매출할인</span><span class="v">마이너스 항목 — 포함 합산</span></div>
+    </div>
+    <div class="sumbadge"><div class="b">전체<br>합산</div><div class="a">→</div></div>
+    <div class="calc">
+      <div class="h">여행경비</div>
+      <div class="r"><span>상품가</span><span>437,800 원</span></div>
+      <div class="r hero"><span class="label">개인추가경비</span><span class="val">297,923 원</span></div>
+      <div class="r total"><span>1인 여행경비 총액</span><span>735,723 원</span></div>
+      <div class="eq">Σ<span style="font-size:.82em">전 인원</span>(상품가 + 개인추가경비) = 총 N인 경비 총액</div>
+    </div>
+  </div>
+
+  <ul class="tight" style="font-size:13px">
+    <li><b>매출 할인(마이너스 금액)도 포함</b>해서 합산 → <b>Σ전 인원(상품가 + 개인추가경비) = 총 N인 경비 총액</b>. 매출 할인만 있으면 <b>음수로 그대로 표기</b>.</li><li><b>집계 단위 주의</b> — <b>총 N인 경비 총액</b>은 <b>예약코드의 전 인원</b>을 합한 값이고, 화면의 <b>1인 여행경비·개인추가경비는 조회한 개인의 값만</b> 보여준다. 그래서 <b>인원이 2명 이상이면 화면의 두 줄을 더해도 총액이 되지 않는다</b>(1명일 때만 일치) — 산술 일치는 <b>전 인원 데이터 기준</b>으로 검증한다.</li>
+    <li><b>변동 항목이 한 건도 없을 때만</b> 줄 자체를 노출하지 않음. <b>항목이 있으면 합산액이 0원이어도 <code>개인추가경비 0원</code>으로 노출</b>(예: 선택관광 + 매출할인이 상계돼 0원 — 감추면 변경 내역·하나허브 표시와 어긋남). 세부 상품명·구분·건수는 보여주지 않음(한 줄).</li>
+  </ul>
+
+  <h3>③ 일정표 선택관광·쇼핑 단순 표기</h3>
+  <div class="card">
+    <p style="margin:0 0 6px">여행계약서 내 <b>'선택관광 / 쇼핑' 필드를 추가</b>하여, 일정표에 선택관광·쇼핑이 있다는 사실을 <b>미리 표기</b>.</p>
+    <p style="margin:0;font-size:13px">교통·숙박·식사를 일정표에 표시하는 것과 같은 방식.</p>
+  </div>
+
+  <h3>④ 하나허브 여행계약서 교부내역 — 개인추가경비 합산값 · 변경 내역</h3>
+  <div class="card">
+    <p class="asis"><b>As-Is</b> — 고객이 보는 “개인추가경비 N원”과 같은 값을 상담원이 바로 확인할 방법이 없음(현재 불가 확인).</p>
+    <p style="margin:0 0 6px"><b>To-Be</b> — 하나허브 <b>여행계약서 교부내역 메뉴</b>에도 같은 합산값을 표시하고, <b>변경 내역은 별도 팝업</b>으로 확인.</p>
+    <p style="margin:0 0 6px;font-size:13px">변경 내역 팝업은 <b>고객 화면(①)의 ‘변경 내역’ 탭과 같은 것을 그대로 사용</b> — 같은 데이터로 같은 표(No / 변경 항목 / 이전 내용 / 변경 내용)를 보여준다.</p>
+    <p style="margin:0;color:var(--success);font-weight:600;font-size:13px">→ 개인추가경비는 개선 ②와, 변경 내역은 개선 ①과 <b>반드시 같은 값</b> — 고객이 보는 것과 상담원이 보는 것이 어긋나면 그 자체가 새 CS.</p>
+  </div>
+
+  <h3>⑤ 여행계약서 조회 진입 페이지 <span class="mini warn">검토 필요</span></h3>
+  <div class="card">
+    <p class="asis"><b>As-Is</b> — 알림톡 “여행계약서 확인”을 눌렀는데 (앱 없음/로그인 안 됨) 로그인 페이지를 거쳐 <b>“비회원 예약조회”</b> 화면으로 도착. 계약서를 보러 왔는데 제목이 “예약조회”라 <b>“여기가 맞나?” 하고 이탈</b> (CS 1위 진입 장벽의 잔여분).</p>
+    <p style="margin:0 0 8px"><b>To-Be</b> — 계약서를 보러 들어온 고객에게는 <b>화면 제목이 “여행계약서 조회”로 보이게</b> 하고, 여행계약서는 <b>패키지 상품만 해당</b>하므로 <b>호텔·항공 탭 없이 패키지 탭만</b> 보이게 한다.</p>
+    <p style="margin:0;font-size:13px"><b>포인트 4가지</b> : ① 예약번호는 지금처럼 자동으로 채워짐(고객은 이름·휴대폰번호만 입력) ② 계약서로 들어온 경우에만 제목·탭이 바뀜 ③ 조회 성공 → <b>예약 상세로 이동</b>(계약서 팝업은 그 화면에서 노출 — 현행 그대로) ④ 비회원 전용(회원은 로그인 후 마이페이지에서 확인).</p>
+  </div>
+
+  <h3>닷컴 직접예약 건 D-2 발송 포함 <span class="mini n">확인 항목</span></h3>
+  <div class="card">
+    <p class="asis"><b>현행</b> — 닷컴에서 직접 예약한 건은 최초 알림톡이 나가지 않음(예약내역에서 바로 확인하는 구조).</p>
+    <p style="margin:0"><b>요구사항</b> — 이 건들도 <b>출발 2일 전 최종 확정본 발송 대상에 포함</b> → 모든 고객이 출발 전 확정된 계약서를 받도록. <span style="color:var(--mute)">새로 만드는 기능이 아니라 기존 발송에 포함되는지 확인하는 건이라 개선 번호에서는 제외.</span></p>
+  </div>
+</section>

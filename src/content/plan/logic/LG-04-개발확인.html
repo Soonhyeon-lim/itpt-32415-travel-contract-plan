@@ -1,0 +1,16 @@
+<!-- ═══ 4. 개발 확인 3건 ═══ -->
+<section id="lgc4">
+  <span class="sec-num">LG-04</span>
+  <h2>개발 확인 3건</h2>
+  <p class="sub">정책이 아니라 구현 확인 — 착수 블로커 없음.</p>
+
+  <div class="grid g3">
+    <div class="card"><span class="tag warn">1 · 최우선</span><h4>금액 집계 소스</h4><p style="font-size:13px;margin:0">변동항목별 금액 — 계약서 API의 <code>flxb*</code>는 금액 없는 플래그(분석정리 6.6). 계약서 API 확장 vs 결제·예약 API 병행 호출 확인. <b style="color:var(--warn-ink)">금액 직결.</b></p></div>
+    <div class="card"><span class="tag warn">2</span><h4>변동 항목 <b>건수</b> 제공</h4><p style="font-size:13px;margin:0">노출 조건이 <b>금액이 아니라 건수</b>(0건이면 미노출 · 1건 이상이면 0원도 노출)로 확정됨 → 합산액과 <b>별개로 건수도 함께 내려와야</b> 0건과 0원을 구분할 수 있음. <code>flxb*</code>가 Y/N 플래그라 건수 산출은 오히려 쉬울 수 있음 — <b>1번과 함께 확인</b>.</p></div>
+    <div class="card"><span class="tag warn">3</span><h4>닷컴 직접예약 D-2</h4><p style="font-size:13px;margin:0">닷컴 직접예약 건이 현행 D-2 발송에 포함되는지 확인 → 미포함이면 배치 반영. 요구사항은 확정.</p></div>
+  </div>
+  <div class="callout removed">
+    <div class="ct">✓ 해소 · 제거 이력 (재론 불필요)</div>
+    <p><b>D2</b> 증빙(차수 데이터 + 동의 기록으로 충분 · 스냅샷 안 함) · <b>D13</b> 사유 처리방식(개별 저장 → N차·N-1차 비교 도출로 전환, 2026-07-15) · <b>D1</b>(D-2 항상 발송·차수 갱신 = 현행) · <b>D-1 발송</b>(자동 발송은 D-2가 마지막) · <b>대표예약자 일괄관리</b>(실재·계획 없음) · <b>사유 저장 형태</b>(코드/자유텍스트 논의 자체가 불요해짐, 비교 도출로 대체).</p>
+  </div>
+</section>
