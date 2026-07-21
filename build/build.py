@@ -76,19 +76,35 @@ def build(target="internal"):
     return dest, out
 
 
+BASELINE = os.path.join(HERE, "baseline.html")
+
+
+def set_baseline(out):
+    """현재 산출물을 기준선으로 고정. 의도적으로 내용을 바꾼 직후에만 쓴다."""
+    with io.open(BASELINE, "w", encoding="utf-8", newline="") as f:
+        f.write(out)
+    print("\n기준선 갱신 → build/baseline.html ({:,}자)".format(len(out)))
+
+
 def verify(out):
-    """1단계 안전장치 — 원본과 바이트 동일해야 회귀 0."""
-    if not os.path.isfile(ORIGINAL):
-        print("  원본을 찾을 수 없어 검증 생략"); return False
-    orig = read(ORIGINAL)
+    """회귀 검증 — 기준선과 바이트 동일해야 한다.
+
+    1~3단계(파일 분리)에서는 기준선이 분리 전 원본이었고, 그래서 '분리가 무손실인가'를
+    증명했다. 이후로는 의도적으로 내용을 고칠 때마다 --set-baseline 으로 기준선을 옮기고,
+    그 사이의 뜻하지 않은 변화를 이 검증이 잡는다.
+    """
+    ref = BASELINE if os.path.isfile(BASELINE) else ORIGINAL
+    if not os.path.isfile(ref):
+        print("  기준선·원본 모두 없어 검증 생략"); return False
+    orig = read(ref)
     same = (orig == out)
     print()
-    print("=== 원본 대조 ===")
-    print("  원본 {:,}자 / 빌드 {:,}자".format(len(orig), len(out)))
+    print("=== 기준선 대조 (%s) ===" % os.path.basename(ref))
+    print("  기준 {:,}자 / 빌드 {:,}자".format(len(orig), len(out)))
     if same:
         print("  ✅ 바이트 동일 — 회귀 0")
     else:
-        print("  ❌ 불일치")
+        print("  ❌ 불일치 (의도한 변경이면 --set-baseline 으로 기준선을 옮긴다)")
         for i, (a, b) in enumerate(zip(orig, out)):
             if a != b:
                 print("     첫 차이 위치 %d" % i)
@@ -105,4 +121,6 @@ if __name__ == "__main__":
     ok = True
     if "--verify" in sys.argv:
         ok = verify(out)
+    if "--set-baseline" in sys.argv:
+        set_baseline(out); ok = True
     sys.exit(0 if ok else 1)

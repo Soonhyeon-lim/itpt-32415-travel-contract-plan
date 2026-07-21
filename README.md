@@ -12,9 +12,14 @@
 ## 사용법
 
 ```bash
-python build/build.py            # → dist/internal/index.html
-python build/build.py --verify   # 빌드 결과가 원본과 바이트 동일한지까지 검증
+python build/build.py                  # → dist/internal/index.html
+python build/build.py --verify         # 기준선(build/baseline.html)과 바이트 동일한지 검증
+python build/build.py --set-baseline   # 의도적으로 내용을 고친 직후 기준선을 옮긴다
 ```
+
+`--verify` 는 회귀 그물이다. 1~3단계(파일 분리)에서는 기준선이 분리 전 원본이었고
+그래서 "분리가 무손실인가"를 증명했다. 이후로는 내용을 고칠 때마다 기준선을 옮기고,
+그 사이의 **뜻하지 않은 변화**를 이 검증이 잡는다.
 
 의존성 없음(Python 표준 라이브러리만). 이 환경 venv에 pip이 없어서 의도적으로 무의존으로 설계했다.
 
@@ -66,7 +71,9 @@ dist/
 - [x] **3단계 — 콘텐츠 섹션 분리** (16개 조각, 바이트 동일 검증 통과)
       → `src/index.html` 이 5,855자 순수 셸이 됐다. 섹션 한 곳을 고치면
         diff 도 `1 file changed, 1 insertion(+)` 로 그 파일에만 잡힌다(실측 확인).
-- [ ] 4단계 — `meta.json` + 버전 스냅샷 빌드(`dist/v1.1/`), 히스토리 탭 버전 링크
+- [x] **v1.0 초판 지정** (2026-07-21) — 대외 배포 첫 판. 내부 작업 이력은 git 에만 남기고
+      문서 히스토리는 v1.0 한 줄로 시작. 버전 표기 5곳 동기화.
+- [ ] 4단계 — `meta.json` + 버전 스냅샷 빌드(`dist/v1.0/`), 히스토리 탭 버전 링크
 - [ ] (보안 검토 후) 공개용 축약 빌드 `dist/shared/` — 내부 API명·관리자 화면·개발확인 제외
 
 ## 규칙 — 어기면 검증이 깨진다
