@@ -129,3 +129,42 @@ python build/release.py          # dist/v1.0/, dist/v1.1/, dist/index.html
 
 - 기획서는 **HTML이 단일 정본**. 중복이던 `기획서_v1.1.md`는 폐기 대상.
 - `0_여행계약서_개편_통합정본.md` · `여행계약서_서비스정책(안)_v0.4.md` 는 **별개 문서로 계속 유지**한다.
+
+## 배포
+
+GitHub(Private) → Vercel 정적 호스팅.
+
+```
+/            →  dist/index.html      최신판으로 이동
+/v1.0        →  dist/v1.0/index.html
+```
+
+`vercel.json` 이 `outputDirectory: dist` 를 지정하므로 **빌드 단계가 없다.**
+빌드된 판(`dist/vX.Y/`)을 커밋해 두기 때문이다. 그 이유는:
+
+- Vercel 빌드 환경에 파이썬·git 태그가 있는지에 배포가 좌우되지 않는다
+  (`release.py` 는 태그를 worktree 로 꺼내므로 얕은 클론에서는 동작하지 않는다)
+- 공개된 판이 git 에 그대로 남아 "그때 무엇을 내보냈나"를 나중에 확인할 수 있다
+- 판은 자주 늘지 않아 저장소가 비대해지지 않는다
+
+작업 중 빌드(`dist/internal/`)는 커밋하지 않는다.
+
+### 새 판 배포
+
+```bash
+# meta.json 의 version·date 수정 → 히스토리 표에 행 추가
+git commit -am "v1.1 …" && git tag -a v1.1 -m "…"
+python build/release.py        # dist/v1.0/, dist/v1.1/, dist/index.html 갱신
+git add dist && git commit -m "release v1.1" && git push --follow-tags
+```
+
+푸시하면 Vercel 이 자동 배포한다.
+
+### 접근 통제
+
+- **검색 색인 차단** — `vercel.json` 의 `X-Robots-Tag: noindex, nofollow, noarchive`
+  + `dist/robots.txt`. 링크를 아는 사람만 본다.
+- ⚠️ **URL 을 아는 사람은 누구나 열람 가능하다**(무료 플랜 기준). 더 막으려면
+  Edge Middleware 로 Basic Auth 를 세우거나 Vercel 의 Password Protection(유료)을 쓴다.
+- HTML 은 브라우저로 전달되는 순간 소스가 읽힌다. 난독화로는 막을 수 없으므로,
+  통제가 필요하면 **접근**(위)이나 **내용**(공개용 축약 빌드)에서 다뤄야 한다.
