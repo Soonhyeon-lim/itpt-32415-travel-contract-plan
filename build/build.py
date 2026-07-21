@@ -19,6 +19,9 @@ DIST = os.path.join(ROOT, "dist")
 ORIGINAL = r"C:\Users\HANA\Desktop\local-task\00. Task\2026\ITPT-32415(여행계약서 개편)\00. 요구사항\ITPT-32415_여행계약서_시스템개선_기획서_v1.1.html"
 
 INCLUDE_RE = re.compile(r'<!--\s*include:\s*([^\s>]+?)\s*-->')
+# 마커가 그 줄에 홀로 있으면 "줄 전체(개행 포함)"를 치환한다.
+# 덕분에 조각 파일이 개행으로 끝나도(= 일반적인 소스 파일 관례) 결과가 어긋나지 않는다.
+LINE_INCLUDE_RE = re.compile(r'^[ \t]*<!--\s*include:\s*([^\s>]+?)\s*-->[ \t]*\r?\n', re.M)
 MAX_DEPTH = 10
 
 
@@ -41,16 +44,21 @@ def expand(text, stack):
             raise RuntimeError("순환 참조: %s" % " > ".join(stack + [rel]))
         return expand(read(path), stack + [rel])
 
-    return INCLUDE_RE.sub(repl, text)
+    text = LINE_INCLUDE_RE.sub(repl, text)   # 단독 줄 마커 → 줄 전체 치환
+    return INCLUDE_RE.sub(repl, text)        # 줄 안에 섞인 마커 → 마커만 치환
 
 
 def build(target="internal"):
     entry = os.path.join(SRC, "index.html")
     out = expand(read(entry), ["index.html"])
 
-    # 자기완결 점검 — 외부 http(s) 리소스를 끌어오면 file:// 에서 깨진다
+    # 자기완결 점검 — 외부 리소스를 끌어오면 오프라인/폐쇄망에서 깨진다.
+    # 속성(src/href)뿐 아니라 CSS 의 @import·url() 까지 본다.
     ext = re.findall(r'(?:src|href)\s*=\s*["\'](https?://[^"\']+)', out)
+    ext += re.findall(r'@import\s+url\(\s*[\'"]?(https?://[^\'")]+)', out)
+    ext += re.findall(r'url\(\s*[\'"]?(https?://[^\'")]+)', out)
     ext = [u for u in ext if not u.startswith("http://www.w3.org")]  # SVG 네임스페이스 제외
+    ext = sorted(set(ext))
 
     outdir = os.path.join(DIST, target)
     os.makedirs(outdir, exist_ok=True)

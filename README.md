@@ -23,6 +23,13 @@ python build/build.py --verify   # 빌드 결과가 원본과 바이트 동일�
 ```
 src/
   index.html                    셸 — include 마커로 조각을 불러온다
+  styles/
+    tokens.css                  :root 토큰 · reset · body
+    base.css                    Layout · 섹션코드 xref 링크 · Cover
+    components.css              callout · card · table · flow · topbar · subtab
+    screens.css                 화면정의 전용 (폰 프레임 · 계약서 탭 · 변경내역표 · admin grid)
+  scripts/
+    tabs.js · subtabs.js · ct-tabs.js · scrollspy.js · xref.js
   embeds/
     sc02-contract.html          SC-02 mqatour 실화면 임베드 (전체의 44.9%)
 build/
@@ -40,10 +47,14 @@ dist/
 
 중첩 가능하고, 순환 참조와 없는 파일은 빌드가 오류로 잡는다.
 
+**마커가 그 줄에 홀로 있으면 줄 전체(개행 포함)를 치환한다.** 덕분에 조각 파일이
+개행으로 끝나도(= 일반적인 소스 파일 관례) 결과가 어긋나지 않는다.
+줄 안에 섞여 있으면 마커 자리만 바뀐다.
+
 ## 진행 상태
 
 - [x] **1단계 — 실화면 임베드 격리** (44.9% 분리, 원본과 바이트 동일 검증 통과)
-- [ ] 2단계 — CSS·JS 분리
+- [x] **2단계 — CSS·JS 분리** (CSS 4개 · JS 5개, 바이트 동일 검증 통과)
 - [ ] 3단계 — 콘텐츠 섹션 분리 (IM/LG/AS·SC·history·refs)
 - [ ] 4단계 — `meta.json` + 버전 스냅샷 빌드(`dist/v1.1/`), 히스토리 탭 버전 링크
 - [ ] (보안 검토 후) 공개용 축약 빌드 `dist/shared/` — 내부 API명·관리자 화면·개발확인 제외
@@ -52,8 +63,10 @@ dist/
 
 1. **개행은 CRLF.** 원본이 CRLF라 `.gitattributes`에서 `* -text`로 자동 변환을 껐고,
    스크립트는 읽기·쓰기 모두 `newline=""` 를 쓴다. (1단계에서 이걸 빠뜨려 1,393자 차이가 났었다)
-2. **산출물에 외부 리소스를 넣지 않는다.** `http(s)` 참조가 생기면 `file://` 에서 깨진다.
-   빌드가 자동으로 점검해 경고한다.
+2. **산출물에 외부 리소스를 넣지 않는다.** `http(s)` 참조가 생기면 오프라인·폐쇄망에서 깨진다.
+   빌드가 `src`/`href` 뿐 아니라 CSS 의 `@import`·`url()` 까지 점검해 경고한다.
+   ⚠️ **현재 1건 미해결** — `tokens.css` 가 Pretendard 웹폰트를 jsdelivr CDN 에서 `@import` 한다.
+   인터넷이 없으면 폰트만 대체글꼴로 떨어진다(레이아웃은 유지). 폐쇄망 배포 시 폰트 내장 검토.
 3. **원본(`00. 요구사항/…_v1.1.html`)은 아직 정본이다.** 이 저장소가 검증될 때까지 원본을 지우지 않는다.
 
 ## 정본 관계

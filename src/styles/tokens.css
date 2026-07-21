@@ -1,0 +1,20 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+:root{
+  --brand:#5e2bb8; --brand-vivid:#884bef; --brand-strong:#6b3edb; --brand-light:#efe7ff;
+  --brand-border:#d3c2f0;
+  --info:#4585ff; --info-bg:#f1f8ff; --cyan:#00b5c5; --campaign:#fd5cb0;
+  --error:#e53935; --success:#40b240; --warning:#ff9800;
+  --warn-bg:#fff5e6; --warn-border:#ffd699; --warn-ink:#b26a00;
+  --text:#111; --soft:#555; --mute:#767676; --faint:#999;
+  --line:#eee; --line2:#e5e5e5; --bg:#eff2f5; --surface:#fff;
+  --font:"Pretendard Variable","Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --radius:12px; --radius-sm:8px;
+  --shadow:0 4px 16px rgba(30,16,60,.06); --shadow-sm:0 1px 2px rgba(0,0,0,.04);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--text);background:var(--bg);
+  line-height:1.62;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-size:15px}
+a{color:var(--info);text-decoration:none}
+a:hover{text-decoration:underline}
+

@@ -1,0 +1,39 @@
+/* ── Layout ── */
+.wrap{display:grid;grid-template-columns:248px minmax(0,1fr);gap:0;max-width:1280px;margin:0 auto}
+.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:28px 18px 40px;
+  border-right:2px solid #111}
+.toc-brand{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.toc-brand .mark{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--brand),var(--brand-vivid));
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
+.toc-brand b{font-size:14px;letter-spacing:-.02em}
+.toc-jira{font-size:11px;color:var(--faint);margin:0 0 20px 35px}
+.toc a{display:block;color:var(--soft);font-size:13px;padding:6px 10px;border-radius:7px;
+  border-left:2px solid transparent;letter-spacing:-.02em;transition:.15s}
+.toc a .n{display:inline-block;min-width:40px;color:var(--faint);font-size:10.5px;font-weight:700;
+  margin-right:7px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.toc a.active .n{color:var(--brand)}
+
+/* 본문 내 섹션 코드 → 해당 섹션으로 이동하는 링크 */
+.xref{display:inline-block;color:var(--brand);font-weight:700;text-decoration:none;
+  border-bottom:1px dashed var(--brand-border);cursor:pointer;padding:0 1px;
+  transition:.15s;white-space:nowrap}
+.xref:hover{background:var(--brand-light);border-bottom-style:solid;text-decoration:none}
+.xref::after{content:"↗";font-size:.75em;margin-left:2px;opacity:.55;font-weight:400}
+/* 이동 직후 대상 섹션 강조 */
+@keyframes xrefFlash{0%{background:var(--brand-light)}100%{background:transparent}}
+section.xref-target{animation:xrefFlash 1.6s ease-out}
+.toc a:hover{background:var(--brand-light);text-decoration:none;color:var(--brand)}
+.toc a.active{background:var(--brand-light);color:var(--brand);font-weight:700;border-left-color:var(--brand)}
+main{padding:0 0 80px;min-width:0}
+
+/* ── Cover ── */
+.cover{background:linear-gradient(135deg,#5e2bb8 0%,#7b3fd6 55%,#884bef 100%);color:#fff;
+  padding:56px 52px 44px;position:relative;overflow:hidden}
+.cover::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;
+  border-radius:50%;background:rgba(255,255,255,.06)}
+.cover .kicker{font-size:13px;letter-spacing:.06em;opacity:.82;font-weight:600;margin-bottom:14px}
+.cover h1{font-size:38px;font-weight:800;letter-spacing:-.035em;line-height:1.2;margin-bottom:18px}
+.cover .lead{font-size:15.5px;opacity:.92;max-width:640px;line-height:1.6}
+.cover .meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px 22px;font-size:13px;opacity:.9}
+.cover .meta b{font-weight:700}
+
