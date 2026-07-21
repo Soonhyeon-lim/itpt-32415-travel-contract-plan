@@ -1,0 +1,100 @@
+# -*- coding: utf-8 -*-
+"""ITPT-32415 기획서 빌드 — src/ 조각을 조립해 자기완결 단일 HTML 산출.
+
+사용법:  python build/build.py            → dist/internal/index.html
+        python build/build.py --verify   → 원본과 바이트 동일 여부까지 검증
+
+설계 원칙
+  - 의존성 0 (Python 표준 라이브러리만)
+  - 산출물은 자기완결 = file:// 로 그냥 열려야 한다 (외부 리소스 참조 금지)
+  - include 는 중첩 허용, 순환 참조는 오류로 잡는다
+"""
+import io, os, re, sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+SRC = os.path.join(ROOT, "src")
+DIST = os.path.join(ROOT, "dist")
+
+ORIGINAL = r"C:\Users\HANA\Desktop\local-task\00. Task\2026\ITPT-32415(여행계약서 개편)\00. 요구사항\ITPT-32415_여행계약서_시스템개선_기획서_v1.1.html"
+
+INCLUDE_RE = re.compile(r'<!--\s*include:\s*([^\s>]+?)\s*-->')
+MAX_DEPTH = 10
+
+
+def read(path):
+    with io.open(path, encoding="utf-8", newline="") as f:
+        return f.read()
+
+
+def expand(text, stack):
+    """include 마커를 재귀적으로 치환. stack = 순환 참조 검출용 경로 목록."""
+    if len(stack) > MAX_DEPTH:
+        raise RuntimeError("include 중첩이 %d단계를 넘음: %s" % (MAX_DEPTH, " > ".join(stack)))
+
+    def repl(m):
+        rel = m.group(1)
+        path = os.path.normpath(os.path.join(SRC, rel))
+        if not os.path.isfile(path):
+            raise RuntimeError("include 대상 없음: %s  (참조: %s)" % (rel, stack[-1]))
+        if rel in stack:
+            raise RuntimeError("순환 참조: %s" % " > ".join(stack + [rel]))
+        return expand(read(path), stack + [rel])
+
+    return INCLUDE_RE.sub(repl, text)
+
+
+def build(target="internal"):
+    entry = os.path.join(SRC, "index.html")
+    out = expand(read(entry), ["index.html"])
+
+    # 자기완결 점검 — 외부 http(s) 리소스를 끌어오면 file:// 에서 깨진다
+    ext = re.findall(r'(?:src|href)\s*=\s*["\'](https?://[^"\']+)', out)
+    ext = [u for u in ext if not u.startswith("http://www.w3.org")]  # SVG 네임스페이스 제외
+
+    outdir = os.path.join(DIST, target)
+    os.makedirs(outdir, exist_ok=True)
+    dest = os.path.join(outdir, "index.html")
+    with io.open(dest, "w", encoding="utf-8", newline="") as f:
+        f.write(out)
+
+    print("빌드 완료  →  dist/%s/index.html  ({:,}자)".format(len(out)) % target)
+    if ext:
+        print("  ⚠ 외부 리소스 참조 %d건 (file:// 에서 깨질 수 있음):" % len(ext))
+        for u in ext[:5]:
+            print("     -", u[:90])
+    else:
+        print("  자기완결 OK (외부 리소스 참조 0건)")
+    return dest, out
+
+
+def verify(out):
+    """1단계 안전장치 — 원본과 바이트 동일해야 회귀 0."""
+    if not os.path.isfile(ORIGINAL):
+        print("  원본을 찾을 수 없어 검증 생략"); return False
+    orig = read(ORIGINAL)
+    same = (orig == out)
+    print()
+    print("=== 원본 대조 ===")
+    print("  원본 {:,}자 / 빌드 {:,}자".format(len(orig), len(out)))
+    if same:
+        print("  ✅ 바이트 동일 — 회귀 0")
+    else:
+        print("  ❌ 불일치")
+        for i, (a, b) in enumerate(zip(orig, out)):
+            if a != b:
+                print("     첫 차이 위치 %d" % i)
+                print("     원본: %r" % orig[max(0, i-40):i+40])
+                print("     빌드: %r" % out[max(0, i-40):i+40])
+                break
+        else:
+            print("     길이만 다름 (앞부분은 동일)")
+    return same
+
+
+if __name__ == "__main__":
+    dest, out = build()
+    ok = True
+    if "--verify" in sys.argv:
+        ok = verify(out)
+    sys.exit(0 if ok else 1)
