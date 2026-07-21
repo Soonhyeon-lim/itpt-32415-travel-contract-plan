@@ -16,13 +16,26 @@ import io, os, subprocess, sys, shutil, tempfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 DIST = os.path.join(ROOT, "dist")
+# 콘솔이 cp949 여도 한글·기호가 깨지지 않게 한다 (윈도우 기본 콘솔 대응)
+for _s in (sys.stdout, sys.stderr):
+    try:
+        _s.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
+
+
+# 자식 프로세스에게 UTF-8 출력을 강제한다.
+# 지난 태그의 build.py 에는 콘솔 인코딩 대응이 없을 수 있으므로(그 시점 소스 그대로다)
+# 부모가 환경변수로 못박아야 어느 판을 꺼내 빌드하든 출력이 깨지지 않는다.
+CHILD_ENV = dict(os.environ, PYTHONIOENCODING="utf-8", PYTHONUTF8="1")
 
 
 def git(*args, cwd=ROOT):
-    r = subprocess.run(["git"] + list(args), cwd=cwd,
-                       capture_output=True, text=True, encoding="utf-8")
+    r = subprocess.run(["git"] + list(args), cwd=cwd, capture_output=True,
+                       text=True, encoding="utf-8", errors="replace", env=CHILD_ENV)
     if r.returncode:
-        raise RuntimeError("git %s 실패:\n%s" % (" ".join(args), r.stderr.strip()))
+        raise RuntimeError("git %s 실패:\n%s" % (" ".join(args), (r.stderr or "").strip()))
     return r.stdout.strip()
 
 
@@ -37,7 +50,8 @@ def build_tag(tag):
     try:
         git("worktree", "add", "--detach", "--quiet", wt, tag)
         r = subprocess.run([sys.executable, os.path.join(wt, "build", "build.py")],
-                           cwd=wt, capture_output=True, text=True, encoding="utf-8")
+                           cwd=wt, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", env=CHILD_ENV)
         if r.returncode:
             print("   빌드 실패:\n%s" % (r.stderr or r.stdout)); return False
         built = os.path.join(wt, "dist", "internal", "index.html")
