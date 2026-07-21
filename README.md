@@ -15,6 +15,8 @@
 python build/build.py                  # → dist/internal/index.html
 python build/build.py --verify         # 기준선(build/baseline.html)과 바이트 동일한지 검증
 python build/build.py --set-baseline   # 의도적으로 내용을 고친 직후 기준선을 옮긴다
+python build/build.py --release        # 현재 상태를 meta.json 의 버전으로 → dist/v1.0/
+python build/release.py                # 모든 v* 태그를 각자 스냅샷으로 빌드
 ```
 
 `--verify` 는 회귀 그물이다. 1~3단계(파일 분리)에서는 기준선이 분리 전 원본이었고
@@ -28,6 +30,7 @@ python build/build.py --set-baseline   # 의도적으로 내용을 고친 직후
 ```
 src/
   index.html                    셸 — include 마커로 조각을 불러온다
+  meta.json                     버전·날짜·지라·팀 — 표기의 유일한 출처
   styles/
     tokens.css                  :root 토큰 · reset · body
     base.css                    Layout · 섹션코드 xref 링크 · Cover
@@ -46,11 +49,47 @@ src/
     screens/                    SC-01 조회진입 · SC-02 계약서조회동의 · SC-03 하나허브교부내역
     history.html · refs.html
 build/
-  build.py                      조립 + 자기완결 점검 + 원본 대조
-  split_step1.py                1단계 분리에 쓴 일회성 스크립트 (이력 보존용)
-dist/
-  internal/index.html           빌드 산출물 (git 제외)
+  build.py                      조립 + meta 주입 + 자기완결 점검 + 기준선 대조
+  release.py                    git 태그별 스냅샷 빌드 (임시 worktree 사용)
+  baseline.html                 회귀 검증 기준선
+  split_step*.py                각 단계 분리에 쓴 일회성 스크립트 (이력 보존용)
+dist/                           빌드 산출물 (git 제외)
+  index.html                    최신판으로 보내는 진입점
+  v1.0/index.html               버전 스냅샷
+  internal/index.html           작업 중 상태
 ```
+
+## 버전 표기
+
+`meta.json` 이 유일한 출처다. 문서 안에서는 `{{version}}` `{{date}}` `{{jira}}`
+`{{title}}` `{{shortTitle}}` `{{team}}` 로 쓰고 빌드가 채운다.
+meta.json 에 없는 키를 쓰면 빌드가 오류로 잡는다(오타 방지).
+
+전에는 버전 문자열이 title·상단바·LNB·커버 배지·갱신일 등 7곳에 흩어져 있어
+하나라도 놓치면 문서가 어긋났다.
+
+## 버전 스냅샷
+
+판을 하나 찍을 때:
+
+```bash
+# 1) meta.json 의 version·date 를 올린다
+# 2) 히스토리 표에 새 행을 추가하고, 지난 판의 버전 칸을 링크로 바꾼다
+#      <td><a href="../v1.0/index.html"><b>v1.0</b></a></td>
+git commit -am "v1.1 …"
+git tag -a v1.1 -m "…"
+python build/release.py          # dist/v1.0/, dist/v1.1/, dist/index.html
+```
+
+`release.py` 는 각 태그를 **임시 worktree** 로 꺼내 그 시점 소스로 빌드한다.
+작업 트리를 건드리지 않으므로 작업 중이어도 안전하다.
+
+옛 판이 최신 CSS·JS 로 다시 그려지지 않는 것이 핵심이다 — 기획서는
+"그때 무엇으로 합의했나"가 내용이라, 판마다 그 시점 그대로 남아야 한다.
+
+배포는 `dist/` 를 정적 루트로 두면 된다. 모든 판이 `/vX.Y/` 아래 있어서
+판끼리 잇는 링크가 `../vX.Y/` 상대경로로 통일되고, 웹서버에서도 `file://`
+에서도 똑같이 동작한다.
 
 `include` 문법은 한 가지뿐이다:
 
@@ -73,7 +112,7 @@ dist/
         diff 도 `1 file changed, 1 insertion(+)` 로 그 파일에만 잡힌다(실측 확인).
 - [x] **v1.0 초판 지정** (2026-07-21) — 대외 배포 첫 판. 내부 작업 이력은 git 에만 남기고
       문서 히스토리는 v1.0 한 줄로 시작. 버전 표기 5곳 동기화.
-- [ ] 4단계 — `meta.json` + 버전 스냅샷 빌드(`dist/v1.0/`), 히스토리 탭 버전 링크
+- [x] **4단계 — `meta.json` + 버전 스냅샷 빌드** (`dist/v1.0/`, 태그별 worktree 빌드, 루트 진입점)
 - [ ] (보안 검토 후) 공개용 축약 빌드 `dist/shared/` — 내부 API명·관리자 화면·개발확인 제외
 
 ## 규칙 — 어기면 검증이 깨진다

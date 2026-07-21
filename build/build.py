@@ -9,7 +9,7 @@
   - 산출물은 자기완결 = file:// 로 그냥 열려야 한다 (외부 리소스 참조 금지)
   - include 는 중첩 허용, 순환 참조는 오류로 잡는다
 """
-import io, os, re, sys
+import io, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -48,9 +48,30 @@ def expand(text, stack):
     return INCLUDE_RE.sub(repl, text)        # 줄 안에 섞인 마커 → 마커만 치환
 
 
-def build(target="internal"):
+PLACEHOLDER_RE = re.compile(r'\{\{(\w+)\}\}')
+
+
+def load_meta():
+    p = os.path.join(SRC, "meta.json")
+    if not os.path.isfile(p):
+        raise RuntimeError("src/meta.json 이 없다")
+    return json.loads(read(p))
+
+
+def apply_meta(text, meta):
+    """{{key}} 를 meta 값으로 치환. 정의되지 않은 키는 오타이므로 오류로 잡는다."""
+    missing = sorted({m.group(1) for m in PLACEHOLDER_RE.finditer(text)} - set(meta))
+    if missing:
+        raise RuntimeError("meta.json 에 없는 플레이스홀더: %s" % ", ".join(missing))
+    return PLACEHOLDER_RE.sub(lambda m: str(meta[m.group(1)]), text)
+
+
+def build(target=None):
+    meta = load_meta()
     entry = os.path.join(SRC, "index.html")
-    out = expand(read(entry), ["index.html"])
+    out = apply_meta(expand(read(entry), ["index.html"]), meta)
+    if target is None:
+        target = "internal"
 
     # 자기완결 점검 — 외부 리소스를 끌어오면 오프라인/폐쇄망에서 깨진다.
     # 속성(src/href)뿐 아니라 CSS 의 @import·url() 까지 본다.
@@ -66,7 +87,8 @@ def build(target="internal"):
     with io.open(dest, "w", encoding="utf-8", newline="") as f:
         f.write(out)
 
-    print("빌드 완료  →  dist/%s/index.html  ({:,}자)".format(len(out)) % target)
+    print("빌드 완료  →  dist/%s/index.html  ({:,}자)  [v%s · %s]"
+          .format(len(out)) % (target, meta["version"], meta["date"]))
     if ext:
         print("  ⚠ 외부 리소스 참조 %d건 (file:// 에서 깨질 수 있음):" % len(ext))
         for u in ext[:5]:
@@ -117,7 +139,9 @@ def verify(out):
 
 
 if __name__ == "__main__":
-    dest, out = build()
+    # --release : 현재 상태를 meta.json 의 버전으로 스냅샷 (dist/v1.0/index.html)
+    tgt = "v" + load_meta()["version"] if "--release" in sys.argv else None
+    dest, out = build(tgt)
     ok = True
     if "--verify" in sys.argv:
         ok = verify(out)
