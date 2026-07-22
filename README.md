@@ -24,6 +24,9 @@ python build/release.py                # 모든 v* 태그를 각자 스냅샷으
 그 사이의 **뜻하지 않은 변화**를 이 검증이 잡는다.
 
 의존성 없음(Python 표준 라이브러리만). 이 환경 venv에 pip이 없어서 의도적으로 무의존으로 설계했다.
+예외는 폰트 서브셋 생성(`build/make_font.py`) 하나뿐이고, 그것도 `uv run --with` 로
+격리 실행해 시스템 환경을 건드리지 않는다. **평소 빌드에는 필요 없다** — 생성물인
+`src/styles/fonts.css` 가 저장소에 들어 있어서, 콘텐츠에 새 글자가 들어올 때만 다시 돌린다.
 
 ## 구조
 
@@ -32,6 +35,8 @@ src/
   index.html                    셸 — include 마커로 조각을 불러온다
   meta.json                     버전·날짜·지라·팀 — 표기의 유일한 출처
   styles/
+    fonts.css                   [생성물] Pretendard Variable 서브셋 base64
+    fonts.charset.json          [생성물] 내장 글자 목록 — 빌드 검사 기준
     tokens.css                  :root 토큰 · reset · body
     base.css                    Layout · 섹션코드 xref 링크 · Cover
     components.css              callout · card · table · flow · topbar · subtab
@@ -49,8 +54,10 @@ src/
     screens/                    SC-01 조회진입 · SC-02 계약서조회동의 · SC-03 하나허브교부내역
     history.html · refs.html
 build/
-  build.py                      조립 + meta 주입 + 자기완결 점검 + 기준선 대조
+  build.py                      조립 + meta 주입 + 자기완결 점검 + 글자 검사 + 기준선 대조
+  make_font.py                  폰트 서브셋 생성 (fonttools 필요 — uv 로 격리 실행)
   release.py                    git 태그별 스냅샷 빌드 (임시 worktree 사용)
+  vendor/                       Pretendard Variable 원본 woff2 + OFL 라이선스
   baseline.html                 회귀 검증 기준선
   split_step*.py                각 단계 분리에 쓴 일회성 스크립트 (이력 보존용)
 dist/                           빌드 산출물 (git 제외)
@@ -58,6 +65,41 @@ dist/                           빌드 산출물 (git 제외)
   v1.0/index.html               버전 스냅샷
   internal/index.html           작업 중 상태
 ```
+
+## 폰트
+
+Pretendard Variable 을 **서브셋으로 내장**한다. CDN `@import` 를 쓰지 않는다.
+
+```bash
+uv run --with fonttools --with brotli python build/make_font.py
+uv run --with fonttools --with brotli python build/make_font.py --measure   # 용량만 비교
+```
+
+`build/vendor/PretendardVariable.woff2`(원본 2.06MB) → 서브셋 450KB → base64 로
+`src/styles/fonts.css` 에 박힌다. 문서는 163KB → 764KB 가 된다.
+
+**왜 내장하나.** CDN 참조를 남기면 폐쇄망·오프라인에서 대체글꼴(맑은 고딕)로 떨어지는데,
+맑은 고딕은 Regular·Bold **두 단계뿐**이다. 이 문서는 400/500/600/700/800 **다섯 단계**를
+정보 위계로 쓰므로, 대체되는 순간 강조 체계가 통째로 평평해진다. 레이아웃만 유지되면
+되는 문제가 아니었다.
+
+**왜 전체가 아니라 서브셋인가.** 전체 내장은 base64 2.7MB 라 문서가 18배로 불어난다.
+
+**왜 KS X 1001 까지 넣나.** 문서에 지금 쓰인 글자만 담으면 128KB 로 더 작지만, 한 글자만
+새로 써도 두부(□)가 뜬다. 이 문서는 계속 고쳐지므로 한글 음절 2,350자를 함께 넣어
+편집 내성을 확보했다. 그래도 안전망으로 **빌드가 매번 「문서 글자 ⊆ 서브셋」을 검사**하고,
+벗어나면 빌드를 실패시킨다(`fonts.charset.json` 이 그 기준).
+
+> 판정에 `iso2022_kr` 을 쓴다. 파이썬의 `euc_kr` 코덱은 실제로 CP949(UHC)라
+> 현대 한글 11,172자를 전부 받아 줘서 걸러지지 않는다(실측 11,309자 → 서브셋 1.74MB).
+
+`fonts.css` 와 `fonts.charset.json` 은 **생성물**이다. 직접 고치지 말 것.
+
+**임베드 주의** — SC-02 실화면 임베드의 인라인 스택은 하나투어 원본 그대로라 첫 항목이
+`Pretendard`(static 판 이름)다. 내장 폰트는 `Pretendard Variable` 이라 이름이 맞물리지 않아
+그대로 두면 그 블록만 맑은 고딕으로 떨어진다. 원본 파일은 손대지 않고 `screens.css` 에서
+`.hnt-contract-embed{font-family:var(--font)!important}` 로 되돌린다(인라인 `style=` 이라
+`!important` 가 아니면 못 이긴다).
 
 ## 버전 표기
 
@@ -113,6 +155,8 @@ python build/release.py          # dist/v1.0/, dist/v1.1/, dist/index.html
 - [x] **v1.0 초판 지정** (2026-07-21) — 대외 배포 첫 판. 내부 작업 이력은 git 에만 남기고
       문서 히스토리는 v1.0 한 줄로 시작. 버전 표기 5곳 동기화.
 - [x] **4단계 — `meta.json` + 버전 스냅샷 빌드** (`dist/v1.0/`, 태그별 worktree 빌드, 루트 진입점)
+- [x] **폰트 내장** (2026-07-22) — variable 판 + 버전 핀 → 서브셋 base64 내장.
+      **외부 리소스 0건 달성**. 글자 검사로 두부(□) 방지, 서브셋 재생성해도 빌드는 바이트 동일(결정적).
 - [ ] (보안 검토 후) 공개용 축약 빌드 `dist/shared/` — 내부 API명·관리자 화면·개발확인 제외
 
 ## 규칙 — 어기면 검증이 깨진다
@@ -121,8 +165,7 @@ python build/release.py          # dist/v1.0/, dist/v1.1/, dist/index.html
    스크립트는 읽기·쓰기 모두 `newline=""` 를 쓴다. (1단계에서 이걸 빠뜨려 1,393자 차이가 났었다)
 2. **산출물에 외부 리소스를 넣지 않는다.** `http(s)` 참조가 생기면 오프라인·폐쇄망에서 깨진다.
    빌드가 `src`/`href` 뿐 아니라 CSS 의 `@import`·`url()` 까지 점검해 경고한다.
-   ⚠️ **현재 1건 미해결** — `tokens.css` 가 Pretendard 웹폰트를 jsdelivr CDN 에서 `@import` 한다.
-   인터넷이 없으면 폰트만 대체글꼴로 떨어진다(레이아웃은 유지). 폐쇄망 배포 시 폰트 내장 검토.
+   ✅ **0건 달성** — 폰트까지 서브셋으로 내장했다(아래 「폰트」).
 3. **원본(`00. 요구사항/…_v1.1.html`)은 아직 정본이다.** 이 저장소가 검증될 때까지 원본을 지우지 않는다.
 
 ## 정본 관계

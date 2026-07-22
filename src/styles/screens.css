@@ -31,6 +31,11 @@
 .rs-frame{height:600px;overflow:auto;padding:24px 26px 40px;background:#fff}
 .rs-omit{text-align:center;font-size:12px;color:var(--faint);letter-spacing:.08em;padding:9px 0;background:#f4f2f8;border:1px dashed #cbc6d8;border-radius:8px;margin-bottom:16px}
 .rs-frame .hnt-contract-embed{max-width:100%}
+/* 임베드 원본 스택은 하나투어 실화면 그대로라 첫 항목이 'Pretendard'(static 판 이름)다.
+   내장 폰트는 'Pretendard Variable' 이라 이름이 맞물리지 않아, 그대로 두면 이 블록만
+   맑은 고딕으로 떨어진다. 원본 파일은 손대지 않고 여기서 되돌린다.
+   인라인 style= 로 박혀 있어 !important 가 아니면 이기지 못한다. */
+.hnt-contract-embed{font-family:var(--font)!important}
 /* 임베드 실화면: 기획서 전역 li 불릿·마진 격리 */
 .hnt-sc01-embed li::before,.hnt-contract-embed li::before{display:none}
 .hnt-sc01-embed li,.hnt-contract-embed li{padding-left:0;margin-bottom:0}

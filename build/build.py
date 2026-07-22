@@ -73,6 +73,36 @@ def apply_meta(text, meta):
     return PLACEHOLDER_RE.sub(lambda m: str(meta[m.group(1)]), text)
 
 
+TAG_RE = re.compile(r'<[^>]+>')
+BLOCK_RE = re.compile(r'(?is)<(script|style)\b.*?</\1>')
+ATTR_RE = re.compile(r'(?:title|alt|placeholder|aria-label)\s*=\s*"([^"]*)"', re.I)
+MANIFEST = os.path.join(SRC, "styles", "fonts.charset.json")
+
+
+def check_glyphs(out):
+    """문서 글자가 내장 서브셋 범위 안인지 검사한다.
+
+    폰트를 서브셋으로 내장한 대가 — 없는 글자는 두부(□)로 뜬다. 눈으로는
+    놓치기 쉬우므로 빌드가 막는다. 걸리면 make_font.py 를 다시 돌리면 된다.
+    """
+    if not os.path.isfile(MANIFEST):
+        print("  ⚠ 폰트 매니페스트 없음 — 글자 검사 생략"); return True
+    allowed = set(json.loads(read(MANIFEST))["codepoints"])
+    body = BLOCK_RE.sub(" ", out)          # base64 가 든 style 블록은 검사 대상이 아니다
+    import html as _html
+    text = _html.unescape(" ".join(ATTR_RE.findall(body)) + " " + TAG_RE.sub(" ", body))
+    missing = sorted({c for c in text if ord(c) > 0x20 and ord(c) not in allowed})
+    # 이모지·기호는 애초에 Pretendard 에 없어 시스템 폰트로 넘어간다 — 검사에서 뺀다
+    missing = [c for c in missing if not (0x2190 <= ord(c) <= 0x2BFF or ord(c) >= 0x1F000)]
+    if missing:
+        print("  ❌ 내장 폰트에 없는 글자 %d자 — 두부(□)로 뜬다:" % len(missing))
+        print("     %s" % " ".join(missing[:40]))
+        print("     → uv run --with fonttools --with brotli python build/make_font.py")
+        return False
+    print("  글자 검사 OK (내장 서브셋으로 전부 렌더됨)")
+    return True
+
+
 def build(target=None):
     meta = load_meta()
     entry = os.path.join(SRC, "index.html")
@@ -102,7 +132,8 @@ def build(target=None):
             print("     -", u[:90])
     else:
         print("  자기완결 OK (외부 리소스 참조 0건)")
-    return dest, out
+    glyphs_ok = check_glyphs(out)
+    return dest, out, glyphs_ok
 
 
 BASELINE = os.path.join(HERE, "baseline.html")
@@ -148,10 +179,9 @@ def verify(out):
 if __name__ == "__main__":
     # --release : 현재 상태를 meta.json 의 버전으로 스냅샷 (dist/v1.0/index.html)
     tgt = "v" + load_meta()["version"] if "--release" in sys.argv else None
-    dest, out = build(tgt)
-    ok = True
+    dest, out, ok = build(tgt)
     if "--verify" in sys.argv:
-        ok = verify(out)
+        ok = verify(out) and ok
     if "--set-baseline" in sys.argv:
-        set_baseline(out); ok = True
+        set_baseline(out)          # 글자 검사 실패는 기준선을 옮겨도 덮이지 않는다
     sys.exit(0 if ok else 1)

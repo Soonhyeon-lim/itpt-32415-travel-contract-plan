@@ -1,10 +1,5 @@
-/* Pretendard Variable · SIL OFL 1.1 · https://github.com/orioncactus/pretendard
-   variable 판 = --font 첫 항목("Pretendard Variable")과 이름이 맞물린다.
-   전에는 static 판을 불러 family 명이 "Pretendard" 뿐이었고, 그래서 Variable 을
-   로컬 설치한 PC 와 아닌 PC 가 서로 다른 폰트로 렌더됐다.
-   버전 태그(@v1.3.9)를 고정한다 — 기본 브랜치를 가리키면 업스트림이 경로를
-   정리하는 순간 예고 없이 폰트가 사라진다. */
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css');
+/* 폰트는 styles/fonts.css 에 서브셋으로 내장돼 있다(외부 참조 없음).
+   --font 첫 항목이 그 @font-face 의 family 명과 맞물린다. */
 :root{
   --brand:#5e2bb8; --brand-vivid:#884bef; --brand-strong:#6b3edb; --brand-light:#efe7ff;
   --brand-border:#d3c2f0;
