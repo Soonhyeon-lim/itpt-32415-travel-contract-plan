@@ -2,7 +2,7 @@
     <div class="scr" id="sc02">
       <div class="scr-head">
         <div class="top"><span class="scid">SC-02</span><span class="scnm">여행계약서 조회·동의</span><span class="tgt">닷컴 Vue · 고객</span></div>
-        <div class="path">SC-01 조회 성공 → 예약 상세 → 여행계약서 팝업 / 앱 딥링크 / 마이페이지 예약내역 → 예약 상세<br><span style="color:var(--brand-strong);font-weight:700">※ 교부상태 <code>미교부</code>면 예약 상세 진입 시 이 팝업이 자동 노출(현행) → 노출 시점에 BE가 <code>교부완료</code>로 전환</span></div>
+        <div class="path">SC-01 조회 성공 → 예약 상세 → 여행계약서 팝업 / 앱 딥링크 / 마이페이지 예약내역 → 예약 상세<br><span style="color:var(--brand-strong)">※ 교부상태 <code>미교부</code>면 예약 상세 진입 시 이 팝업이 자동 노출(현행) → 노출 시점에 BE가 <code>교부완료</code>로 전환</span></div>
       </div>
       <div class="scr-body">
         <div class="view">
@@ -54,16 +54,16 @@
             </div><!-- /ct-panel changes -->
             </div><!-- /rs-phone-body -->
           </div><!-- /rs-phone -->
-          <div class="swap">실화면 · mqatour 모바일 계약서 (디바이스 뷰) · 개인정보 마스킹 — <b style="color:var(--brand)">탭을 클릭하면 전환됩니다</b>. 변경점이 없으면 탭 자체가 노출되지 않고 현행 UI 그대로.</div>
+          <div class="swap">실화면 · 개인정보 마스킹 — <b style="color:var(--brand)">탭을 클릭하면 전환됩니다</b></div>
         </div>
         <div class="desc">
           <h4>DESCRIPTION</h4>
-          <div class="d-item"><div class="d-num chg">1</div><div class="d-body"><div class="t">상단 차수 문구 <span class="new">개선 ①</span></div><p>발송 유형별 3종(기획서 › 기존 로직 점검 <b>AS-02</b>): <b>[1차]</b> 예고 / <b>[N차·D-2 확정]</b> "출발 확정" / <b>[N차·재교부]</b> <b>[변경 내역] 탭 유도</b></p><p class="arw"><b>상단에는 변경 항목·사유를 나열 X</b> — 무엇이 바뀌었는지는 변경 내역 탭에서 확인</p><p class="arw">유형 구분 = 사유 값(내부 판별용) · 직전 교부 이력 없는 첫 발송(seq≥2)은 "다시" 제외한 1차형.</p></div></div>
-          <div class="d-item"><div class="d-num chg">2</div><div class="d-body"><div class="t">변경 내역 탭 <span class="new">개선 ②</span></div><p><b>조건부 노출</b> — 직전 차수 대비 변경점이 <b>있을 때만</b> [계약서 / 변경 내역] 탭이 생기고, <b>변경점이 없으면 탭 없이 현행 UI 그대로</b>. 탭 라벨에 <b>건수는 표시 X </b></p><p>표 구성 = <b>No / 변경 항목 / 이전 내용 / 변경 내용</b> 4열. <b>이전 값은 회색, 변경 값은 브랜드 컬러</b>로 대비</p><p class="arw">상단 문구(유도) → 변경 내역 탭(전 건)의 2단 구성 — “왜 또 왔나”는 문구로, “무엇이 바뀌었나”는 <b>표에서만</b> 확인.</p><p class="arw">표 데이터 = 「개선 로직」<b>LG-01</b> N차·N-1차 비교 결과를 <b>요약 없이 전 건</b> 그대로 렌더 (별도 집계 없음).</p></div></div>
-          <div class="d-item"><div class="d-num chg">3</div><div class="d-body"><div class="t">개인추가경비 합산 금액 <span class="new">개선 ③</span></div><p style="margin:0 0 3px"><b>1. 총 N인 경비총액 N원</b></p><p class="arw">예약코드 기준, <b>모든 인원 N명</b> 표기</p><p class="arw">예약코드 기준, 모든 인원 각각 <b>[상품가 및 변동 금액] 전체 합산 금액</b> 노출</p><p style="margin:7px 0 3px"><b>2. 1인 여행경비 N원</b></p><p class="arw">예약을 조회한 <b>여행자 순번 1인</b>에 대한 여행경비(<b>순매출액 = 판매상품가 + 변동가</b>) 노출 → 즉 <b>여행자 1인 기준 총액</b></p><p style="margin:7px 0 3px"><b>3. 개인추가경비 N원</b></p><p class="arw">예약을 조회한 <b>여행자 순번 1인</b>에 대한 <b>변동금액</b> 노출(<b>변동금액 Only</b>)</p><p class="arw" style="margin-top:7px">음수 허용(할인만 있을 때) · <b>노출 조건은 금액이 아니라 건수</b> — 변동 항목 <b>0건이면 미노출</b>, <b>1건 이상이면 합산 0원이어도 <code>개인추가경비 0원</code> 노출</b>(선택관광+매출할인 상계 케이스) · 세부명·건수 미노출.</p></div></div>
+          <div class="d-item"><div class="d-num chg">1</div><div class="d-body"><div class="t">상단 차수 문구 <span class="new">개선 ①</span></div><p>발송 유형별 3종(기획서 › 기존 로직 점검 AS-02): <b>[1차]</b> 예고 / <b>[N차·D-2 확정]</b> "출발 확정" / <b>[N차·재교부]</b> [변경 내역] 탭 유도</p><p class="arw"><b>상단에는 변경 항목·사유를 나열 X</b> — 무엇이 바뀌었는지는 변경 내역 탭에서 확인</p><p class="arw">유형 구분 = 사유 값(내부 판별용) · 직전 교부 이력 없는 첫 발송(seq≥2)은 "다시" 제외한 1차형.</p></div></div>
+          <div class="d-item"><div class="d-num chg">2</div><div class="d-body"><div class="t">변경 내역 탭 <span class="new">개선 ②</span></div><p><b>조건부 노출</b> — 직전 차수 대비 변경점이 있을 때만 [계약서 / 변경 내역] 탭이 생기고, <b>변경점이 없으면 탭 없이 현행 UI 그대로</b>. 탭 라벨에 건수는 표시 X</p><p>표 구성 = <b>No / 변경 항목 / 이전 내용 / 변경 내용</b> 4열. 이전 값은 회색, 변경 값은 브랜드 컬러로 대비</p><p class="arw">상단 문구(유도) → 변경 내역 탭(전 건)의 2단 구성 — “왜 또 왔나”는 문구로, “무엇이 바뀌었나”는 <b>표에서만</b> 확인.</p><p class="arw">표 데이터 = 「개선 로직」LG-01 N차·N-1차 비교 결과를 <b>요약 없이 전 건</b> 그대로 렌더 (별도 집계 없음).</p></div></div>
+          <div class="d-item"><div class="d-num chg">3</div><div class="d-body"><div class="t">개인추가경비 합산 금액 <span class="new">개선 ③</span></div><p style="margin:0 0 3px"><b>1. 총 N인 경비총액 N원</b></p><p class="arw">예약코드 기준, 모든 인원 N명 표기</p><p class="arw">예약코드 기준, 모든 인원 각각 [상품가 및 변동 금액] 전체 합산 금액 노출</p><p style="margin:7px 0 3px"><b>2. 1인 여행경비 N원</b></p><p class="arw">예약을 조회한 여행자 순번 1인에 대한 여행경비(<b>순매출액 = 판매상품가 + 변동가</b>) 노출 → 즉 여행자 1인 기준 총액</p><p style="margin:7px 0 3px"><b>3. 개인추가경비 N원</b></p><p class="arw">예약을 조회한 여행자 순번 1인에 대한 변동금액 노출(<b>변동금액 Only</b>)</p><p class="arw" style="margin-top:7px">음수 허용(할인만 있을 때) · <b>노출 조건은 금액이 아니라 건수</b> — 변동 항목 0건이면 미노출, 1건 이상이면 합산 0원이어도 <code>개인추가경비 0원</code> 노출(선택관광+매출할인 상계 케이스) · 세부명·건수 미노출.</p></div></div>
           <div class="d-item"><div class="d-num chg">4</div><div class="d-body"><div class="t">일정표 선택관광·쇼핑 표기 <span class="new">개선 ④</span></div><p>일정표에 선택관광·쇼핑을 단순 표기(상세 미표기) — 교통·숙박·식사와 같은 "일정표 표시" 방식.</p></div></div>
           <div class="d-item"><div class="d-num">5</div><div class="d-body"><div class="t">약관 동의 영역 (현행 유지)</div><p>전체 약관 동의 체크 + 표준/특별약관 동의 라디오 + 개인정보 수집·이용 동의. 동의는 <b>차수 단위</b>(D-2 갱신 차수 = 최종본 기준).</p></div></div>
-          <div class="d-item"><div class="d-num dot">–</div><div class="d-body"><div class="t">데이터 · API</div><div class="d-meta">계약 상세 <code>getPkgTustCndmDtlInfo</code> · 약관 <code>getPkgStpl</code> · 차수 <code>trvlCndmSeq</code> · <b>변경 내역 = API 신규 필드</b>(BE가 교부 시점에 N차·N-1차 비교·저장한 결과 — FE 비교 없음, 2026-07-20 갱신). <b>변동항목별 금액 집계 소스는 개발 확인 1순위</b>(<code>flxb*</code>는 금액 없는 플래그).</div></div></div>
+          <div class="d-item"><div class="d-num dot">–</div><div class="d-body"><div class="t">데이터 · API</div><div class="d-meta">계약 상세 <code>getPkgTustCndmDtlInfo</code> · 약관 <code>getPkgStpl</code> · 차수 <code>trvlCndmSeq</code> · <b>변경 내역 = API 신규 필드</b>(LG-01) · 변동항목별 금액 집계 소스는 개발 확인 1순위(LG-04)</div></div></div>
         </div>
       </div>
     </div>

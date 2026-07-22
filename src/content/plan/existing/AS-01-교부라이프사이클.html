@@ -2,22 +2,22 @@
 <section id="ref1">
   <span class="sec-num">AS-01</span>
   <h2>여행계약서 교부 라이프사이클</h2>
-  <p class="sub">최초 교부 → D-2 확정 교부 → 재교부(조건부)까지, 한 예약에서 계약서가 몇 번 어떻게 나가는가.<br><span style="font-size:12.5px"><b>교부상태</b> = 고객의 <b>열람 여부</b>(미교부 / 교부완료) — <b>동의와는 별개 상태값</b>이다.</span></p>
+  <p class="sub">최초 교부 → D-2 확정 교부 → 재교부(조건부)까지, 한 예약에서 계약서가 몇 번 어떻게 나가는가.<br><span style="font-size:12.5px"><b>교부상태</b> = 고객의 열람 여부(미교부 / 교부완료) — <b>동의와는 별개 상태값</b>.</span></p>
 
   <div class="callout brand">
     <div class="ct">변경 사항 없음. 기존 로직 유지</div>
     <ul class="tight" style="font-size:13.5px;margin:0">
-      <li><b>①</b> 지상·항공 <b>OK/OK</b> 전환 시 <b>최초(1차) 교부</b></li>
+      <li><b>①</b> 지상·항공 OK/OK 전환 시 <b>최초(1차) 교부</b></li>
       <li><b>②</b> 변경이 없어도 <b>출발 D-2에 2차 교부</b> — 확정 계약서(단, 이후에도 변경될 수 있음)</li>
-      <li><b>③</b> 재교부 요건(항목 변경) 발생 시 <b>N+1차 교부</b> — <b style="color:var(--brand)">단, 고객이 직전 차수를 열람(교부완료)한 경우에만</b></li>
-      <li><b>④</b> <b style="color:var(--brand)">교부상태가 <code>미교부</code>이면, 고객이 예약내역(예약 상세)에 진입하는 순간 여행계약서가 <b>자동으로 팝업 노출</b></b> — 고객이 따로 버튼을 누르지 않는다. 그렇게 계약서가 호출·노출되면 <b>BE에서 <code>미교부 → 교부완료</code>로 상태 전환</b>된다. <span style="color:var(--mute)">(현행 로직 — 이번 개편에서 바꾸지 않음)</span></li>
+      <li><b>③</b> 재교부 요건(항목 변경) 발생 시 N+1차 교부 — <b style="color:var(--brand)">단, 고객이 직전 차수를 열람(교부완료)한 경우에만</b></li>
+      <li><b>④</b> <span style="color:var(--brand)">교부상태가 <code>미교부</code>이면, 고객이 예약내역(예약 상세)에 진입하는 순간 여행계약서가 자동으로 팝업 노출</span> — 고객이 따로 버튼을 누르지 않음. 그렇게 계약서가 호출·노출되면 BE에서 <code>미교부 → 교부완료</code>로 <b>상태 전환</b>.</li>
     </ul>
   </div>
 
   <div class="callout warn">
     <div class="ct">⚠ ④가 이번 개편에 갖는 의미 — 비교 트리거의 실체</div>
-    <p style="margin:0"><b>LG-01</b>의 비교 트리거인 <code>미교부 → 교부완료</code> 전환은, 실제로는 <b>고객이 예약내역에 들어와 계약서 팝업이 자동으로 뜨는 순간</b>이다. 즉 <b>고객의 능동적 클릭이 아니라 페이지 진입만으로 발동</b>한다.<br>
-    → 비교가 <b>예약내역 진입 응답 경로에 얹히므로</b>, 동기 수행 시 <b>계약서 팝업이 뜨는 속도에 직접 영향</b>을 준다. <b>비동기(계약서 먼저 표시 · 변경 내역 탭만 로딩)</b> 검토가 필요한 이유가 여기에 있다(성능 실측 후 판단).</p>
+    <p style="margin:0">LG-01의 비교 트리거인 <code>미교부 → 교부완료</code> 전환은, 실제로는 고객이 예약내역에 들어와 계약서 팝업이 자동으로 뜨는 순간. 즉 <b>고객의 능동적 클릭이 아니라 페이지 진입만으로 발동</b>.<br>
+    → 비교가 예약내역 진입 응답 경로에 얹히므로, 동기 수행 시 계약서 팝업이 뜨는 속도에 직접 영향. <b>비동기(계약서 먼저 표시 · 변경 내역 탭만 로딩)</b> 검토가 필요한 이유(성능 실측 후 판단).</p>
   </div>
 
   <!-- ═ 통합 라이프사이클 다이어그램 ═ -->
@@ -37,9 +37,9 @@
     </div>
     <div class="branch"><span class="dn">WT 포함 ↓</span><div class="box">자동발송 제외 — OK/OK 전환 시 재진입</div></div>
 
-    <div class="lc-join">↓ <b>①~② 사이(그리고 D-2 이후에도) 언제든</b> 아래 흐름이 합류·반복된다</div>
+    <div class="lc-join">↓ <b>①~② 사이(그리고 D-2 이후에도) 언제든</b> 아래 흐름이 합류·반복</div>
 
-    <div class="flow-label" style="margin-top:4px"><span class="pill">STEP ③</span> 재교부 — 교부상태가 차수 증가를 가른다</div>
+    <div class="flow-label" style="margin-top:4px"><span class="pill">STEP ③</span> 재교부 — 교부상태가 차수 증가를 가름</div>
     <div class="spine" style="min-width:0">
       <div class="node plain"><div class="t">재교부 요건 발생</div><div class="s">상품·예약 정보 변경 / WT→OK 최초 1회</div></div>
       <span class="arr">›</span>
@@ -53,7 +53,7 @@
         <div class="band-hd"><span class="mb">교부완료</span>고객이 이미 열람함</div>
         <div class="band-flow" style="flex-direction:column;align-items:stretch;gap:8px">
           <div class="mnode"><div class="t">✓ N+1차 교부</div><div class="s">상단 [N차·변경사유] 문구</div></div>
-          <div class="mnode"><div class="t">신규 계약서 = 교부상태 <b>미교부</b>로 시작</div></div>
+          <div class="mnode"><div class="t">신규 계약서 = 교부상태 미교부로 시작</div></div>
         </div>
         <div class="band-note">고객이 열람한 스냅샷을 넘어선 변경 → <b>새 스냅샷(N+1차)으로 분리 보존</b>.</div>
       </div>
@@ -62,13 +62,13 @@
         <div class="band-hd" style="color:var(--mute)"><span class="mb" style="background:#999">미교부</span>고객이 아직 열람 안 함</div>
         <div class="band-flow" style="flex-direction:column;align-items:stretch;gap:8px">
           <div class="mnode" style="border-color:#ccc"><div class="t">✗ 교부하지 않음</div><div class="s">차수 N 유지 · 교부상태 미교부 유지</div></div>
-          <div class="mnode" style="border-color:#ccc"><div class="t">같은 차수에 내용만 갱신</div><div class="s">고객 열람 전까지 항목 수정 가능 · 재알림 없음<br><b>변경 내역 비교도 아직 안 함</b> — 고객 열람 시점에 1회 수행(「개선 로직」<b>LG-01</b>)</div></div>
+          <div class="mnode" style="border-color:#ccc"><div class="t">같은 차수에 내용만 갱신</div><div class="s">고객 열람 전까지 항목 수정 가능 · 재알림 없음<br><b>변경 내역 비교도 아직 안 함</b> — 고객 열람 시점에 1회 수행(「개선 로직」LG-01)</div></div>
         </div>
-        <div class="band-note" style="color:var(--mute)">아직 확정 스냅샷이 아닌 “작업 중 초안” — 요건이 <b>여러 번 바뀌어도 차수는 안 오른다</b>.</div>
+        <div class="band-note" style="color:var(--mute)">아직 확정 스냅샷이 아닌 “작업 중 초안” — 요건이 여러 번 바뀌어도 차수는 안 오름.</div>
       </div>
     </div>
 
-    <div class="lc-foot"><b>교부상태 = 고객의 열람 여부</b>(동의와는 별개 상태값). 차수는 <b>“재교부 요건이 몇 번 발생했나”</b>가 아니라 <b>“고객이 열람한 스냅샷을 몇 번 넘겼나”</b>로 센다. · 문구에 <b>“최종”이라는 단어 사용 지양</b>(D-2 이후에도 변경될 수 있음)</div>
+    <div class="lc-foot">차수는 “재교부 요건이 몇 번 발생했나”가 아니라 <b>“고객이 열람한 스냅샷을 몇 번 넘겼나”</b> 기준. · 문구에 <b>“최종”이라는 단어 사용 지양</b>(D-2 이후에도 변경될 수 있음)</div>
   </div>
 
   <h4>재교부 요건 (담당자 판단 기준)</h4>

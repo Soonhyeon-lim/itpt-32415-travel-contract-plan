@@ -6,7 +6,7 @@
 
   <div class="grid g3">
     <div class="card"><span class="tag warn">1 · 최우선</span><h4>금액 집계 소스</h4><p style="font-size:13px;margin:0">변동항목별 금액 — 계약서 API의 <code>flxb*</code>는 금액 없는 플래그(분석정리 6.6). 계약서 API 확장 vs 결제·예약 API 병행 호출 확인. <b style="color:var(--warn-ink)">금액 직결.</b></p></div>
-    <div class="card"><span class="tag warn">2</span><h4>변동 항목 <b>건수</b> 제공</h4><p style="font-size:13px;margin:0">노출 조건이 <b>금액이 아니라 건수</b>(0건이면 미노출 · 1건 이상이면 0원도 노출)로 확정됨 → 합산액과 <b>별개로 건수도 함께 내려와야</b> 0건과 0원을 구분할 수 있음. <code>flxb*</code>가 Y/N 플래그라 건수 산출은 오히려 쉬울 수 있음 — <b>1번과 함께 확인</b>.</p></div>
+    <div class="card"><span class="tag warn">2</span><h4>변동 항목 건수 제공</h4><p style="font-size:13px;margin:0">노출 조건이 <b>금액이 아니라 건수</b>(0건이면 미노출 · 1건 이상이면 0원도 노출)로 확정됨 → 합산액과 별개로 건수도 함께 내려와야 0건과 0원을 구분할 수 있음. <code>flxb*</code>가 Y/N 플래그라 건수 산출은 오히려 쉬울 수 있음 — 1번과 함께 확인.</p></div>
     <div class="card"><span class="tag warn">3</span><h4>닷컴 직접예약 D-2</h4><p style="font-size:13px;margin:0">닷컴 직접예약 건이 현행 D-2 발송에 포함되는지 확인 → 미포함이면 배치 반영. 요구사항은 확정.</p></div>
   </div>
   <div class="callout removed">
