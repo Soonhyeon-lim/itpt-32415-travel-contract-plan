@@ -11,3 +11,6 @@ dist/internal/
 _hist.html
 _h.png
 __pycache__/
+
+# Vercel CLI 링크 정보 (프로젝트 id·조직 id) — 로컬 전용
+.vercel/
