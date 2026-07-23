@@ -1003,11 +1003,31 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
     <div class="scr" id="sc01">
       <div class="scr-head">
         <div class="top"><span class="scid">SC-01</span><span class="scnm">여행계약서 조회 진입 페이지</span><span class="tgt">닷컴 웹 · 비회원</span></div>
-        <div class="path">알림톡 "여행계약서 확인" → (앱 미설치/세션 없음) → 로그인 페이지 → 비회원 → 본 화면</div>
+        <div class="path">알림톡 "여행계약서 확인" → 딥링크 분기 → <b style="color:var(--brand-strong)">① 앱 설치</b> : 앱 계약서 화면으로 이동(본 화면 미경유) / <b style="color:var(--brand-strong)">② 앱 미설치·PC</b> : 로그인 페이지 → 비회원 → <b>본 화면</b></div>
       </div>
       <div class="scr-body">
         <div class="view">
           <span class="cap">화면 VIEW</span>
+
+          <!-- 진입점 — 현행 알림톡 (양식 미변경) -->
+          <div style="width:400px;margin:0 auto 4px;font-size:11px;font-weight:800;color:var(--mute);letter-spacing:.02em">진입점 · 카카오 알림톡 <span style="font-weight:600;color:var(--faint)">(현행 양식 — 이번 개편 미변경)</span></div>
+          <div style="width:400px;margin:0 auto;background:#b2c7d9;border-radius:14px;padding:14px 12px;box-sizing:border-box">
+            <div style="background:#fff;border-radius:10px;padding:13px 14px;font-size:11.5px;line-height:1.62;color:#222;box-sizing:border-box">
+              <div style="font-weight:800;font-size:12.5px;margin-bottom:8px">[하나투어 여행계약서 및 관련 약관 동의]</div>
+              <p style="margin:0 0 9px">고객님께서 예약하신 상품의 여행계약서 및 관련 약관을 확인 후 동의해 주시기 바랍니다.</p>
+              <div style="font-weight:700;margin-bottom:2px">▶예약상품</div>
+              <p style="margin:0 0 9px">[상품명] <span style="background:#f3f0f9;color:var(--brand-strong);font-family:'SF Mono',Consolas,monospace;font-size:10.5px;padding:0 3px;border-radius:3px">${MAP4}</span><br>[예약번호] <span style="background:#f3f0f9;color:var(--brand-strong);font-family:'SF Mono',Consolas,monospace;font-size:10.5px;padding:0 3px;border-radius:3px">${MAP7}</span></p>
+              <div style="font-weight:700;margin-bottom:2px">※ 여행계약서 확인 방법</div>
+              <p style="margin:0 0 9px">① 하단의 ▶여행계약서 바로가기 링크 클릭<br>② 회원: 로그인 (아이디/비밀번호)<br>③ 비회원: 비회원 예약조회 (이름/예약번호/연락처)<br><span style="color:#666">- 고객님의 하나투어 회원정보와 예약 시 정보가 일치하지 않을 경우 예약 확인이 불가할 수 있습니다. 예약 확인이 되지 않을 경우 비회원 예약조회로 진행해 주십시오.</span></p>
+              <div style="font-weight:700;margin-bottom:2px">▶주의사항</div>
+              <p style="margin:0 0 9px;color:#666">- 발송되는 여행계약서 모두 여행자의 확인 및 동의가 필요합니다.<br>- 여행계약서는 여행자 본인의 정보로만 확인 및 동의를 할 수 있습니다.<br>- 여행계약서는 여행이 종료되는 귀국일까지 확인이 가능합니다.</p>
+              <div style="font-weight:700;margin-bottom:3px">▶ 여행계약서 바로가기</div>
+              <div style="border:1px solid #d3c2f0;background:#efe7ff;border-radius:7px;text-align:center;padding:8px 0;font-weight:800;color:#5e2bb8;margin-bottom:9px">여행계약서 확인 <span style="font-family:'SF Mono',Consolas,monospace;font-size:10px;font-weight:600">${MAP1}</span></div>
+              <div style="color:#666">▶ 여행계약서 자주찾는 질문<br>▶ 예약 담당자 <span style="background:#f3f0f9;color:var(--brand-strong);font-family:'SF Mono',Consolas,monospace;font-size:10.5px;padding:0 3px;border-radius:3px">${MAP3}</span></div>
+            </div>
+          </div>
+          <div style="width:400px;margin:8px auto 10px;text-align:center;font-size:11.5px;font-weight:700;color:var(--brand-strong);line-height:1.5">↓ 딥링크 <span style="font-weight:600;color:var(--mute)">— 앱 설치 시 앱 계약서 화면 / 미설치·PC는 로그인 페이지 → 비회원</span></div>
+
           <div class="phone">
             <div class="ph-note"></div>
             <div class="ph-top"><span class="bk">‹</span><span class="dyn">여행계약서 조회</span></div>
@@ -1024,6 +1044,7 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
         </div>
         <div class="desc">
           <h4>DESCRIPTION</h4>
+          <div class="d-item"><div class="d-num dot">–</div><div class="d-body"><div class="t">진입 경로 분기 (현행 유지)</div><p>알림톡 "여행계약서 확인" 클릭 시 <b>디바이스·로그인 상태로 분기</b> — 본 화면은 그중 <b>비회원 경로</b>에서만 노출.</p><p>· <b>앱 설치 + 세션 유효</b> → 딥링크로 <b>앱 계약서 화면</b>(본 화면 미경유)<br>· <b>앱 설치 + 세션 만료</b> → 앱 로그인 페이지<br>· <b>앱 미설치 · PC 웹</b> → 로그인 페이지<br>· 로그인 후 <b>회원</b> → 마이페이지 → 계약서<br>· <b>비회원</b> → <b>본 화면</b>(예약코드 파라미터 전달)</p><p class="arw">전부 현행 — ITPT-24104로 기조치. 이번 개편에서 라우팅은 바꾸지 않고 <b>도착 화면의 타이틀·탭만</b> 손댐(아래 1번).</p><p style="font-size:12px;color:var(--mute)">예외 : <code>reservationId</code> 만료 시 "예약 조회 시간이 만료되었습니다" 안내 + 재조회 경로 제공.</p></div></div>
           <div class="d-item"><div class="d-num chg">1</div><div class="d-body"><div class="t"><span class="mini warn">검토 필요</span>동적 타이틀 · 패키지 탭 단독 <span class="new">개선 항목 ⑤</span></div><p><b>① 타이틀</b> — 여행계약서 딥링크로 진입한 경우 상단 타이틀을 <b>"여행계약서 조회"</b>로 표기(기본 "비회원 예약조회"에서 전환).</p><p><b>② 상품 탭</b> — 여행계약서는 패키지 상품만 해당하므로 <b>호텔·항공 탭은 노출하지 않고 패키지 탭만</b> 사용.</p><p class="arw">페이지 카피 아님 — 비회원 예약조회 페이지 재사용, <code>redirectUri</code> 컨텍스트를 읽어 <b>타이틀·탭 구성을 함께 분기</b>(이중 유지보수 회피).</p><p class="arw" style="color:var(--warn-ink)">⚠ 개발팀 검토 필요 — 컨텍스트 읽어 동적 전환하는 방식보다, <b>여행계약서 전용 진입 페이지(정적 shell)</b>를 별도로 두는 편이 구현 효율적일 수 있음. 착수 전 협의 대상.</p></div></div>
           <div class="d-item"><div class="d-num">2</div><div class="d-body"><div class="t">예약번호 자동주입</div><p>딥링크 파라미터(<code>resCd</code>)로 예약번호 자동 채움 → 고객은 <b>이름 + 휴대폰번호</b>만 입력. 세션 만료 우회 경로에서도 유지(ITPT-24104).</p></div></div>
           <div class="d-item"><div class="d-num">3</div><div class="d-body"><div class="t">조회 방식</div><p>연락처로 조회 / 이메일로 조회 라디오. 예약 시 제공한 <b>여행자 본인</b> 정보 입력(예약자 ≠ 여행자 주의).</p></div></div>
