@@ -73,6 +73,22 @@ def apply_meta(text, meta):
     return PLACEHOLDER_RE.sub(lambda m: str(meta[m.group(1)]), text)
 
 
+# 버전 배지 — 그 판에서 새로 들어온 요소에만 표시한다.
+#   <span class="ver-new" data-ver="1.1">v1.1</span>
+# 빌드가 현재 판(meta.version)과 data-ver 를 대조해, 다르면 배지를 통째로 지운다.
+# release.py 가 판마다 meta.version 을 주입하므로:
+#   v1.1 스냅샷 → data-ver="1.1" 배지 표시 / v1.0·v1.2 스냅샷 → 자동 제거.
+# 덕분에 판을 올려도 옛 배지를 손으로 뗄 필요가 없다(마커는 소스에 영구히 둔다).
+VER_BADGE_RE = re.compile(r'<span class="ver-new" data-ver="([^"]+)">.*?</span>', re.S)
+
+
+def apply_version_badges(text, meta):
+    cur = str(meta.get("version", ""))
+    def keep(m):
+        return m.group(0) if m.group(1) == cur else ""
+    return VER_BADGE_RE.sub(keep, text)
+
+
 TAG_RE = re.compile(r'<[^>]+>')
 BLOCK_RE = re.compile(r'(?is)<(script|style)\b.*?</\1>')
 ATTR_RE = re.compile(r'(?:title|alt|placeholder|aria-label)\s*=\s*"([^"]*)"', re.I)
@@ -107,6 +123,7 @@ def build(target=None):
     meta = load_meta()
     entry = os.path.join(SRC, "index.html")
     out = apply_meta(expand(read(entry), ["index.html"]), meta)
+    out = apply_version_badges(out, meta)   # 현재 판 것만 남기고 나머지 버전 배지는 제거
     if target is None:
         target = "internal"
 

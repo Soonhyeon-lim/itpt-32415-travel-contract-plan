@@ -228,6 +228,10 @@ td .mono{font-family:"SF Mono",Consolas,monospace;font-size:12px;color:var(--bra
 .mini{font-size:11px;font-weight:700;padding:2px 7px;border-radius:5px;background:var(--brand-light);color:var(--brand)}
 .mini.n{background:#f1f1f3;color:var(--mute)}
 .mini.warn{background:var(--warn-bg);color:var(--warn-ink);margin-right:6px}
+/* 버전 배지 — 그 판에서 새로 들어온 요소 표시. 개선 배지(캠페인 핑크)와 구분되게 정보성 파랑.
+   빌드(build.py)가 현재 판이 아닌 data-ver 는 통째로 지운다. */
+.ver-new{display:inline-block;font-size:10px;font-weight:800;color:#fff;background:var(--info);
+  padding:1px 6px;border-radius:5px;margin-left:6px;vertical-align:1px;letter-spacing:.02em;white-space:nowrap}
 .two-col{columns:2;column-gap:32px}
 
 /* ── Topbar / Tabs ── */
@@ -1053,7 +1057,7 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
 
             <!-- ① 진입점 — 카카오 알림톡 (현행 양식, 이번 개편 미변경) -->
             <div class="step">
-              <div class="lbl">① 진입점 · 카카오 알림톡 <span style="font-weight:600">— 알림톡 발송 실패 시 SMS 발송 처리</span></div>
+              <div class="lbl">① 진입점 · 카카오 알림톡 <span class="ver-new" data-ver="1.1">v1.1 신규</span> <span style="font-weight:600">— 알림톡 발송 실패 시 SMS 발송 처리</span></div>
               <div class="phone">
                 <div class="ph-note"></div>
                 <div class="kt-stat"><span>9:07</span><span class="r">▪▪▪ ◗ ▮</span></div>
