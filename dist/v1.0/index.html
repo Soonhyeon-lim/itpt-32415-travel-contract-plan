@@ -1221,19 +1221,56 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
 
 <!-- ═══════════ 히스토리 탭 ═══════════ -->
 <div class="tab-panel" id="panel-history" hidden>
+  <!-- 이 탭은 버전 스냅샷의 예외다 — 어느 판을 열든 전체 히스토리가 보여야 판끼리 오갈 수 있다.
+       release.py 가 옛 태그를 빌드할 때도 이 파일(history.html)만은 최신본으로 주입한다.
+       그래서 스타일을 CSS 파일이 아니라 여기 인라인으로 둔다 — 옛 시점 CSS 엔 이 규칙이 없기 때문. -->
+  <style>
+    ul.chglog{list-style:none;margin:0;padding:0}
+    ul.chglog>li{padding-left:0;margin-bottom:9px;color:var(--text);font-weight:600}
+    ul.chglog>li::before{display:none}
+    ul.chglog>li:last-child{margin-bottom:0}
+    ul.chglog .sc{display:inline-block;font-family:"SF Mono",Consolas,monospace;font-size:12px;font-weight:700;
+      color:var(--brand-strong);background:var(--brand-light);border-radius:5px;padding:1px 7px;margin-right:5px}
+    ul.chglog ul{list-style:none;margin:6px 0 0;padding:0}
+    ul.chglog ul li{position:relative;padding-left:15px;margin-bottom:4px;color:var(--soft);font-weight:400;font-size:12.5px;line-height:1.55}
+    ul.chglog ul li::before{content:"";position:absolute;left:3px;top:8px;width:4px;height:4px;border-radius:50%;background:var(--brand-vivid)}
+    ul.chglog li.nochg{font-weight:400;color:var(--mute);font-size:12.5px}
+    ul.chglog li.nochg::before{content:"\00B7";display:inline;position:static;background:none;margin-right:3px;color:var(--mute)}
+  </style>
   <div style="max-width:1128px;margin:0 auto">
     <section>
       <span class="sec-num">HISTORY</span>
       <h2>버전 히스토리</h2>
+      <p style="margin:0 0 14px;font-size:13px;color:var(--soft)">지금 보고 계신 판 <b style="color:var(--brand-strong)">v1.0</b> · 다른 판으로 이동하려면 아래 표의 버전을 클릭하세요.</p>
       <div class="tbl-wrap">
         <table>
           <thead><tr><th style="width:110px">버전</th><th>변경내용</th><th style="width:130px">변경일자</th></tr></thead>
           <tbody>
-            <!-- 판이 늘면 최신 판을 맨 위에 추가하고, 지난 판의 버전 칸은 링크로 바꾼다.
-                 예)  <td><a href="../v1.0/index.html"><b>v1.0</b></a></td>
-                 모든 판이 dist/vX.Y/ 아래 있으므로 ../vX.Y/ 상대경로가
-                 웹서버에서도 file:// 에서도 똑같이 동작한다. -->
-            <tr><td><b>v1.0</b> <span style="font-size:11px;color:var(--mute);font-weight:600">(현재 판)</span></td><td><b>초판</b> — 여행계약서 개편 범위·정책·구현 로직·화면정의 확정. 개선 항목 5종(차수·변경 내역 표기 / 개인추가경비 합산 / 일정표 선택관광·쇼핑 표기 / 하나허브 교부내역 표시 / 조회 진입 페이지), 변경 내역 비교는 백엔드에서 교부 시점에 1회 산출·저장.</td><td>2026-07-21</td></tr>
+            <!-- 판이 늘면 최신 판을 맨 위에 추가한다. 모든 판의 버전 칸은 ../vX.Y/ 링크로 둔다
+                 — 어느 판을 열든 다른 판으로 오갈 수 있어야 하기 때문. "지금 보는 판"은 위의
+                 배너가 1.0 으로 알려준다(빌드가 판마다 주입).
+                 모든 판이 dist/vX.Y/ 아래 있어 ../vX.Y/ 상대경로가 웹서버·file:// 양쪽에서 동작.
+                 ⚠️ 변경내용은 대외 공개 문서다 — 사내 리뷰 코드·내부 이슈 번호를 쓰지 않는다. -->
+            <tr><td><a href="../v1.1/index.html"><b>v1.1</b></a></td>
+              <td><ul class="chglog">
+                <li><span class="sc">[SC-01]</span> 진입 경로 보강
+                  <ul>
+                    <li>진입점(카카오 알림톡) 화면 추가</li>
+                    <li>딥링크 분기 표기 — 앱 설치 시 앱 계약서 화면 / 미설치·PC는 조회 화면</li>
+                    <li>알림톡 발송 실패 시 SMS 발송 처리 명기</li>
+                  </ul>
+                </li>
+                <li class="nochg">정책·개선 항목 변경 없음</li>
+              </ul></td><td>2026-07-23</td></tr>
+            <tr><td><a href="../v1.0/index.html"><b>v1.0</b></a></td>
+              <td><ul class="chglog">
+                <li><span class="sc">[초판]</span> 여행계약서 개편 범위·정책·구현 로직·화면정의 확정
+                  <ul>
+                    <li>개선 항목 5종 — 차수·변경 내역 표기 / 개인추가경비 합산 / 일정표 선택관광·쇼핑 표기 / 하나허브 교부내역 표시 / 조회 진입 페이지</li>
+                    <li>변경 내역 비교는 백엔드에서 교부 시점에 1회 산출·저장</li>
+                  </ul>
+                </li>
+              </ul></td><td>2026-07-21</td></tr>
           </tbody>
         </table>
       </div>
