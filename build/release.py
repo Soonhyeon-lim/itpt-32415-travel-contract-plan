@@ -44,11 +44,22 @@ def tags():
     return [t for t in out.split("\n") if t.strip()]
 
 
+# 버전 스냅샷에서 예외로 두는 조각 — 그 시점 소스 대신 현재(HEAD 작업트리) 것으로 덮어쓴다.
+# 히스토리 탭은 어느 판을 열든 전체 목록이 보여야 판끼리 오갈 수 있으므로, 옛 판에도 최신 이력을
+# 주입한다. 스타일은 이 조각 안에 인라인으로 들어 있어 옛 시점 CSS 와 무관하게 함께 따라온다.
+LIVE_FRAGMENTS = [os.path.join("src", "content", "history.html")]
+
+
 def build_tag(tag):
     tmp = tempfile.mkdtemp(prefix="wt_")
     wt = os.path.join(tmp, "src")
     try:
         git("worktree", "add", "--detach", "--quiet", wt, tag)
+        for rel in LIVE_FRAGMENTS:
+            live = os.path.join(ROOT, rel)
+            dst = os.path.join(wt, rel)
+            if os.path.isfile(live) and os.path.isdir(os.path.dirname(dst)):
+                shutil.copyfile(live, dst)
         r = subprocess.run([sys.executable, os.path.join(wt, "build", "build.py")],
                            cwd=wt, capture_output=True, text=True,
                            encoding="utf-8", errors="replace", env=CHILD_ENV)
