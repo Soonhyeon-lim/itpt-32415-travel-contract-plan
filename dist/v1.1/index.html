@@ -497,7 +497,7 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
 <!-- ═══ TOC ═══ -->
 <nav class="toc">
   <div class="toc-brand"><span class="mark">H</span><b>여행계약서 개선 기획서</b></div>
-  <div class="toc-jira">ITPT-32415 · v1.1 · 2026-07-23</div>
+  <div class="toc-jira">ITPT-32415 · v1.1 · 2026-07-24</div>
   <div class="lnb-subtabs">
     <button class="subtab-btn lnb-subtab-btn active" data-subtab="content-improve">개선 항목<span class="cnt">5</span></button>
     <button class="subtab-btn lnb-subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
@@ -532,7 +532,7 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
     <span><b>지라</b> ITPT-32415</span>
     <span><b>버전</b> v1.1</span>
     <span><b>작성</b> 상품서비스기획팀</span>
-    <span><b>갱신</b> 2026-07-23</span>
+    <span><b>갱신</b> 2026-07-24</span>
   </div>
 </header>
 
@@ -1048,7 +1048,7 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
     <div class="scr" id="sc01">
       <div class="scr-head">
         <div class="top"><span class="scid">SC-01</span><span class="scnm">여행계약서 조회 진입 페이지</span><span class="tgt">닷컴 웹 · 비회원</span></div>
-        <div class="path">알림톡 "여행계약서 확인" → 딥링크 분기 → <b style="color:var(--brand-strong)">앱 설치</b> : 앱 계약서 화면(본 화면 미경유) / <b style="color:var(--brand-strong)">앱 미설치 · PC</b> : 로그인 페이지 → 비회원 → <b>본 화면</b></div>
+        <div class="path">알림톡 "여행계약서 확인" → 딥링크 분기 → <b style="color:var(--brand-strong)">앱(Session OK)</b> : 예약 조회 페이지로 이동 / <b style="color:var(--brand-strong)">앱(Session None) · PC/Mo-Web</b> : <b>여행계약서 조회 페이지</b>(본 화면)</div>
       </div>
       <div class="scr-body">
         <div class="view">
@@ -1090,7 +1090,7 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
               </div>
             </div>
 
-            <div class="jump"><span class="ar">→</span>딥링크<span class="sub">앱 설치 시 앱으로<br>미설치·PC는 이 화면</span></div>
+            <div class="jump"><span class="ar">→</span>딥링크<span class="sub">앱 세션 시 예약 조회<br>없거나·웹은 이 화면</span></div>
 
             <!-- ② 본 화면 -->
             <div class="step">
@@ -1346,12 +1346,12 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
                 <li><span class="sc">[SC-01]</span> 진입 경로 보강
                   <ul>
                     <li>진입점(카카오 알림톡) 화면 추가</li>
-                    <li>딥링크 분기 표기 — 앱 설치 시 앱 계약서 화면 / 미설치·PC는 조회 화면</li>
+                    <li>딥링크 분기 표기 — 앱(Session OK)은 예약 조회 페이지 / 앱(Session None)·PC/Mo-Web은 여행계약서 조회 페이지</li>
                     <li>알림톡 발송 실패 시 SMS 발송 처리 명기</li>
                   </ul>
                 </li>
                 <li class="nochg">정책·개선 항목 변경 없음</li>
-              </ul></td><td>2026-07-23</td></tr>
+              </ul></td><td>2026-07-24</td></tr>
             <tr><td><a href="../v1.0/index.html"><b>v1.0</b></a></td>
               <td><ul class="chglog">
                 <li><span class="sc">[초판]</span> 여행계약서 개편 범위·정책·구현 로직·화면정의 확정
