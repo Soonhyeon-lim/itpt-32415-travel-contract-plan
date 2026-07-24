@@ -10,12 +10,12 @@
         <tr style="background:#faf7ff"><td class="tc"><b>①</b></td><td><b>여행계약서 API</b> · <b>BE 비교 로직</b></td><td><b>변경 내역(비교 결과) 필드 추가</b> — 교부 시점에 BE가 N차·N-1차를 비교·저장, API는 <b>저장된 배열을 응답</b><br><span style="font-size:12px;color:var(--mute)">N-1차 원본을 내리는 것이 아님 · 닷컴·하나허브·파트너포탈이 같은 필드 공유(LG-01)</span></td><td class="tc">중</td></tr>
         <tr><td class="tc"><b>①</b></td><td>닷컴 Vue 계약서 팝업</td><td>상단 문구 블록 — <span class="mono">seq</span>·사유·교부이력 분기</td><td class="tc">소</td></tr>
         <tr><td class="tc"><b>①</b></td><td>닷컴 Vue 계약서 팝업</td><td><b>변경 내역 탭 신설</b> — 비교 결과 표 렌더(4열) · 0건이면 탭 미생성</td><td class="tc">소~중</td></tr>
-        <tr><td class="tc"><b>②</b></td><td>닷컴 Vue 계약서 팝업</td><td>개인추가경비 합산 줄 (변동항목 전체 + 매출할인, <b>0건일 때만</b> 미노출)</td><td class="tc">소</td></tr>
-        <tr><td class="tc"><b>③</b></td><td>닷컴 Vue 일정표</td><td>선택관광·쇼핑 단순 표기</td><td class="tc">소</td></tr>
+        <tr><td class="tc"><b>②</b></td><td>닷컴 Vue 계약서 팝업<br><span style="font-size:11.5px;color:var(--mute);font-weight:400">+ 하나허브 OZ Report</span></td><td>개인추가경비 합산 줄 (변동항목 전체 + 매출할인, <b>0건일 때만</b> 미노출)<br><span style="font-size:12px;color:var(--mute)">양 채널 공통 VO — OZ 양식 변경 없이 본문에 항목만 반영</span></td><td class="tc">소</td></tr>
+        <tr><td class="tc"><b>③</b></td><td>닷컴 Vue 일정표<br><span style="font-size:11.5px;color:var(--mute);font-weight:400">+ 하나허브 OZ Report</span></td><td>선택관광·쇼핑 단순 표기<br><span style="font-size:12px;color:var(--mute)">양 채널 공통 VO — OZ 양식 변경 없이 본문에 항목만 반영</span></td><td class="tc">소</td></tr>
         <tr><td class="tc"><b>④</b></td><td>하나허브 여행계약서 교부내역<br><span style="font-size:11.5px;color:var(--mute);font-weight:400">+ 파트너포탈(화면·API 공유)</span></td><td>개인추가경비 동일 합산값 표시 (②와 로직 공유) + <b>변경 내역 팝업</b>(①의 변경 내역 탭 재사용, 0건이면 진입점 미노출)<br><span style="font-size:12px;color:var(--mute)">파트너포탈은 같은 화면·API를 쓰므로 추가 구현 없이 동일 반영 — 노출 화면만 1곳 더</span></td><td class="tc">소~중</td></tr>
         <tr><td class="tc"><b>⑤</b></td><td>닷컴 웹 조회 페이지</td><td>여행계약서 딥링크 진입 시 <b>타이틀 동적 전환 + 패키지 탭 단독 노출</b> (페이지 재사용)</td><td class="tc">소</td></tr>
         <tr><td class="tc">확인</td><td>배치 (TMS)</td><td>닷컴 직접예약 D-2 발송 포함 (현행 확인 후)</td><td class="tc">확인/소</td></tr>
-        <tr style="background:#f6f6f8"><td class="tc">—</td><td style="color:var(--mute)">하나허브 OZ 문서 · 알림톡 템플릿</td><td style="color:var(--mute)">변경 없음</td><td class="tc" style="color:var(--mute)">—</td></tr>
+        <tr style="background:#f6f6f8"><td class="tc">—</td><td style="color:var(--mute)">알림톡 템플릿 · 하나허브 OZ 문서 <b>양식</b>(레이아웃)</td><td style="color:var(--mute)">변경 없음 <span style="font-size:11px">— OZ 계약서 본문엔 ②③ 항목만 반영</span></td><td class="tc" style="color:var(--mute)">—</td></tr>
       </tbody>
     </table>
   </div>
