@@ -910,14 +910,14 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
     <table>
       <thead><tr><th style="width:132px">구분</th><th>내용</th></tr></thead>
       <tbody>
-        <tr style="background:#f4f2f8"><td colspan="2" style="font-weight:800;color:var(--brand);font-size:12.5px;padding:8px 14px">■ 백엔드 내부 — 화면에 내려가지 않는 구간</td></tr>
+        <tr style="background:#f4f2f8"><td colspan="2" style="font-weight:800;color:var(--brand);font-size:12.5px;padding:8px 14px">■ Back-End</td></tr>
         <tr style="background:#faf7ff"><td><b>트리거</b></td><td>교부상태 <span class="mono">미교부 → 교부완료</span> 전환(= 고객 열람) 시 1회 비교. <b style="color:var(--brand-strong)">실제 발동</b> — 미교부 상태에서 예약 상세 진입 시 계약서 팝업이 자동 노출되고, 그 호출 시 BE가 교부완료로 전환(AS-01 ④). 페이지 진입만으로 발동, FE 통지 불필요.<br><span style="font-size:12px;color:var(--mute)">교부완료 = 열람, 동의와는 별개 상태값(AS-01)</span></td></tr>
         <tr><td><b>시점 근거</b></td><td>교부완료 전환 = 해당 차수 내용이 확정되는 순간. 미교부 구간은 비교하지 않음(내용이 계속 바뀜).</td></tr>
-        <tr><td><b>비교 입력</b></td><td>N차 · N-1차 여행계약서 전체 스냅샷 (BE 내부값, FE 미전달).</td></tr>
+        <tr><td><b>비교 입력</b></td><td>N차 · N-1차 여행계약서 <b>전체 데이터 비교</b> (BE 내부값, FE 미전달).</td></tr>
         <tr><td><b>처리</b></td><td>값이 달라진 <b>항목명 + 이전 값 + 변경 값</b> 추출.</td></tr>
         <tr><td><b>저장</b></td><td>변경 내역 배열을 해당 차수에 통째 저장(새 필드 늘어도 구조 변경 불요). 확정 후 재산출 없이 재사용.</td></tr>
 
-        <tr style="background:#f4f2f8"><td colspan="2" style="font-weight:800;color:var(--brand);font-size:12.5px;padding:8px 14px">■ API 응답 — 화면이 받는 것</td></tr>
+        <tr style="background:#f4f2f8"><td colspan="2" style="font-weight:800;color:var(--brand);font-size:12.5px;padding:8px 14px">■ API 응답</td></tr>
         <tr><td><b>응답 필드</b></td><td>기존 N차 계약서 내용 + <b style="color:var(--brand)">신규</b> 변경 내역 필드 <span style="color:var(--warn-ink)">(= 신규 개발)</span> · 닷컴·하나허브·파트너포탈 공유.</td></tr>
         <tr><td><b>화면 활용 (1)</b><br><span style="font-size:11.5px;color:var(--mute);font-weight:400">변경 내역 표</span></td><td>변경 내역 배열을 SC-02 탭 / SC-03 팝업에 그대로 렌더 — 요약·생략 없이 전 건(No는 렌더 시 부여).</td></tr>
         <tr><td><b>화면 활용 (2)</b><br><span style="font-size:11.5px;color:var(--mute);font-weight:400">탭 노출 여부</span></td><td>건수 0 / 1건 이상으로 분기 — 1건 이상 탭 생성 + “탭에서 확인해 주세요” 유도 문구, 0건 탭 미생성. 상단에 항목명·사유 미포함.</td></tr>
@@ -930,13 +930,13 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
     <div class="ct">🏷 착수 시 확정 필요</div>
     <p style="margin:0 0 6px"><b>① 저장 구조</b> — 보관 위치(차수 테이블 컬럼 vs 별도) + 1차(비교 대상 없음)일 때 값(빈 배열 / null).</p>
     <p style="margin:0 0 6px"><b>② 미교부 차수 조회</b> — 아직 열람 안 한 차수는 비교 결과 없음. 하나허브·파트너포탈 조회 시 처리(진입점 미노출 / “고객 미열람” 안내 / 실시간 비교).</p>
-    <p style="margin:0 0 6px"><b>③ 비교 정확도</b> — 정확도 기준 + 실패 시 fallback(문구 fallback + 표 미노출).</p>
+    <p style="margin:0 0 6px"><b>③ 비교 정확도</b> — <b>AI비교 vs Data-Field 비교</b> 방식 선택 + 정확도 기준 + 실패 시 fallback(문구 fallback + 표 미노출).</p>
     <p style="margin:0"><b>④ 상단 문구 원칙</b> — 고정 유도 문구, 항목명·사유 미포함. 결과는 변경 내역 표로만 전 건 노출.</p>
   </div>
 
   <div class="callout info">
     <div class="ct">◎ 착수 전 검토 사항 — 열람 응답 지연(latency)</div>
-    <p style="margin:0">트리거가 열람이라 비교가 계약서 여는 순간 발생 → 열람 자체가 느려질 수 있음. <b>검토안</b> — 동기 vs <b>비동기</b>(본문 먼저 표시, 변경 내역 탭만 로딩). <span style="color:var(--mute)">착수 전 필수 결정은 아니며 성능 실측 후 판단.</span></p>
+    <p style="margin:0">트리거가 열람이라 비교가 계약서 여는 순간 발생 → 열람 자체가 느려질 수 있음. <b>검토안</b> — 동기 vs <b>비동기</b>(본문 먼저 표시, 변경 내역 탭만 로딩). <span style="color:var(--mute)">→ 착수 전 검토, 비교 성능 실측 후 판단.</span></p>
   </div>
 </section>
 
