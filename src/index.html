@@ -34,8 +34,8 @@
   <div class="toc-jira">{{jira}} · v{{version}} · {{date}}</div>
   <div class="lnb-subtabs">
     <button class="subtab-btn lnb-subtab-btn active" data-subtab="content-improve">개선 항목<span class="cnt">5</span></button>
-    <button class="subtab-btn lnb-subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
     <button class="subtab-btn lnb-subtab-btn" data-subtab="content-existing">기존 로직<span class="cnt">2</span></button>
+    <button class="subtab-btn lnb-subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
   </div>
   <div class="toc-list" id="toclist-improve" data-for="content-improve">
   <a href="#imp1"><span class="n">IM-01</span>배경 · 목적</a>
@@ -44,15 +44,15 @@
   <a href="#imp4"><span class="n">IM-04</span>개선 항목 상세</a>
   <a href="#imp5"><span class="n">IM-05</span>기대 효과 · AC</a>
   </div>
+  <div class="toc-list" id="toclist-existing" data-for="content-existing" hidden>
+  <a href="#ref1"><span class="n">AS-01</span>교부 라이프사이클</a>
+  <a href="#ref2"><span class="n">AS-02</span>문구 · 차수 규칙</a>
+  </div>
   <div class="toc-list" id="toclist-logic" data-for="content-logic" hidden>
   <a href="#lgc1"><span class="n">LG-01</span>변경 내역 도출 로직</a>
   <a href="#lgc2"><span class="n">LG-02</span>항목별 구현 로직</a>
   <a href="#lgc3"><span class="n">LG-03</span>변경 지점</a>
   <a href="#lgc4"><span class="n">LG-04</span>개발 확인 3건</a>
-  </div>
-  <div class="toc-list" id="toclist-existing" data-for="content-existing" hidden>
-  <a href="#ref1"><span class="n">AS-01</span>교부 라이프사이클</a>
-  <a href="#ref2"><span class="n">AS-02</span>문구 · 차수 규칙</a>
   </div>
 </nav>
 
@@ -73,8 +73,8 @@
 <!-- ═══ 서브탭 ═══ -->
 <div class="subtab-bar">
   <button class="subtab-btn active" data-subtab="content-improve">개선 항목<span class="cnt">5</span></button>
-  <button class="subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
   <button class="subtab-btn" data-subtab="content-existing">기존 로직 점검<span class="cnt">2</span></button>
+  <button class="subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
 </div>
 
 <div class="subtab-panel" id="content-improve">
@@ -91,6 +91,14 @@
 
 </div><!-- /content-improve -->
 
+<div class="subtab-panel" id="content-existing" hidden>
+
+<!-- include: content/plan/existing/AS-01-교부라이프사이클.html -->
+
+<!-- include: content/plan/existing/AS-02-문구차수규칙.html -->
+
+</div><!-- /content-existing -->
+
 <div class="subtab-panel" id="content-logic" hidden>
 
 <!-- include: content/plan/logic/LG-01-변경내역도출로직.html -->
@@ -102,14 +110,6 @@
 <!-- include: content/plan/logic/LG-04-개발확인.html -->
 
 </div><!-- /content-logic -->
-
-<div class="subtab-panel" id="content-existing" hidden>
-
-<!-- include: content/plan/existing/AS-01-교부라이프사이클.html -->
-
-<!-- include: content/plan/existing/AS-02-문구차수규칙.html -->
-
-</div><!-- /content-existing -->
 
 </main>
 </div>
