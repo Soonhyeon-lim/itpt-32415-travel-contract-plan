@@ -500,8 +500,8 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
   <div class="toc-jira">ITPT-32415 · v1.1 · 2026-07-24</div>
   <div class="lnb-subtabs">
     <button class="subtab-btn lnb-subtab-btn active" data-subtab="content-improve">개선 항목<span class="cnt">5</span></button>
-    <button class="subtab-btn lnb-subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
     <button class="subtab-btn lnb-subtab-btn" data-subtab="content-existing">기존 로직<span class="cnt">2</span></button>
+    <button class="subtab-btn lnb-subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
   </div>
   <div class="toc-list" id="toclist-improve" data-for="content-improve">
   <a href="#imp1"><span class="n">IM-01</span>배경 · 목적</a>
@@ -510,15 +510,15 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
   <a href="#imp4"><span class="n">IM-04</span>개선 항목 상세</a>
   <a href="#imp5"><span class="n">IM-05</span>기대 효과 · AC</a>
   </div>
+  <div class="toc-list" id="toclist-existing" data-for="content-existing" hidden>
+  <a href="#ref1"><span class="n">AS-01</span>교부 라이프사이클</a>
+  <a href="#ref2"><span class="n">AS-02</span>문구 · 차수 규칙</a>
+  </div>
   <div class="toc-list" id="toclist-logic" data-for="content-logic" hidden>
   <a href="#lgc1"><span class="n">LG-01</span>변경 내역 도출 로직</a>
   <a href="#lgc2"><span class="n">LG-02</span>항목별 구현 로직</a>
   <a href="#lgc3"><span class="n">LG-03</span>변경 지점</a>
   <a href="#lgc4"><span class="n">LG-04</span>개발 확인 3건</a>
-  </div>
-  <div class="toc-list" id="toclist-existing" data-for="content-existing" hidden>
-  <a href="#ref1"><span class="n">AS-01</span>교부 라이프사이클</a>
-  <a href="#ref2"><span class="n">AS-02</span>문구 · 차수 규칙</a>
   </div>
 </nav>
 
@@ -539,8 +539,8 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
 <!-- ═══ 서브탭 ═══ -->
 <div class="subtab-bar">
   <button class="subtab-btn active" data-subtab="content-improve">개선 항목<span class="cnt">5</span></button>
-  <button class="subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
   <button class="subtab-btn" data-subtab="content-existing">기존 로직 점검<span class="cnt">2</span></button>
+  <button class="subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
 </div>
 
 <div class="subtab-panel" id="content-improve">
@@ -661,17 +661,17 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
     </div>
     <div class="sumbadge"><div class="b">전체<br>합산</div><div class="a">→</div></div>
     <div class="calc">
-      <div class="h">여행경비</div>
-      <div class="r"><span>상품가</span><span>437,800 원</span></div>
-      <div class="r hero"><span class="label">개인추가경비</span><span class="val">297,923 원</span></div>
-      <div class="r total"><span>1인 여행경비 총액</span><span>735,723 원</span></div>
-      <div class="eq">Σ<span style="font-size:.82em">전 인원</span>(상품가 + 개인추가경비) = 총 N인 경비 총액</div>
+      <div class="h">여행계약서 여행경비 표기 — 1인 예약 예시</div>
+      <div class="r"><span>총 1인 경비총액</span><span>774,400 원</span></div>
+      <div class="r"><span>1인 여행경비</span><span>774,400 원</span></div>
+      <div class="r hero"><span class="label">개인추가경비</span><span class="val">312,400 원</span></div>
+      <div class="eq">1인 여행경비(774,400) = 판매상품가(462,000) + 개인추가경비(312,400) — <b>이미 포함</b></div>
     </div>
   </div>
 
   <ul class="tight" style="font-size:13px">
     <li><b>매출할인 포함</b> — 마이너스 금액도 합산 → <b>Σ전 인원(상품가 + 개인추가경비) = 총 N인 경비 총액</b>. 매출 할인만 있으면 음수로 그대로 표기.</li>
-    <li><b>집계 단위 주의</b> — 총 N인 경비 총액 = 예약코드 전 인원 합 / 화면의 1인 여행경비·개인추가경비 = 조회한 개인 값. 2명 이상이면 <b>화면 두 줄을 더해도 총액이 되지 않음</b>(1명일 때만 일치) — 산술 검증은 전 인원 데이터 기준.</li>
+    <li><b>집계 단위 주의</b> — 총 N인 경비총액 = 예약코드 <b>전 인원 합</b> / 1인 여행경비·개인추가경비 = 조회한 <b>여행자 1인</b> 값. 1인 여행경비가 개인추가경비를 <b>이미 포함</b>하므로 두 줄을 더하면 중복이고, 인원 2명 이상이면 1인 여행경비 ≠ 총액(1명일 때만 일치) — 산술 검증은 전 인원 데이터 기준.</li>
     <li><b>노출 조건</b> — 변동 항목 0건일 때만 줄 미노출. 항목이 있으면 <b>합산 0원이어도</b> <code>개인추가경비 0원</code> 노출(예: 선택관광 + 매출할인 상계). 세부 상품명·건수는 표시 안 함(한 줄).</li>
   </ul>
 
@@ -696,7 +696,7 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
     <ul style="margin:0">
       <li><b>As-Is</b> — 알림톡 “여행계약서 확인”을 눌렀는데 (앱 없음/로그인 안 됨) 로그인 페이지를 거쳐 “비회원 예약조회” 화면으로 도착. 제목이 “예약조회”라 <b>“여기가 맞나?” 하고 이탈</b>(CS 1위 진입 장벽 잔여분).</li>
       <li><b>To-Be</b> — 계약서로 들어온 고객에게는 화면 제목을 <b>“여행계약서 조회”로 표시</b>, 패키지 상품만 해당하므로 호텔·항공 탭 없이 패키지 탭만 노출.</li>
-      <li><b>포인트 4가지</b> — ① 예약번호 자동 채움(고객은 이름·휴대폰만 입력) ② 계약서로 들어온 경우에만 제목·탭 전환 ③ 조회 성공 → <b>예약 상세로 이동</b>(계약서 팝업은 그 화면에서, 현행 그대로) ④ 비회원 전용(회원은 로그인 후 마이페이지).</li>
+      <li><b>포인트 3가지</b> — ① 예약번호 자동 채움(고객은 이름·휴대폰만 입력) ② 계약서로 들어온 경우에만 제목·탭 전환 ③ 조회 성공 → <b>예약 상세로 이동</b>(계약서 팝업은 그 화면에서, 현행 그대로).</li>
     </ul>
   </div>
 
@@ -731,217 +731,6 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
 </section>
 
 </div><!-- /content-improve -->
-
-<div class="subtab-panel" id="content-logic" hidden>
-
-<!-- ═══ 1. 변경 내역 도출 로직 ═══ -->
-<section id="lgc1">
-  <span class="sec-num">LG-01</span>
-  <h2>변경 내역 도출 로직 — N차 · N-1차 비교</h2>
-
-  <div class="callout brand">
-    <div class="ct">확정 — 비교 방식·주체 (개발팀 협의 2026-07-15 · 07-20)</div>
-    <p style="margin:0 0 6px"><b>비교 방식</b> — 필드별 diff 설계·저장 없음. N차·N-1차 <b>전체 데이터를 비교해 값이 달라진 항목만 추출</b>(새 필드 자동 포함).</p>
-    <p style="margin:0"><b>비교 주체</b> — <b>BE가 교부 시점에 1회 비교·저장</b>. 닷컴·하나허브·파트너포탈은 저장된 결과를 렌더만 → 3개 화면 항상 같은 값.</p>
-  </div>
-
-  <h3>데이터 조달 — API에 변경 내역 필드 추가</h3>
-  <div class="card">
-    <ul style="margin:0 0 8px">
-      <li><b>As-Is</b> — 현행 여행계약서 API는 N차(최신) 계약서 내용만 응답. 변경 내역을 받을 수단 없음.</li>
-      <li><b>To-Be</b> — 기존 응답은 그대로 두고 <b>“변경 내역” 필드 하나 추가</b>.</li>
-    </ul>
-    <div class="tbl-wrap" style="margin:0 0 8px">
-      <table>
-        <thead><tr><th style="width:110px">FE 수신</th><th style="width:80px">구분</th><th>내용</th></tr></thead>
-        <tbody>
-          <tr><td><b>계약서 내용</b></td><td class="tc"><span class="mini n">기존</span></td><td>N차(최신) 여행계약서 내용 — <b>현행 그대로</b></td></tr>
-          <tr style="background:#faf7ff"><td><b>변경 내역</b></td><td class="tc"><span class="mini">신규</span></td><td>BE가 미리 비교해둔 <b>결과 배열</b> — 항목당 [변경 항목 / 이전 내용 / 변경 내용]</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="margin:0;font-size:13px;color:var(--success);font-weight:600">→ N-1차 원본은 FE로 내려가지 않음. 화면은 받은 배열을 표로 렌더만 → 3개 화면 값 불일치 원천 차단.</p>
-  </div>
-
-  <h3>비교 로직 — 백엔드가 하는 일 · 화면이 받는 것</h3>
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th style="width:132px">구분</th><th>내용</th></tr></thead>
-      <tbody>
-        <tr style="background:#f4f2f8"><td colspan="2" style="font-weight:800;color:var(--brand);font-size:12.5px;padding:8px 14px">■ 백엔드 내부 — 화면에 내려가지 않는 구간</td></tr>
-        <tr><td><b>비교 주체</b></td><td>백엔드 — 화면(FE)은 비교하지 않음.</td></tr>
-        <tr style="background:#faf7ff"><td><b>트리거</b></td><td>교부상태 <span class="mono">미교부 → 교부완료</span> 전환(= 고객 열람) 시 1회 비교. <b style="color:var(--brand-strong)">실제 발동</b> — 미교부 상태에서 예약 상세 진입 시 계약서 팝업이 자동 노출되고, 그 호출 시 BE가 교부완료로 전환(AS-01 ④). 페이지 진입만으로 발동, FE 통지 불필요.<br><span style="font-size:12px;color:var(--mute)">교부완료 = 열람, 동의와는 별개 상태값(AS-01)</span></td></tr>
-        <tr><td><b>시점 근거</b></td><td>교부완료 전환 = 해당 차수 내용이 확정되는 순간. 미교부 구간은 비교하지 않음(내용이 계속 바뀜).</td></tr>
-        <tr><td><b>비교 입력</b></td><td>N차 · N-1차 여행계약서 전체 스냅샷 (BE 내부값, FE 미전달).</td></tr>
-        <tr><td><b>처리</b></td><td>값이 달라진 <b>항목명 + 이전 값 + 변경 값</b> 추출 (신규 작문 아님).</td></tr>
-        <tr><td><b>저장</b></td><td>변경 내역 배열을 해당 차수에 통째 저장(새 필드 늘어도 구조 변경 불요). 확정 후 재산출 없이 재사용.</td></tr>
-
-        <tr style="background:#f4f2f8"><td colspan="2" style="font-weight:800;color:var(--brand);font-size:12.5px;padding:8px 14px">■ API 응답 — 화면이 받는 것</td></tr>
-        <tr><td><b>응답 필드</b></td><td>기존 N차 계약서 내용 + <b style="color:var(--brand)">신규</b> 변경 내역 필드 <span style="color:var(--warn-ink)">(= 신규 개발)</span> · 닷컴·하나허브·파트너포탈 공유.</td></tr>
-        <tr><td><b>화면 활용 (1)</b><br><span style="font-size:11.5px;color:var(--mute);font-weight:400">변경 내역 표</span></td><td>변경 내역 배열을 SC-02 탭 / SC-03 팝업에 그대로 렌더 — 요약·생략 없이 전 건(No는 렌더 시 부여).</td></tr>
-        <tr><td><b>화면 활용 (2)</b><br><span style="font-size:11.5px;color:var(--mute);font-weight:400">탭 노출 여부</span></td><td>건수 0 / 1건 이상으로 분기 — 1건 이상 탭 생성 + “탭에서 확인해 주세요” 유도 문구, 0건 탭 미생성. 상단에 항목명·사유 미포함.</td></tr>
-        <tr><td><b>미적용 조건</b></td><td>1차(N-1차 없음) → 1차형 문구 · D-2 확정 교부 → “출발 확정 안내” 고정. 둘 다 변경 내역 0건 → 탭·팝업 미노출.</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="callout dev">
-    <div class="ct">🏷 착수 시 확정 필요</div>
-    <p style="margin:0 0 6px"><b>① 저장 구조</b> — 보관 위치(차수 테이블 컬럼 vs 별도) + 1차(비교 대상 없음)일 때 값(빈 배열 / null).</p>
-    <p style="margin:0 0 6px"><b>② 미교부 차수 조회</b> — 아직 열람 안 한 차수는 비교 결과 없음. 하나허브·파트너포탈 조회 시 처리(진입점 미노출 / “고객 미열람” 안내 / 실시간 비교).</p>
-    <p style="margin:0 0 6px"><b>③ 비교 정확도</b> — 정확도 기준 + 실패 시 fallback(문구 fallback + 표 미노출).</p>
-    <p style="margin:0"><b>④ 상단 문구 원칙</b> — 고정 유도 문구, 항목명·사유 미포함. 결과는 변경 내역 표로만 전 건 노출.</p>
-  </div>
-
-  <div class="callout info">
-    <div class="ct">◎ 추가 검토 — 열람 응답 지연(latency)</div>
-    <p style="margin:0">트리거가 열람이라 비교가 계약서 여는 순간 발생 → 열람 자체가 느려질 수 있음. <b>검토안</b> — 동기 vs <b>비동기</b>(본문 먼저 표시, 변경 내역 탭만 로딩). <span style="color:var(--mute)">착수 전 필수 결정은 아니며 성능 실측 후 판단.</span></p>
-  </div>
-</section>
-
-<!-- ═══ 2. 항목별 구현 로직 ═══ -->
-<section id="lgc2">
-  <span class="sec-num">LG-02</span>
-  <h2>항목별 구현 로직</h2>
-  <p class="sub">「개선 항목」IM-04의 ①~⑤와 같은 번호 — 각 항목을 무엇으로 구현하는가.</p>
-
-  <h3>① 계약서 차수·변경 내역 표기 <span class="mini">닷컴 Vue</span></h3>
-  <div class="card">
-    <ul style="margin:0 0 6px">
-      <li><b>차수 표기</b> — 이 계약서가 몇 번째로 발행된 것인지(1차·2차…)를 계약서 상단에 표시. 이미 계약서 데이터에 들어 있는 발행 순번을 그대로 사용.</li>
-      <li><b>변경 내역 데이터</b> — 여행 계약서가 새로 교부될 때, <b>N-1차 · N차 계약서를 비교</b>하여 달라진 항목만 추출·저장.</li>
-      <li><b>상단 안내 문구 3가지 Case</b> — <b>최초 교부 · D-2 교부 · 요건 변경 재교부</b> 세 케이스에 따라 상단 안내 문구를 다르게 처리.
-        <ul style="margin:6px 0 0">
-          <li style="font-size:13px">최초 교부 → “다시”를 뺀 1차형 문구</li>
-          <li style="font-size:13px">D-2 교부 → 출발 확정 안내 문구 (변경 내역 없음)</li>
-          <li style="font-size:13px">요건 변경 재교부 → “변경된 항목은 [변경 내역] 탭에서 확인해 주세요” 유도 문구</li>
-        </ul>
-      </li>
-      <li><b>변경 내역 탭</b> — 저장된 변경 내역을 표(변경 항목 / 이전 내용 / 변경 내용)로 전 항목 노출. 요약·생략 없음.</li>
-      <li><b>탭 노출 조건</b> — 변경 항목 0건이면 [변경 내역] 탭 미생성 → 현행 단일 화면 유지.</li>
-    </ul>
-    <p style="margin:0 0 4px;font-size:13px;color:var(--warn-ink)">⚠ 아직 정할 것 — 변경 내역은 시스템 내부 항목 단위로 나오므로, <b>고객에게 보여줄 항목 이름</b>(예: 상품명·여행기간·개인추가경비)과 <b>보여주지 않을 항목</b>을 따로 정해야 함.</p>
-    <div class="sub-block" style="margin-bottom:0">
-      <h4>관련 필드 · 데이터</h4>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th style="width:104px">쓰임</th><th style="width:150px">필드 / 값</th><th>설명</th></tr></thead>
-          <tbody>
-            <tr><td><b>차수</b></td><td><code>trvlCndmSeq</code></td><td>계약서 변경 순번 — 확인 완료</td></tr>
-            <tr><td><b>변경 내역</b></td><td>API 신규 필드</td><td>BE가 교부 시점에 N-1차·N차를 비교·저장한 결과 배열 · 항목당 [변경 항목 / 이전 내용 / 변경 내용] <span class="mini n">LG-01 화면 활용 (1)</span></td></tr>
-            <tr><td><b>유형 판별</b></td><td>사유 값 · <code>seq≥2</code></td><td>최초 / D-2 확정 / 요건 변경 판별 — 내부 판단용, 문구 비노출 <span class="mini n">LG-01 화면 활용 (2)</span></td></tr>
-            <tr><td><b>발송 유형</b></td><td>AS-02 매트릭스</td><td>3유형 — 상단 문구 분기 근거</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <p style="margin:10px 0 0;font-size:13px;color:var(--mute)">변경 내역 탭·상단 문구는 닷컴 Vue · 하나허브 상담용 변경 사유는 교부내역 메뉴(④)에서 확인. <b>OZ 계약서 양식은 미변경이나 개인추가경비·선택관광/쇼핑 항목(②③)은 OZ 본문에도 반영</b>.</p>
-  </div>
-
-  <h3>② 개인추가경비 합산 한 줄 <span class="mini">닷컴 Vue · 하나허브 OZ</span></h3>
-  <div class="card">
-    <ul style="margin:0 0 6px">
-      <li><b>합산 금액</b> — 상품가 외 변동 항목(항공·호텔·지상·기타 + 매출할인 마이너스)을 전부 합산해 “개인추가경비 N원” 한 줄로 표기. 음수 허용.</li>
-      <li><b>산술 검증</b> — <code>Σ전 인원(상품가 + 개인추가경비) = 총 N인 경비 총액</code> (예약코드 전 인원 합 기준).</li>
-      <li><b>노출 조건</b> — 변동 항목 건수 &gt; 0일 때만 노출(금액 기준 아님). 0건이면 미노출, 1건 이상이면 합산 0원이어도 <code>0원</code> 노출.</li>
-    </ul>
-    <p style="margin:0 0 4px;font-size:13px;color:var(--warn-ink)">⚠ 집계 소스 미확정 — 합산 소스를 계약서 API 확장으로 갈지 결제·예약 API 병행 호출로 갈지 확인 필요 → LG-04 개발 확인 ①(최우선).</p>
-    <div class="sub-block" style="margin-bottom:0">
-      <h4>관련 필드 · 데이터</h4>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th style="width:104px">쓰임</th><th style="width:150px">필드 / 값</th><th>설명</th></tr></thead>
-          <tbody>
-            <tr><td><b>변동 항목</b></td><td><code>flxb*</code></td><td>금액 없는 Y/N 체크 플래그 (분석정리 6.6) — 건수 산출 근거</td></tr>
-            <tr><td><b>집계 소스</b></td><td>미확정</td><td>계약서 API 확장 vs 결제·예약 API 병행 호출 → LG-04 개발 확인 ①</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <p style="margin:10px 0 0;font-size:13px;color:var(--mute)">닷컴 Vue·하나허브 OZ Report 모두 반영(공통 VO) — 양식 변경 없이 기존 여행경비 영역에 합산 줄 추가.</p>
-  </div>
-
-  <h3>③ 일정표 선택관광·쇼핑 단순 표기 <span class="mini">닷컴 Vue · 하나허브 OZ</span></h3>
-  <div class="card"><p style="margin:0">일정표 영역에 <b>선택관광·쇼핑</b>을 “일정표 표시” 방식으로 추가(교통·숙박·식사와 동일). 상세 미표기라 데이터 요구 적음.</p><p style="margin:6px 0 0;font-size:13px;color:var(--mute)">닷컴 Vue·하나허브 OZ Report 모두 반영(공통 VO, 양식 변경 없음).</p></div>
-
-  <h3>④ 하나허브 여행계약서 교부내역 — 합산값 · 변경 내역 <span class="mini">하나허브</span></h3>
-  <div class="card">
-    <ul style="margin:0 0 6px">
-      <li><b>합산값</b> — ②와 <b>동일한 합산 로직 공유</b>(값 일치 보장).</li>
-      <li><b>변경 내역 팝업</b> — LG-01에서 저장한 변경 내역을 조회해 표(변경 항목 / 이전 내용 / 변경 내용)로 렌더. 표 구성·항목명 매핑·노출 제외 규칙 전부 ①과 동일 적용, 하나허브에서 재비교 없음.</li>
-      <li><b>노출 조건</b> — 변경 결과 0건이면 팝업 진입점 미노출(고객 화면과 동일).</li>
-    </ul>
-    <p style="margin:0;font-size:13px;color:var(--mute)">하나허브 OZ 문서 양식은 미변경 — 여행계약서 교부내역 메뉴에만 표시 추가.</p>
-  </div>
-
-  <h3>⑤ 여행계약서 조회 진입 페이지 <span class="mini warn">검토 필요</span></h3>
-  <div class="card">
-    <ul style="margin:0 0 6px">
-      <li><b>재사용 방식</b> — 기존 비회원 예약조회 페이지를 재사용, 진입 컨텍스트를 읽어 <b>타이틀·상품 탭을 동적 전환</b>(페이지 신규 카피 아님).</li>
-      <li><b>승계 4조건</b> — ① 예약코드 자동주입 유지(이름+휴대폰, 세션 만료 경로 포함) ② 딥링크 컨텍스트로 타이틀 + 패키지 탭 단독(호텔·항공 탭 미노출) ③ 조회 성공 → 예약 상세로 이동(계약서 팝업은 예약 상세에서 노출 — 현행 흐름 유지) ④ 비회원 전용(회원은 로그인 → 마이페이지).</li>
-    </ul>
-    <p style="margin:0 0 4px;font-size:13px;color:var(--warn-ink)">⚠ 개발팀 검토 필요 — 컨텍스트로 타이틀만 바꾸는 방식보다 <b>여행계약서 전용 진입 페이지(정적 shell)</b>를 따로 두는 편이 구현 효율적일 수 있음. 착수 전 협의 대상.</p>
-    <div class="sub-block" style="margin-bottom:0">
-      <h4>관련 필드 · 데이터</h4>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th style="width:104px">쓰임</th><th style="width:150px">필드 / 값</th><th>설명</th></tr></thead>
-          <tbody>
-            <tr><td><b>진입 컨텍스트</b></td><td><code>redirectUri</code></td><td>타이틀·상품 탭 동적 전환 근거</td></tr>
-            <tr><td><b>설계 의도</b></td><td>이원화 회피</td><td>페이지 카피 시 divergence 리스크(분석정리 7.8) 회피</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <p style="margin:10px 0 0;font-size:13px;color:var(--mute)">로그인 페이지 하단 ‘비회원 예약조회’ 버튼 라벨은 공용이라 미변경(보류).</p>
-  </div>
-</section>
-
-<!-- ═══ 3. 변경 지점 ═══ -->
-<section id="lgc3">
-  <span class="sec-num">LG-03</span>
-  <h2>변경 지점 (개발 관점)</h2>
-  <p class="sub">건드리는 곳과 건드리지 않는 곳.</p>
-  <div class="tbl-wrap">
-    <table>
-      <thead><tr><th style="width:34px">#</th><th style="width:180px">시스템</th><th>변경 내용</th><th style="width:80px">규모</th></tr></thead>
-      <tbody>
-        <tr style="background:#faf7ff"><td class="tc"><b>①</b></td><td><b>여행계약서 API</b> · <b>BE 비교 로직</b></td><td><b>변경 내역(비교 결과) 필드 추가</b> — 교부 시점에 BE가 N차·N-1차를 비교·저장, API는 <b>저장된 배열을 응답</b><br><span style="font-size:12px;color:var(--mute)">N-1차 원본을 내리는 것이 아님 · 닷컴·하나허브·파트너포탈이 같은 필드 공유(LG-01)</span></td><td class="tc">중</td></tr>
-        <tr><td class="tc"><b>①</b></td><td>닷컴 Vue 계약서 팝업</td><td>상단 문구 블록 — <span class="mono">seq</span>·사유·교부이력 분기</td><td class="tc">소</td></tr>
-        <tr><td class="tc"><b>①</b></td><td>닷컴 Vue 계약서 팝업</td><td><b>변경 내역 탭 신설</b> — 비교 결과 표 렌더(4열) · 0건이면 탭 미생성</td><td class="tc">소~중</td></tr>
-        <tr><td class="tc"><b>②</b></td><td>닷컴 Vue 계약서 팝업<br><span style="font-size:11.5px;color:var(--mute);font-weight:400">+ 하나허브 OZ Report</span></td><td>개인추가경비 합산 줄 (변동항목 전체 + 매출할인, <b>0건일 때만</b> 미노출)<br><span style="font-size:12px;color:var(--mute)">양 채널 공통 VO — OZ 양식 변경 없이 본문에 항목만 반영</span></td><td class="tc">소</td></tr>
-        <tr><td class="tc"><b>③</b></td><td>닷컴 Vue 일정표<br><span style="font-size:11.5px;color:var(--mute);font-weight:400">+ 하나허브 OZ Report</span></td><td>선택관광·쇼핑 단순 표기<br><span style="font-size:12px;color:var(--mute)">양 채널 공통 VO — OZ 양식 변경 없이 본문에 항목만 반영</span></td><td class="tc">소</td></tr>
-        <tr><td class="tc"><b>④</b></td><td>하나허브 여행계약서 교부내역<br><span style="font-size:11.5px;color:var(--mute);font-weight:400">+ 파트너포탈(화면·API 공유)</span></td><td>개인추가경비 동일 합산값 표시 (②와 로직 공유) + <b>변경 내역 팝업</b>(①의 변경 내역 탭 재사용, 0건이면 진입점 미노출)<br><span style="font-size:12px;color:var(--mute)">파트너포탈은 같은 화면·API를 쓰므로 추가 구현 없이 동일 반영 — 노출 화면만 1곳 더</span></td><td class="tc">소~중</td></tr>
-        <tr><td class="tc"><b>⑤</b></td><td>닷컴 웹 조회 페이지</td><td>여행계약서 딥링크 진입 시 <b>타이틀 동적 전환 + 패키지 탭 단독 노출</b> (페이지 재사용)</td><td class="tc">소</td></tr>
-        <tr><td class="tc">확인</td><td>배치 (TMS)</td><td>닷컴 직접예약 D-2 발송 포함 (현행 확인 후)</td><td class="tc">확인/소</td></tr>
-        <tr style="background:#f6f6f8"><td class="tc">—</td><td style="color:var(--mute)">알림톡 템플릿 · 하나허브 OZ 문서 <b>양식</b>(레이아웃)</td><td style="color:var(--mute)">변경 없음 <span style="font-size:11px">— OZ 계약서 본문엔 ②③ 항목만 반영</span></td><td class="tc" style="color:var(--mute)">—</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p style="font-size:12.5px;color:var(--mute);margin:10px 0 0;line-height:1.7">
-    <b>확인 완료</b> — 차수(<code>trvlCndmSeq</code>) · D-2 차수 갱신(현행 동작)<br>
-    <b>신규 개발</b> — BE 비교 로직 + 여행계약서 API 변경 내역 필드(LG-01)<br>
-    <b>개발 확인</b> — 변동항목별 금액 집계 소스(LG-04)</p>
-</section>
-
-<!-- ═══ 4. 개발 확인 3건 ═══ -->
-<section id="lgc4">
-  <span class="sec-num">LG-04</span>
-  <h2>개발 확인 3건</h2>
-  <p class="sub">정책이 아니라 구현 확인 — 착수 블로커 없음.</p>
-
-  <div class="grid g3">
-    <div class="card"><span class="tag warn">1 · 최우선</span><h4>금액 집계 소스</h4><p style="font-size:13px;margin:0">변동항목별 금액 — 계약서 API의 <code>flxb*</code>는 금액 없는 플래그(분석정리 6.6). 계약서 API 확장 vs 결제·예약 API 병행 호출 확인. <b style="color:var(--warn-ink)">금액 직결.</b></p></div>
-    <div class="card"><span class="tag warn">2</span><h4>변동 항목 건수 제공</h4><p style="font-size:13px;margin:0">노출 조건이 <b>금액이 아니라 건수</b>(0건이면 미노출 · 1건 이상이면 0원도 노출)로 확정됨 → 합산액과 별개로 건수도 함께 내려와야 0건과 0원을 구분할 수 있음. <code>flxb*</code>가 Y/N 플래그라 건수 산출은 오히려 쉬울 수 있음 — 1번과 함께 확인.</p></div>
-    <div class="card"><span class="tag warn">3</span><h4>닷컴 직접예약 D-2</h4><p style="font-size:13px;margin:0">닷컴 직접예약 건이 현행 D-2 발송에 포함되는지 확인 → 미포함이면 배치 반영. 요구사항은 확정.</p></div>
-  </div>
-  <div class="callout removed">
-    <div class="ct">✓ 해소 · 제거 이력 (재론 불필요)</div>
-    <p><b>D2</b> 증빙(차수 데이터 + 동의 기록으로 충분 · 스냅샷 안 함) · <b>D13</b> 사유 처리방식(개별 저장 → N차·N-1차 비교 도출로 전환, 2026-07-15) · <b>D1</b>(D-2 항상 발송·차수 갱신 = 현행) · <b>D-1 발송</b>(자동 발송은 D-2가 마지막) · <b>대표예약자 일괄관리</b>(실재·계획 없음) · <b>사유 저장 형태</b>(코드/자유텍스트 논의 자체가 불요해짐, 비교 도출로 대체).</p>
-  </div>
-</section>
-
-</div><!-- /content-logic -->
 
 <div class="subtab-panel" id="content-existing" hidden>
 
@@ -1084,6 +873,212 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
 </section>
 
 </div><!-- /content-existing -->
+
+<div class="subtab-panel" id="content-logic" hidden>
+
+<!-- ═══ 1. 변경 내역 도출 로직 ═══ -->
+<section id="lgc1">
+  <span class="sec-num">LG-01</span>
+  <h2>변경 내역 도출 로직 — N차 · N-1차 비교</h2>
+
+  <div class="callout brand">
+    <div class="ct">확정 — 비교 방식·주체 (개발팀 협의 2026-07-15 · 07-20)</div>
+    <p style="margin:0 0 6px"><b>비교 방식</b> — 필드별 diff 설계·저장 없음. N차·N-1차 <b>전체 데이터를 비교해 값이 달라진 항목만 추출</b>(새 필드 자동 포함).</p>
+    <p style="margin:0"><b>비교 주체</b> — <b>BE가 교부 시점에 1회 비교·저장</b>. 닷컴·하나허브·파트너포탈은 저장된 결과를 렌더만 → 3개 화면 항상 같은 값.</p>
+  </div>
+
+  <h3>데이터 조달 — API에 변경 내역 필드 추가</h3>
+  <div class="card">
+    <ul style="margin:0 0 8px">
+      <li><b>As-Is</b> — 현행 여행계약서 API는 N차(최신) 계약서 내용만 응답. 변경 내역을 받을 수단 없음.</li>
+      <li><b>To-Be</b> — 기존 응답은 그대로 두고 <b>“변경 내역” 필드 하나 추가</b>.</li>
+    </ul>
+    <div class="tbl-wrap" style="margin:0 0 8px">
+      <table>
+        <thead><tr><th style="width:110px">FE 수신</th><th style="width:80px">구분</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td><b>계약서 내용</b></td><td class="tc"><span class="mini n">기존</span></td><td>N차(최신) 여행계약서 내용 — <b>현행 그대로</b></td></tr>
+          <tr style="background:#faf7ff"><td><b>변경 내역</b></td><td class="tc"><span class="mini">신규</span></td><td>BE가 미리 비교해둔 <b>결과 배열</b> — 항목당 [변경 항목 / 이전 내용 / 변경 내용]</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin:0;font-size:13px;color:var(--success);font-weight:600">→ N-1차 원본은 FE로 내려가지 않음. 화면은 받은 배열을 표로 렌더만 → 3개 화면 값 불일치 원천 차단.</p>
+  </div>
+
+  <h3>비교 로직</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:132px">구분</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr style="background:#f4f2f8"><td colspan="2" style="font-weight:800;color:var(--brand);font-size:12.5px;padding:8px 14px">■ Back-End</td></tr>
+        <tr style="background:#faf7ff"><td><b>트리거</b></td><td>교부상태 <span class="mono">미교부 → 교부완료</span> 전환(= 고객 열람) 시 1회 비교. <b style="color:var(--brand-strong)">실제 발동</b> — 미교부 상태에서 예약 상세 진입 시 계약서 팝업이 자동 노출되고, 그 호출 시 BE가 교부완료로 전환(AS-01 ④). 페이지 진입만으로 발동, FE 통지 불필요.<br><span style="font-size:12px;color:var(--mute)">교부완료 = 열람, 동의와는 별개 상태값(AS-01)</span></td></tr>
+        <tr><td><b>시점 근거</b></td><td>교부완료 전환 = 해당 차수 내용이 확정되는 순간. 미교부 구간은 비교하지 않음(내용이 계속 바뀜).</td></tr>
+        <tr><td><b>비교 입력</b></td><td>N차 · N-1차 여행계약서 <b>전체 데이터 비교</b> (BE 내부값, FE 미전달).</td></tr>
+        <tr><td><b>처리</b></td><td>값이 달라진 <b>항목명 + 이전 값 + 변경 값</b> 추출.</td></tr>
+        <tr><td><b>저장</b></td><td>변경 내역 배열을 해당 차수에 통째 저장(새 필드 늘어도 구조 변경 불요). 확정 후 재산출 없이 재사용.</td></tr>
+
+        <tr style="background:#f4f2f8"><td colspan="2" style="font-weight:800;color:var(--brand);font-size:12.5px;padding:8px 14px">■ API 응답</td></tr>
+        <tr><td><b>응답 필드</b></td><td>기존 N차 계약서 내용 + <b style="color:var(--brand)">신규</b> 변경 내역 필드 <span style="color:var(--warn-ink)">(= 신규 개발)</span> · 닷컴·하나허브·파트너포탈 공유.</td></tr>
+        <tr><td><b>화면 활용 (1)</b><br><span style="font-size:11.5px;color:var(--mute);font-weight:400">변경 내역 표</span></td><td>변경 내역 배열을 SC-02 탭 / SC-03 팝업에 그대로 렌더 — 요약·생략 없이 전 건(No는 렌더 시 부여).</td></tr>
+        <tr><td><b>화면 활용 (2)</b><br><span style="font-size:11.5px;color:var(--mute);font-weight:400">탭 노출 여부</span></td><td>건수 0 / 1건 이상으로 분기 — 1건 이상 탭 생성 + “탭에서 확인해 주세요” 유도 문구, 0건 탭 미생성. 상단에 항목명·사유 미포함.</td></tr>
+        <tr><td><b>미적용 조건</b></td><td>1차(N-1차 없음) → 1차형 문구 · D-2 확정 교부 → “출발 확정 안내” 고정. 둘 다 변경 내역 0건 → 탭·팝업 미노출.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout dev">
+    <div class="ct">🏷 착수 시 확정 필요</div>
+    <p style="margin:0 0 6px"><b>① 저장 구조</b> — 보관 위치(차수 테이블 컬럼 vs 별도) + 1차(비교 대상 없음)일 때 값(빈 배열 / null).</p>
+    <p style="margin:0 0 6px"><b>② 미교부 차수 조회</b> — 아직 열람 안 한 차수는 비교 결과 없음. 하나허브·파트너포탈 조회 시 처리(진입점 미노출 / “고객 미열람” 안내 / 실시간 비교).</p>
+    <p style="margin:0 0 6px"><b>③ 비교 정확도</b> — <b>AI비교 vs Data-Field 비교</b> 방식 선택 + 정확도 기준 + 실패 시 fallback(문구 fallback + 표 미노출).</p>
+    <p style="margin:0"><b>④ 상단 문구 원칙</b> — 고정 유도 문구, 항목명·사유 미포함. 결과는 변경 내역 표로만 전 건 노출.</p>
+  </div>
+
+  <div class="callout info">
+    <div class="ct">◎ 착수 전 검토 사항 — 열람 응답 지연(latency)</div>
+    <p style="margin:0">트리거가 열람이라 비교가 계약서 여는 순간 발생 → 열람 자체가 느려질 수 있음. <b>검토안</b> — 동기 vs <b>비동기</b>(본문 먼저 표시, 변경 내역 탭만 로딩). <span style="color:var(--mute)">→ 착수 전 검토, 비교 성능 실측 후 판단.</span></p>
+  </div>
+</section>
+
+<!-- ═══ 2. 항목별 구현 로직 ═══ -->
+<section id="lgc2">
+  <span class="sec-num">LG-02</span>
+  <h2>항목별 구현 로직</h2>
+  <p class="sub">「개선 항목」IM-04의 ①~⑤와 같은 번호 — 각 항목을 무엇으로 구현하는가.</p>
+
+  <h3>① 계약서 차수·변경 내역 표기 <span class="mini">닷컴 Vue</span></h3>
+  <div class="card">
+    <ul style="margin:0 0 6px">
+      <li><b>차수 표기</b> — 이 계약서가 몇 번째로 발행된 것인지(1차·2차…)를 계약서 상단에 표시. 이미 계약서 데이터에 들어 있는 발행 순번을 그대로 사용.</li>
+      <li><b>변경 내역 데이터</b> — 여행 계약서가 새로 교부될 때, <b>N-1차 · N차 계약서를 비교</b>하여 달라진 항목만 추출·저장.</li>
+      <li><b>상단 안내 문구 3가지 Case</b> — <b>최초 교부 · D-2 교부 · 요건 변경 재교부</b> 세 케이스에 따라 상단 안내 문구를 다르게 처리.
+        <ul style="margin:6px 0 0">
+          <li style="font-size:13px">최초 교부 → “다시”를 뺀 1차형 문구</li>
+          <li style="font-size:13px">D-2 교부 → 출발 확정 안내 문구 (변경 내역 없음)</li>
+          <li style="font-size:13px">요건 변경 재교부 → “변경된 항목은 [변경 내역] 탭에서 확인해 주세요” 유도 문구</li>
+        </ul>
+      </li>
+      <li><b>변경 내역 탭</b> — 저장된 변경 내역을 표(변경 항목 / 이전 내용 / 변경 내용)로 전 항목 노출. 요약·생략 없음.</li>
+      <li><b>탭 노출 조건</b> — 변경 항목 0건이면 [변경 내역] 탭 미생성 → 현행 단일 화면 유지.</li>
+    </ul>
+    <p style="margin:0 0 4px;font-size:13px;color:var(--warn-ink)">⚠ 아직 정할 것 — 변경 내역은 시스템 내부 항목 단위로 나오므로, <b>고객에게 보여줄 항목 이름</b>(예: 상품명·여행기간·개인추가경비)과 <b>보여주지 않을 항목</b>을 따로 정해야 함.</p>
+    <div class="sub-block" style="margin-bottom:0">
+      <h4>관련 필드 · 데이터</h4>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:104px">쓰임</th><th style="width:150px">필드 / 값</th><th>설명</th></tr></thead>
+          <tbody>
+            <tr><td><b>차수</b></td><td><code>trvlCndmSeq</code></td><td>계약서 변경 순번 — 확인 완료</td></tr>
+            <tr><td><b>변경 내역</b></td><td>API 신규 필드</td><td>BE가 교부 시점에 N-1차·N차를 비교·저장한 결과 배열 · 항목당 [변경 항목 / 이전 내용 / 변경 내용] <span class="mini n">LG-01 화면 활용 (1)</span></td></tr>
+            <tr><td><b>유형 판별</b></td><td>사유 값 · <code>seq≥2</code></td><td>최초 / D-2 확정 / 요건 변경 판별 — 내부 판단용, 문구 비노출 <span class="mini n">LG-01 화면 활용 (2)</span></td></tr>
+            <tr><td><b>발송 유형</b></td><td>AS-02 매트릭스</td><td>3유형 — 상단 문구 분기 근거</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p style="margin:10px 0 0;font-size:13px;color:var(--mute)">변경 내역 탭·상단 문구는 닷컴 Vue · 하나허브 상담용 변경 사유는 교부내역 메뉴(④)에서 확인. <b>OZ 계약서 양식은 미변경이나 개인추가경비·선택관광/쇼핑 항목(②③)은 OZ 본문에도 반영</b>.</p>
+  </div>
+
+  <h3>② 개인추가경비 합산 한 줄 <span class="mini">닷컴 Vue · 하나허브 OZ</span></h3>
+  <div class="card">
+    <ul style="margin:0 0 6px">
+      <li><b>합산 금액</b> — 상품가 외 변동 항목(항공·호텔·지상·기타 + 매출할인 마이너스)을 전부 합산해 “개인추가경비 N원” 한 줄로 표기. 음수 허용.</li>
+      <li><b>산술 검증</b> — <code>Σ전 인원(상품가 + 개인추가경비) = 총 N인 경비 총액</code> (예약코드 전 인원 합 기준).</li>
+      <li><b>노출 조건</b> — 변동 항목 건수 &gt; 0일 때만 노출(금액 기준 아님). 0건이면 미노출, 1건 이상이면 합산 0원이어도 <code>0원</code> 노출.</li>
+    </ul>
+    <p style="margin:0 0 4px;font-size:13px;color:var(--warn-ink)">⚠ 집계 소스 미확정 — 합산 소스를 계약서 API 확장으로 갈지 결제·예약 API 병행 호출로 갈지 확인 필요 → LG-04 개발 확인 ①(최우선).</p>
+    <div class="sub-block" style="margin-bottom:0">
+      <h4>관련 필드 · 데이터</h4>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:104px">쓰임</th><th style="width:150px">필드 / 값</th><th>설명</th></tr></thead>
+          <tbody>
+            <tr><td><b>변동 항목</b></td><td><code>flxb*</code></td><td>금액 없는 Y/N 체크 플래그 (분석정리 6.6) — 건수 산출 근거</td></tr>
+            <tr><td><b>집계 소스</b></td><td>미확정</td><td>계약서 API 확장 vs 결제·예약 API 병행 호출 → LG-04 개발 확인 ①</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p style="margin:10px 0 0;font-size:13px;color:var(--mute)">닷컴 Vue·하나허브 OZ Report 모두 반영(공통 VO) — 양식 변경 없이 기존 여행경비 영역에 합산 줄 추가.</p>
+  </div>
+
+  <h3>③ 일정표 선택관광·쇼핑 단순 표기 <span class="mini">닷컴 Vue · 하나허브 OZ</span></h3>
+  <div class="card"><p style="margin:0">일정표 영역에 <b>선택관광·쇼핑</b>을 “일정표 표시” 방식으로 추가(교통·숙박·식사와 동일). 상세 미표기라 데이터 요구 적음.</p><p style="margin:6px 0 0;font-size:13px;color:var(--mute)">닷컴 Vue·하나허브 OZ Report 모두 반영(공통 VO, 양식 변경 없음).</p></div>
+
+  <h3>④ 하나허브 여행계약서 교부내역 — 합산값 · 변경 내역 <span class="mini">하나허브</span></h3>
+  <div class="card">
+    <ul style="margin:0 0 6px">
+      <li><b>합산값</b> — ②와 <b>동일한 합산 로직 공유</b>(값 일치 보장).</li>
+      <li><b>변경 내역 팝업</b> — LG-01에서 저장한 변경 내역을 조회해 표(변경 항목 / 이전 내용 / 변경 내용)로 렌더. 표 구성·항목명 매핑·노출 제외 규칙 전부 ①과 동일 적용, 하나허브에서 재비교 없음.</li>
+      <li><b>노출 조건</b> — 변경 결과 0건이면 팝업 진입점 미노출(고객 화면과 동일).</li>
+    </ul>
+    <p style="margin:0;font-size:13px;color:var(--mute)">하나허브 OZ 문서 양식은 미변경 — 여행계약서 교부내역 메뉴에만 표시 추가.</p>
+  </div>
+
+  <h3>⑤ 여행계약서 조회 진입 페이지 <span class="mini warn">검토 필요</span></h3>
+  <div class="card">
+    <ul style="margin:0 0 6px">
+      <li><b>재사용 방식</b> — 기존 비회원 예약조회 페이지를 재사용, 진입 컨텍스트를 읽어 <b>타이틀·상품 탭을 동적 전환</b>(페이지 신규 카피 아님).</li>
+      <li><b>승계 4조건</b> — ① 예약코드 자동주입 유지(이름+휴대폰, 세션 만료 경로 포함) ② 딥링크 컨텍스트로 타이틀 + 패키지 탭 단독(호텔·항공 탭 미노출) ③ 조회 성공 → 예약 상세로 이동(계약서 팝업은 예약 상세에서 노출 — 현행 흐름 유지) ④ 비회원 전용(회원은 로그인 → 마이페이지).</li>
+    </ul>
+    <p style="margin:0 0 4px;font-size:13px;color:var(--warn-ink)">⚠ 개발팀 검토 필요 — 컨텍스트로 타이틀만 바꾸는 방식보다 <b>여행계약서 전용 진입 페이지(정적 shell)</b>를 따로 두는 편이 구현 효율적일 수 있음. 착수 전 협의 대상.</p>
+    <div class="sub-block" style="margin-bottom:0">
+      <h4>관련 필드 · 데이터</h4>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:104px">쓰임</th><th style="width:150px">필드 / 값</th><th>설명</th></tr></thead>
+          <tbody>
+            <tr><td><b>진입 컨텍스트</b></td><td><code>redirectUri</code></td><td>타이틀·상품 탭 동적 전환 근거</td></tr>
+            <tr><td><b>설계 의도</b></td><td>이원화 회피</td><td>페이지 카피 시 divergence 리스크(분석정리 7.8) 회피</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p style="margin:10px 0 0;font-size:13px;color:var(--mute)">로그인 페이지 하단 ‘비회원 예약조회’ 버튼 라벨은 공용이라 미변경(보류).</p>
+  </div>
+</section>
+
+<!-- ═══ 3. 변경 지점 ═══ -->
+<section id="lgc3">
+  <span class="sec-num">LG-03</span>
+  <h2>변경 지점 (개발 관점)</h2>
+  <p class="sub">건드리는 곳과 건드리지 않는 곳.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:34px">#</th><th style="width:180px">시스템</th><th>변경 내용</th><th style="width:80px">규모</th></tr></thead>
+      <tbody>
+        <tr style="background:#faf7ff"><td class="tc"><b>①</b></td><td><b>여행계약서 API</b> · <b>BE 비교 로직</b></td><td><b>변경 내역(비교 결과) 필드 추가</b> — 교부 시점에 BE가 N차·N-1차를 비교·저장, API는 <b>저장된 배열을 응답</b><br><span style="font-size:12px;color:var(--mute)">N-1차 원본을 내리는 것이 아님 · 닷컴·하나허브·파트너포탈이 같은 필드 공유(LG-01)</span></td><td class="tc">중</td></tr>
+        <tr><td class="tc"><b>①</b></td><td>닷컴 Vue 계약서 팝업</td><td>상단 문구 블록 — <span class="mono">seq</span>·사유·교부이력 분기</td><td class="tc">소</td></tr>
+        <tr><td class="tc"><b>①</b></td><td>닷컴 Vue 계약서 팝업</td><td><b>변경 내역 탭 신설</b> — 비교 결과 표 렌더(4열) · 0건이면 탭 미생성</td><td class="tc">소~중</td></tr>
+        <tr><td class="tc"><b>②</b></td><td>닷컴 Vue 계약서 팝업<br><span style="font-size:11.5px;color:var(--mute);font-weight:400">+ 하나허브 OZ Report</span></td><td>개인추가경비 합산 줄 (변동항목 전체 + 매출할인, <b>0건일 때만</b> 미노출)<br><span style="font-size:12px;color:var(--mute)">양 채널 공통 VO — OZ 양식 변경 없이 본문에 항목만 반영</span></td><td class="tc">소</td></tr>
+        <tr><td class="tc"><b>③</b></td><td>닷컴 Vue 일정표<br><span style="font-size:11.5px;color:var(--mute);font-weight:400">+ 하나허브 OZ Report</span></td><td>선택관광·쇼핑 단순 표기<br><span style="font-size:12px;color:var(--mute)">양 채널 공통 VO — OZ 양식 변경 없이 본문에 항목만 반영</span></td><td class="tc">소</td></tr>
+        <tr><td class="tc"><b>④</b></td><td>하나허브 여행계약서 교부내역<br><span style="font-size:11.5px;color:var(--mute);font-weight:400">+ 파트너포탈(화면·API 공유)</span></td><td>개인추가경비 동일 합산값 표시 (②와 로직 공유) + <b>변경 내역 팝업</b>(①의 변경 내역 탭 재사용, 0건이면 진입점 미노출)<br><span style="font-size:12px;color:var(--mute)">파트너포탈은 같은 화면·API를 쓰므로 추가 구현 없이 동일 반영 — 노출 화면만 1곳 더</span></td><td class="tc">소~중</td></tr>
+        <tr><td class="tc"><b>⑤</b></td><td>닷컴 웹 조회 페이지</td><td>여행계약서 딥링크 진입 시 <b>타이틀 동적 전환 + 패키지 탭 단독 노출</b> (페이지 재사용)</td><td class="tc">소</td></tr>
+        <tr><td class="tc">확인</td><td>배치 (TMS)</td><td>닷컴 직접예약 D-2 발송 포함 (현행 확인 후)</td><td class="tc">확인/소</td></tr>
+        <tr style="background:#f6f6f8"><td class="tc">—</td><td style="color:var(--mute)">알림톡 템플릿 · 하나허브 OZ 문서 <b>양식</b>(레이아웃)</td><td style="color:var(--mute)">변경 없음 <span style="font-size:11px">— OZ 계약서 본문엔 ②③ 항목만 반영</span></td><td class="tc" style="color:var(--mute)">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12.5px;color:var(--mute);margin:10px 0 0;line-height:1.7">
+    <b>확인 완료</b> — 차수(<code>trvlCndmSeq</code>) · D-2 차수 갱신(현행 동작)<br>
+    <b>신규 개발</b> — BE 비교 로직 + 여행계약서 API 변경 내역 필드(LG-01)<br>
+    <b>개발 확인</b> — 변동항목별 금액 집계 소스(LG-04)</p>
+</section>
+
+<!-- ═══ 4. 개발 확인 3건 ═══ -->
+<section id="lgc4">
+  <span class="sec-num">LG-04</span>
+  <h2>개발 확인 3건</h2>
+  <p class="sub">정책이 아니라 구현 확인 — 착수 블로커 없음.</p>
+
+  <div class="grid g3">
+    <div class="card"><span class="tag warn">1 · 최우선</span><h4>금액 집계 소스</h4><p style="font-size:13px;margin:0">변동항목별 금액 — 계약서 API의 <code>flxb*</code>는 금액 없는 플래그(분석정리 6.6). 계약서 API 확장 vs 결제·예약 API 병행 호출 확인. <b style="color:var(--warn-ink)">금액 직결.</b></p></div>
+    <div class="card"><span class="tag warn">2</span><h4>변동 항목 건수 제공</h4><p style="font-size:13px;margin:0">노출 조건이 <b>금액이 아니라 건수</b>(0건이면 미노출 · 1건 이상이면 0원도 노출)로 확정됨 → 합산액과 별개로 건수도 함께 내려와야 0건과 0원을 구분할 수 있음. <code>flxb*</code>가 Y/N 플래그라 건수 산출은 오히려 쉬울 수 있음 — 1번과 함께 확인.</p></div>
+    <div class="card"><span class="tag warn">3</span><h4>닷컴 직접예약 D-2</h4><p style="font-size:13px;margin:0">닷컴 직접예약 건이 현행 D-2 발송에 포함되는지 확인 → 미포함이면 배치 반영. 요구사항은 확정.</p></div>
+  </div>
+</section>
+
+</div><!-- /content-logic -->
 
 </main>
 </div>
