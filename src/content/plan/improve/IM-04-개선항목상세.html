@@ -26,17 +26,17 @@
     </div>
     <div class="sumbadge"><div class="b">전체<br>합산</div><div class="a">→</div></div>
     <div class="calc">
-      <div class="h">여행경비</div>
-      <div class="r"><span>상품가</span><span>437,800 원</span></div>
-      <div class="r hero"><span class="label">개인추가경비</span><span class="val">297,923 원</span></div>
-      <div class="r total"><span>1인 여행경비 총액</span><span>735,723 원</span></div>
-      <div class="eq">Σ<span style="font-size:.82em">전 인원</span>(상품가 + 개인추가경비) = 총 N인 경비 총액</div>
+      <div class="h">여행계약서 여행경비 표기 — 1인 예약 예시</div>
+      <div class="r"><span>총 1인 경비총액</span><span>774,400 원</span></div>
+      <div class="r"><span>1인 여행경비</span><span>774,400 원</span></div>
+      <div class="r hero"><span class="label">개인추가경비</span><span class="val">312,400 원</span></div>
+      <div class="eq">1인 여행경비(774,400) = 판매상품가(462,000) + 개인추가경비(312,400) — <b>이미 포함</b></div>
     </div>
   </div>
 
   <ul class="tight" style="font-size:13px">
     <li><b>매출할인 포함</b> — 마이너스 금액도 합산 → <b>Σ전 인원(상품가 + 개인추가경비) = 총 N인 경비 총액</b>. 매출 할인만 있으면 음수로 그대로 표기.</li>
-    <li><b>집계 단위 주의</b> — 총 N인 경비 총액 = 예약코드 전 인원 합 / 화면의 1인 여행경비·개인추가경비 = 조회한 개인 값. 2명 이상이면 <b>화면 두 줄을 더해도 총액이 되지 않음</b>(1명일 때만 일치) — 산술 검증은 전 인원 데이터 기준.</li>
+    <li><b>집계 단위 주의</b> — 총 N인 경비총액 = 예약코드 <b>전 인원 합</b> / 1인 여행경비·개인추가경비 = 조회한 <b>여행자 1인</b> 값. 1인 여행경비가 개인추가경비를 <b>이미 포함</b>하므로 두 줄을 더하면 중복이고, 인원 2명 이상이면 1인 여행경비 ≠ 총액(1명일 때만 일치) — 산술 검증은 전 인원 데이터 기준.</li>
     <li><b>노출 조건</b> — 변동 항목 0건일 때만 줄 미노출. 항목이 있으면 <b>합산 0원이어도</b> <code>개인추가경비 0원</code> 노출(예: 선택관광 + 매출할인 상계). 세부 상품명·건수는 표시 안 함(한 줄).</li>
   </ul>
 
