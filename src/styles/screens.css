@@ -204,3 +204,29 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
   section{break-inside:avoid;padding:24px 30px}
   body{background:#fff;font-size:12px}.cover{padding:34px}
 }
+
+/* ── SC-03 변경 내역 팝업 (하나허브 · 관리자 오버레이) ──
+   [보기 N] 클릭 시 .adm 위에 뜬다. 기본은 닫힘 —
+   PPT 캡처 시엔 make_caps job CSS 로 .hub-pop{display:flex} 강제. */
+.adm{position:relative}
+.hub-pop{position:absolute;inset:0;display:none;align-items:center;justify-content:center;
+  background:rgba(27,23,48,.42);border-radius:10px;padding:10px;z-index:5}
+.hub-pop.on{display:flex}
+.hub-win{width:100%;max-width:380px;background:#fff;border-radius:8px;overflow:hidden;
+  box-shadow:0 10px 30px rgba(27,23,48,.32);display:flex;flex-direction:column;max-height:100%}
+.hub-win-head{display:flex;align-items:center;gap:7px;background:#2b2440;color:#fff;
+  padding:8px 11px;font-size:11px;font-weight:700;flex:0 0 auto}
+.hub-win-head .hw-ttl{flex:1}
+.hub-win-head .hw-meta{font-weight:600;opacity:.72;font-size:10px}
+.hub-win-head .hw-x{cursor:pointer;opacity:.8;font-weight:400;font-size:13px;line-height:1}
+.hub-win-head .hw-x:hover{opacity:1}
+.hub-win-body{overflow:auto;padding:11px 12px 13px}
+.hub-win-body .chg-lead{font-size:10.5px;margin-bottom:9px}
+.hub-win-body table.chg-tbl{font-size:10px}
+.hub-win-body table.chg-tbl th{padding:6px 4px;font-size:9.5px}
+.hub-win-body table.chg-tbl td{padding:6px 4px}
+.hub-win-foot{flex:0 0 auto;border-top:1px solid var(--line);padding:7px 12px;text-align:right;background:#faf9fc}
+.hub-win-foot .hw-close{display:inline-block;border:1px solid var(--line2);background:#fff;border-radius:5px;
+  padding:3px 13px;font-size:10.5px;font-weight:700;color:#2a2440;cursor:pointer}
+.adm .vbtn{cursor:pointer}
+.adm .vbtn:hover{background:#e3d5fa}

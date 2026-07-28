@@ -42,8 +42,9 @@
         <tr style="background:#f4f2f8"><td colspan="2" style="font-weight:800;color:var(--brand);font-size:12.5px;padding:8px 14px">■ API 응답</td></tr>
         <tr><td><b>응답 필드</b></td><td>기존 N차 계약서 내용 + <b style="color:var(--brand)">신규</b> 변경 내역 필드 <span style="color:var(--warn-ink)">(= 신규 개발)</span> · 닷컴·하나허브·파트너포탈 공유.</td></tr>
         <tr><td><b>화면 활용 (1)</b><br><span style="font-size:11.5px;color:var(--mute);font-weight:400">변경 내역 표</span></td><td>변경 내역 배열을 SC-02 탭 / SC-03 팝업에 그대로 렌더 — 요약·생략 없이 전 건(No는 렌더 시 부여).</td></tr>
-        <tr><td><b>화면 활용 (2)</b><br><span style="font-size:11.5px;color:var(--mute);font-weight:400">탭 노출 여부</span></td><td>건수 0 / 1건 이상으로 분기 — 1건 이상 탭 생성 + “탭에서 확인해 주세요” 유도 문구, 0건 탭 미생성. 상단에 항목명·사유 미포함.</td></tr>
+        <tr><td><b>화면 활용 (2)</b><br><span style="font-size:11.5px;color:var(--mute);font-weight:400">탭 노출 여부</span></td><td>건수 0 / 1건 이상으로 분기 — 1건 이상 탭 생성, 0건 탭 미생성. 상단에 항목명·사유 미포함.<br><span style="font-size:12px;color:var(--mute)">⚠ 문구는 <b>발송 시점</b>(사유 값), 탭 유무는 <b>열람 시점</b>(비교 건수)에 결정 — 두 시점이 다르므로 유도 문구를 <b>조건부 표현</b>(“변경된 항목이 있는 경우”)으로 고정해 0건일 때 문구·화면이 어긋나지 않게 함(AS-02).</span></td></tr>
         <tr><td><b>미적용 조건</b></td><td>1차(N-1차 없음) → 1차형 문구 · D-2 확정 교부 → “출발 확정 안내” 고정. 둘 다 변경 내역 0건 → 탭·팝업 미노출.</td></tr>
+        <tr style="background:#faf7ff"><td><b>재교부인데 0건</b></td><td>재교부 요건은 발생했으나 비교 결과가 0건인 경우. 발생 경로 —<br>① <b>변동금액만 변경</b> : <code>flxb*</code>는 <b>금액 없는 Y/N 플래그</b>(실측 6.6)라, 이미 체크된 항목의 <b>금액만</b> 바뀌면 계약서 데이터가 그대로다 <span class="mini n">개발 확인 1번 결과에 좌우됨</span><br>② <b>노출 제외 항목만 변경</b> : 비교는 잡았으나 고객 노출 대상이 아니라 표 건수 0 <span class="mini n">LG-02 미정</span><br>③ <b>계약서 데이터 모델에 없는 요건 항목만 변경</b> : 프로모션·테마·현지합류 구분 등 <span style="color:var(--warn-ink)">[확인필요]</span><br>④ <b>원복·상계</b> : 미교부 구간 in-place update로 값이 되돌아옴(A→B→A)<br>⑤ <b>내용 변경 없는 수동 재교부</b> : 고객 요청 재발송 · 알림톡 미수신 정정<br>→ <b>재교부 문구는 그대로 유지하고 탭만 미생성.</b> 유도 문구가 조건부 표현이라 모순 없음.</td></tr>
       </tbody>
     </table>
   </div>
@@ -53,7 +54,8 @@
     <p style="margin:0 0 6px"><b>① 저장 구조</b> — 보관 위치(차수 테이블 컬럼 vs 별도) + 1차(비교 대상 없음)일 때 값(빈 배열 / null).</p>
     <p style="margin:0 0 6px"><b>② 미교부 차수 조회</b> — 아직 열람 안 한 차수는 비교 결과 없음. 하나허브·파트너포탈 조회 시 처리(진입점 미노출 / “고객 미열람” 안내 / 실시간 비교).</p>
     <p style="margin:0 0 6px"><b>③ 비교 정확도</b> — <b>AI비교 vs Data-Field 비교</b> 방식 선택 + 정확도 기준 + 실패 시 fallback(문구 fallback + 표 미노출).</p>
-    <p style="margin:0"><b>④ 상단 문구 원칙</b> — 고정 유도 문구, 항목명·사유 미포함. 결과는 변경 내역 표로만 전 건 노출.</p>
+    <p style="margin:0 0 6px"><b>④ 상단 문구 원칙</b> — 고정 유도 문구, 항목명·사유 미포함. 결과는 변경 내역 표로만 전 건 노출.</p>
+    <p style="margin:0"><b>⑤ D-2 교부의 변경 내역 처리</b> — 현재 D-2는 <b>변경 내역 0건 고정</b>. 다만 <b>직전 차수가 교부완료된 뒤 변경이 생겼는데 담당자 재교부 없이 D-2에 도달</b>하면, 고객이 본 스냅샷과 달라졌는데도 변경 내역이 노출되지 않는다. 0건 고정을 유지할지, <b>“직전 교부완료 스냅샷 대비 0건일 때”로 좁힐지</b> 개발 협의에서 판단.</p>
   </div>
 
   <div class="callout info">

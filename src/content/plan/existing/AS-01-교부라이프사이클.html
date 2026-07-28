@@ -11,6 +11,7 @@
       <li><b>②</b> 변경이 없어도 <b>출발 D-2에 2차 교부</b> — 확정 계약서(단, 이후에도 변경될 수 있음)</li>
       <li><b>③</b> 재교부 요건(항목 변경) 발생 시 N+1차 교부 — <b style="color:var(--brand)">단, 고객이 직전 차수를 열람(교부완료)한 경우에만</b></li>
       <li><b>④</b> <span style="color:var(--brand)">교부상태가 <code>미교부</code>이면, 고객이 예약내역(예약 상세)에 진입하는 순간 여행계약서가 자동으로 팝업 노출</span> — 고객이 따로 버튼을 누르지 않음. 그렇게 계약서가 호출·노출되면 BE에서 <code>미교부 → 교부완료</code>로 <b>상태 전환</b>.</li>
+      <li><b>⑤ 전 교부 공통 전제</b> — <b style="color:var(--brand)">지상·항공이 둘 다 <code>OK</code>일 때만 교부</b>한다. 1차뿐 아니라 <b>D-2·N차 재교부 발송 시에도 매번 재확인</b>하며, 둘 중 하나라도 <code>WT</code>면 교부하지 않는다.</li>
     </ul>
   </div>
 
@@ -31,17 +32,17 @@
       <span class="arr-l">OK/OK</span>
       <div class="node"><div class="t">① 1차 교부 · seq1</div><div class="s">예약확정+1일 09:07<br>상단 [1차] 예고 문구</div></div>
       <span class="arr">›</span>
-      <div class="node hl"><div class="t">② 2차 교부 · D-2 확정</div><div class="s">변경 무관 항상 · 차수 +1 갱신<br>사유 = “출발 확정 안내”</div></div>
+      <div class="node hl"><div class="t">② 2차 교부 · D-2 확정</div><div class="s">변경 무관 항상 · 차수 +1 갱신<br>사유 = “출발 확정 안내”<br><b style="color:var(--brand)">교부상태 무관</b>(현행 DB 동작)</div></div>
       <span class="arr">›</span>
       <div class="node term"><div class="t">출발</div></div>
     </div>
-    <div class="branch"><span class="dn">WT 포함 ↓</span><div class="box">자동발송 제외 — OK/OK 전환 시 재진입</div></div>
+    <div class="branch"><span class="dn">WT 포함 ↓</span><div class="box">자동발송 제외 — OK/OK 전환 시 재진입(최초 1회 자동 · 1차형 문구)</div></div>
 
     <div class="lc-join">↓ <b>①~② 사이(그리고 D-2 이후에도) 언제든</b> 아래 흐름이 합류·반복</div>
 
     <div class="flow-label" style="margin-top:4px"><span class="pill">STEP ③</span> 재교부 — 교부상태가 차수 증가를 가름</div>
     <div class="spine" style="min-width:0">
-      <div class="node plain"><div class="t">재교부 요건 발생</div><div class="s">상품·예약 정보 변경 / WT→OK 최초 1회</div></div>
+      <div class="node plain"><div class="t">재교부 요건 발생</div><div class="s">상품 정보 변경 / 예약 정보 변경</div></div>
       <span class="arr">›</span>
       <div class="node plain"><div class="t">상품담당자 판단</div><div class="s">수동 — 자동 배치 아님</div></div>
       <span class="arr">›</span>
@@ -52,7 +53,7 @@
       <div class="band">
         <div class="band-hd"><span class="mb">교부완료</span>고객이 이미 열람함</div>
         <div class="band-flow" style="flex-direction:column;align-items:stretch;gap:8px">
-          <div class="mnode"><div class="t">✓ N+1차 교부</div><div class="s">상단 [N차·변경사유] 문구</div></div>
+          <div class="mnode"><div class="t">✓ N+1차 교부</div><div class="s">상단 [N차] 재교부 문구 — 사유 미표기</div></div>
           <div class="mnode"><div class="t">신규 계약서 = 교부상태 미교부로 시작</div></div>
         </div>
         <div class="band-note">고객이 열람한 스냅샷을 넘어선 변경 → <b>새 스냅샷(N+1차)으로 분리 보존</b>.</div>
@@ -68,15 +69,16 @@
       </div>
     </div>
 
-    <div class="lc-foot">차수는 “재교부 요건이 몇 번 발생했나”가 아니라 <b>“고객이 열람한 스냅샷을 몇 번 넘겼나”</b> 기준. · 문구에 <b>“최종”이라는 단어 사용 지양</b>(D-2 이후에도 변경될 수 있음)</div>
+    <div class="lc-foot"><b>재교부(STEP ③) 경로에서는</b> 차수를 “재교부 요건이 몇 번 발생했나”가 아니라 <b>“고객이 열람한 스냅샷을 몇 번 넘겼나”</b>로 센다. · <b>자동 발송 ①·②는 이 게이트를 타지 않는다</b> — D-2는 교부상태와 무관하게 차수 +1(현행 DB 동작). · 문구에 <b>“최종”이라는 단어 사용 지양</b>(D-2 이후에도 변경될 수 있음)</div>
   </div>
 
   <h4>재교부 요건 (담당자 판단 기준)</h4>
   <ul class="tight two-col" style="font-size:12.5px">
     <li><b>상품 정보 변경</b> : 제목 · 브랜드 · 프로모션 · 테마 · 여행기간 · 최저행사인원 · 인솔자 · 가이드 · 포함사항 · 여행자보험 · 취소료 규정</li>
     <li><b>예약 정보 변경</b> : 인원 · 예약가 · 변동금액 전항목 · 현지합류 구분 · 대리점 · 여행자 이름 · 연락처 · 상품 이동</li>
-    <li><b>상태 전환</b> : WT → OK (최초 1회)</li>
     <li>그 외 조건은 “재교부 필요” 상태 팝업만 (알림톡 X)</li>
+    <li><b>발송 직전 재확인</b> : 지상·항공 <code>OK/OK</code> — 하나라도 <code>WT</code>면 교부하지 않음(⑤)</li>
+    <li style="color:var(--mute)"><b>WT → OK 전환은 재교부 아님</b> — 자동발송 경로(①)의 <b>지연된 최초 교부</b>. 배치 자동(OK/OK 전환 다음날 09:07)이며 문구도 1차형 — 담당자 수동 판단 대상이 아니다</li>
   </ul>
 
   <h4>개발 확인 상태 — 미교부 구간</h4>
@@ -88,5 +90,10 @@
         <tr><td><b>(b) 미교부 구간 갱신 시 재알림 여부</b></td><td>재알림 없음 — 자동 발송은 최초(1차) + D-2(2차) 2회로 변경 없음</td><td class="tc"><span class="mini">확정</span></td></tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="callout info">
+    <div class="ct">◎ 이 구간이 개편에 갖는 의미</div>
+    <p style="margin:0">미교부 구간에서는 <b>비교를 수행하지 않는다</b> — 내용이 계속 바뀌므로 비교해도 곧 무효가 되기 때문(「개선 로직」LG-01 시점 근거).</p>
   </div>
 </section>
