@@ -85,3 +85,21 @@ document.addEventListener('keydown', function(e){
   e.preventDefault();
   gotoXref(a.dataset.code);
 });
+
+// Resolve direct section links as well as page-ID references across hidden panels.
+function revealPlanAnchor(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const panel = el.closest('.tab-panel');
+  if (!panel || panel.id === 'panel-fields') return;
+  if (panel.hidden) document.querySelector('[data-tab="'+panel.id+'"]')?.click();
+  const sub = el.closest('.subtab-panel');
+  if (sub?.hidden) document.querySelector('[data-subtab="'+sub.id+'"]')?.click();
+  requestAnimationFrame(() => el.scrollIntoView({block:'start'}));
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if(a) revealPlanAnchor(a.getAttribute('href').slice(1));
+});
+window.addEventListener('hashchange', () => revealPlanAnchor(location.hash.slice(1)));
+revealPlanAnchor(location.hash.slice(1));

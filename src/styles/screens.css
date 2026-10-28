@@ -52,7 +52,7 @@
 .rs-phone .hnt-contract-embed th,.rs-phone .hnt-contract-embed td{overflow-wrap:anywhere;word-break:break-word}
 .rs-phone .hnt-contract-embed td *{max-width:100%}
 
-/* 계약서 내 [계약서 / 변경 내역] 탭 — 변경점 있을 때만 노출 */
+/* 계약서 내 [계약서 / 변경 내역] 탭 — 비교를 수행한 차수면 0건이어도 노출(v1.2) */
 .ct-tabs{display:flex;border-bottom:1px solid #e5e5e5;background:#fff}
 .ct-tab{flex:1;text-align:center;padding:13px 6px;font-size:13.5px;font-weight:700;color:#999;
   border:none;border-bottom:2px solid transparent;letter-spacing:-.03em;white-space:nowrap;
@@ -61,6 +61,28 @@
 .ct-tab.on{color:#5e2bb8;border-bottom-color:#5e2bb8;background:#fff}
 /* 변경 내역 표 */
 .chg-wrap{padding:16px}
+/* 변경 0건 — 안내 문구만 노출(표·리드·각주 모두 숨김) */
+.chg-empty{padding:38px 20px;text-align:center;word-break:keep-all}
+.chg-empty b{display:block;font-size:14px;font-weight:800;color:#111;margin-bottom:6px}
+.chg-empty span{display:block;font-size:12.5px;color:#767676;line-height:1.55}
+/* 기획서 설명용 축소 샘플 */
+.chg-empty-demo,.mini-demo{border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;background:#fff;margin:8px 0 2px}
+.chg-empty-demo .ced-cap,.mini-demo .ced-cap{background:#f4f5f9;border-bottom:1px solid #e5e5e5;padding:6px 10px;
+  font-size:10.5px;font-weight:800;color:#767676;letter-spacing:.02em}
+.chg-empty-demo .chg-empty{padding:26px 16px}
+.chg-empty-demo .chg-empty b{font-size:13px}
+.chg-empty-demo .chg-empty span{font-size:11.5px}
+/* 최초 교부(탭 바 전체 미노출) 축소 샘플 — 계약서 본문이 바로 보이는 상태 */
+.mini-demo .md-head{position:relative;text-align:center;border-bottom:1px solid #e5e5e5;
+  padding:8px 10px;font-size:11.5px;font-weight:800;color:#111}
+.mini-demo .md-head i{position:absolute;right:10px;top:8px;font-style:normal;font-weight:400;color:#aaa}
+.mini-demo .md-note{background:#efe7ff;border:1px solid #d3c2f0;border-radius:8px;margin:10px;
+  padding:9px 11px;font-size:11px;line-height:1.5;color:#5e2bb8;word-break:keep-all}
+.mini-demo .md-note b{display:block;font-weight:800;margin-bottom:2px}
+.mini-demo .md-skel{padding:0 10px 12px}
+.mini-demo .md-skel span{display:block;height:7px;border-radius:4px;background:#eceef3;margin-bottom:6px}
+.mini-demo .md-skel span:nth-child(2){width:78%}
+.mini-demo .md-skel span:nth-child(3){width:56%}
 .chg-lead{font-size:12.5px;color:#666;line-height:1.55;margin-bottom:12px}
 .chg-lead b{color:#5e2bb8}
 table.chg-tbl{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0;
@@ -159,6 +181,58 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
 .adm td{padding:7px 8px;text-align:center;border-top:1px solid var(--line)}
 .adm td.new{background:#fff2f8;font-weight:700;color:var(--campaign)}
 
+/* SC-03 — 하나허브 QA(Nexacro) 2026-09-17 실측 UI */
+#sc03 .scr-body{grid-template-columns:650px minmax(0,1fr);gap:24px}
+#sc03 .adm{font-family:NanumGothic,"Malgun Gothic",sans-serif;border:1px solid #949da0;border-radius:2px;
+  background:#fff;color:#435059;font-size:9px;line-height:1.25}
+.hubqa-top{height:31px;display:flex;align-items:center;gap:19px;padding:0 12px;background:#fff;
+  border-bottom:3px solid #e8dc69;color:#435059;font-size:8.5px;white-space:nowrap}
+.hubqa-top .hubqa-logo{margin-right:auto;font-size:13px;font-weight:800;color:#435059;letter-spacing:-.04em}
+.hubqa-top .hubqa-logo b{color:#e1282f;font-size:10px;margin-left:3px}.hubqa-top .on{font-weight:800}
+.hubqa-app{display:grid;grid-template-columns:102px minmax(0,1fr);min-height:466px;background:#fff}
+.hubqa-side{background:#3f4653;color:#dce0e5;padding:8px 0;display:flex;flex-direction:column;font-size:8px}
+.hubqa-side b{padding:5px 8px;border-bottom:1px solid #333944;color:#fff}.hubqa-side span{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.035)}
+.hubqa-side span.on{color:#f25764;font-weight:800}.hubqa-main{min-width:0;padding:0 6px 7px;background:#fff}
+.hubqa-window{height:23px;display:flex;align-items:center;gap:4px;border-bottom:1px solid #c2cacd;color:#7a858b;font-size:7.5px}
+.hubqa-window span,.hubqa-window b{padding:5px 8px;background:#f7f8f9;border:1px solid #cfd5d8;border-bottom:0;font-weight:400}
+.hubqa-window b{background:#fff;color:#435059}
+.hubqa-title{height:27px;display:flex;align-items:center;justify-content:space-between;font-size:8px;white-space:nowrap}
+.hubqa-title b{font-size:9px}.hubqa-title span{color:#7f898e;font-size:6.7px}
+.hubqa-tabs{height:23px;display:flex;align-items:end;border-bottom:1px solid #00a6b0}
+.hubqa-tabs b,.hubqa-tabs span{display:flex;align-items:center;justify-content:center;width:104px;height:22px;color:#fff;font-size:8px}
+.hubqa-tabs b{background:#10b6c0;border:1px solid #00a6b0}.hubqa-tabs span{background:#a4adb0;border:1px solid #949da0}
+.hubqa-search{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:3px 5px;padding:6px 7px;
+  background:#e4e8ec;border:1px solid #c2cacd;font-size:7.2px}
+.hubqa-search label{display:flex;align-items:center;gap:4px;min-width:0;font-weight:700;font-style:normal;white-space:nowrap}
+.hubqa-search label:nth-child(1),.hubqa-search label:nth-child(5),.hubqa-search label:nth-child(8){grid-column:span 3}
+.hubqa-search label:nth-child(2),.hubqa-search label:nth-child(6),.hubqa-search label:nth-child(9){grid-column:span 5}
+.hubqa-search label:nth-child(3),.hubqa-search label:nth-child(4),.hubqa-search label:nth-child(10){grid-column:span 2}
+.hubqa-search label:nth-child(7){grid-column:span 4}.hubqa-search label em{color:#f25764;font-style:normal}
+.hubqa-search label i{display:block;min-width:0;flex:1;height:16px;line-height:15px;padding:0 4px;overflow:hidden;
+  background:#fff;border:1px solid #becacf;color:#59666d;font-style:normal;font-weight:400}
+.hubqa-query,.hubqa-reset{height:16px;display:flex;align-items:center;justify-content:center;color:#fff;border:1px solid #00a6b0;font-weight:700}
+.hubqa-query{background:#00c6d0}.hubqa-reset{background:#fff;color:#00a6b0}
+.hubqa-section{height:25px;display:flex;align-items:center;justify-content:space-between;font-size:7.7px}
+.hubqa-section b{font-size:8px}.hubqa-section small{font-size:7px;color:#f25764}.hubqa-section span{display:flex;gap:3px}
+.hubqa-section i{display:inline-flex;align-items:center;height:17px;padding:0 6px;background:#708a96;border:1px solid #617b88;color:#fff;font-style:normal;font-weight:700}
+.hubqa-section.detail{height:25px}.hubqa-master,.hubqa-detail{border:1px solid #949da0;background:#fff;overflow:hidden}
+#sc03 .hubqa-grid{width:100%;table-layout:fixed;border-collapse:collapse;min-width:0;font-size:7.2px;color:#435059}
+#sc03 .hubqa-grid th{height:22px;padding:2px 3px;background:#edf1f5;color:#435059;border-right:1px solid #cbd3d7;
+  font-size:7px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#sc03 .hubqa-grid td{height:23px;padding:2px 3px;text-align:center;border-top:1px solid #d6dde0;border-right:1px solid #e0e5e7;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#sc03 .hubqa-grid th.new{background:#dff7f8;color:#007f87;border-top:2px solid #10b6c0}
+#sc03 .hubqa-grid td.new{background:#f1fbfc;color:#007f87;font-weight:700}.hubqa-grid td.link{color:#007f87;text-decoration:underline;font-weight:700}
+.hubqa-master .blank td{height:74px}.hubqa-sum{height:18px;display:grid;grid-template-columns:1fr 90px;align-items:center;text-align:center;
+  background:#e0e5e9;border-top:1px solid #c2cacd;font-size:7.3px}.hubqa-sum b{border-left:1px solid #c2cacd}
+.hubqa-scroll{height:10px;background:#f6f7f8;border-top:1px solid #d2d8db;padding:2px 5px}.hubqa-scroll i{display:block;width:42%;height:5px;background:#bdc2c5}
+.hubqa-scroll.end i{width:55%;margin-left:auto}.hubqa-detail .hubqa-grid th:nth-child(1){width:6%}.hubqa-detail .hubqa-grid th:nth-child(2){width:10%}
+.hubqa-detail .hubqa-grid th:nth-child(3){width:23%}.hubqa-detail .hubqa-grid th:nth-child(4){width:15%}.hubqa-detail .hubqa-grid th:nth-child(5){width:24%}
+.hubqa-detail .hubqa-grid th:nth-child(6){width:22%}.hubqa-detail .vbtn{display:inline-flex;align-items:center;justify-content:center;min-width:31px;padding:2px 7px;border:1px solid #00a6b0;
+  background:#e4f9fa;color:#007f87;font:700 7.2px NanumGothic,"Malgun Gothic",sans-serif;line-height:1.2;white-space:nowrap;cursor:pointer}
+.hubqa-note{padding:5px 3px 2px;color:#6f7b81;font-size:7.2px}.hubqa-note b{color:#007f87}
+#sc03 .hub-win-head{background:#435059}.hubqa-main+.hub-pop{border-radius:0}
+
 /* description */
 .desc h4{margin:0 0 4px;font-size:12px;color:var(--faint);letter-spacing:.05em;font-weight:800}
 .d-item{display:flex;gap:12px;padding:13px 0;border-top:1px solid var(--line)}
@@ -176,8 +250,9 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
 .d-meta code{font-size:11px}
 
 @media(max-width:1000px){
-  .scr-body{grid-template-columns:1fr}
-  .view{position:static}
+  .scr-body,#sc01 .scr-body,#sc02 .scr-body,#sc03 .scr-body{grid-template-columns:minmax(0,1fr)}
+  .view{position:static;min-width:0;max-width:100%;overflow-x:auto}
+  .rs-phone{max-width:100%}
 }
 @media(max-width:900px){
   .screens-wrap{grid-template-columns:1fr}
@@ -206,7 +281,7 @@ table.chg-tbl td.after{color:#5e2bb8;font-weight:700}
 }
 
 /* ── SC-03 변경 내역 팝업 (하나허브 · 관리자 오버레이) ──
-   [보기 N] 클릭 시 .adm 위에 뜬다. 기본은 닫힘 —
+   [보기] 클릭 시 .adm 위에 뜬다. 기본은 닫힘 —
    PPT 캡처 시엔 make_caps job CSS 로 .hub-pop{display:flex} 강제. */
 .adm{position:relative}
 .hub-pop{position:absolute;inset:0;display:none;align-items:center;justify-content:center;

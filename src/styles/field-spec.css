@@ -1,0 +1,43 @@
+
+/* Only the V1.3 data definition panel and its dialog; other screens retain their styles. */
+.v13-notice{margin:0;padding:16px 28px;background:var(--brand-light);font-size:13px;border-bottom:1px solid var(--brand-border)}
+#panel-fields{max-width:1760px;margin:auto}
+#panel-fields section{background:var(--surface)}
+#panel-fields section{padding:32px}
+#panel-fields .meta,#panel-fields .small,.expense-dialog .meta,.expense-dialog .small{font-size:12px;color:#62758f}
+#panel-fields .small{display:block;margin-top:6px}
+#panel-fields nav{display:flex;gap:18px;flex-wrap:wrap;margin:18px 0}
+#panel-fields .scroll{overflow-x:auto;margin-bottom:18px}
+#panel-fields table{width:100%;border-collapse:collapse;table-layout:fixed}
+#panel-fields th,#panel-fields td{padding:13px;border:1px solid #d3deec;vertical-align:top;text-align:left;overflow-wrap:anywhere}
+#panel-fields thead th{background:#263f62;color:white}
+#panel-fields tbody th{background:#f2f6fc;font-weight:normal}
+#panel-fields .field-table{min-width:1180px;font-size:14px;line-height:1.65}
+#panel-fields .source-cell{font-size:13px}
+#panel-fields .results{table-layout:auto;font-size:14px}
+#panel-fields .results th{background:#edf2fa;color:#294365}
+#panel-fields .badge{display:inline-block;padding:2px 6px;border-radius:4px;background:#edf2f9;color:#4a6283;font-size:12px;margin-bottom:5px}
+#panel-fields .badge.orange{background:#fff0df;color:#984d21}
+#panel-fields .badge.purple{background:#eee7fa;color:#653b9b}
+#panel-fields .field-legend{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+#panel-fields .field-pending{margin-top:12px;padding-top:10px;border-top:1px dashed #ceaa78}
+#panel-fields .note,.expense-dialog .note{background:#f4f7fc;border-left:4px solid #637c9e;padding:12px 16px;margin:16px 0}
+#panel-fields .note.warn{background:#fff8ed;border-color:#ad6b2e}
+#panel-fields [id]{scroll-margin-top:78px}
+.expense-open,.expense-close{font:inherit;cursor:pointer;border:1px solid #aebed3;border-radius:6px;padding:7px 12px;background:#edf3fc;color:#244f86}
+.expense-open{margin-top:10px;font-size:13px}
+.expense-open:hover,.expense-close:hover{background:#dfeafa}
+.expense-open:focus-visible,.expense-close:focus-visible{outline:3px solid #3978c8;outline-offset:3px}
+.expense-dialog{position:fixed;inset:0;margin:auto;width:min(760px,calc(100vw - 32px));max-height:calc(100dvh - 40px);overflow:auto;padding:24px;border:1px solid #cbd7e7;border-radius:12px;color:#1a2e48;background:#fff;box-shadow:0 20px 70px #152d4b40}
+.expense-dialog::backdrop{background:#14243c99}
+.expense-dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.expense-dialog h2{font-size:22px;margin:0}
+.expense-dialog .expense-groups{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.expense-group{background:#f4f7fc;border:1px solid #dce5f0;border-radius:8px;padding:14px 18px}
+.expense-group h3{margin:0 0 8px;font-size:16px}
+.expense-group ul{margin:0;padding-left:0}
+.expense-group li{margin:3px 0}
+.expense-dialog-footer{margin-top:18px;text-align:right}
+@media(max-width:900px){.topbar{grid-template-columns:minmax(0,1fr);gap:0;padding:8px 14px 0}.topbar .tb-brand{white-space:nowrap}.topbar .tabs{width:100%;justify-self:stretch;overflow-x:auto}.topbar .tab-btn{flex-shrink:0;white-space:nowrap}.topbar .tb-spacer{display:none}}
+@media(max-width:700px){#panel-fields section{padding:18px 14px}.expense-dialog{padding:18px}.expense-dialog .expense-groups{grid-template-columns:1fr}.expense-dialog h2{font-size:19px}}
+@media print{.expense-open,.expense-dialog{display:none!important}#panel-fields .field-table{min-width:0;font-size:9px}#panel-fields th,#panel-fields td{padding:6px}#panel-fields tr{break-inside:avoid}#panel-fields .scroll{overflow:visible}}

@@ -1,12 +1,1 @@
-<!-- ═══ 4. 개발 확인 3건 ═══ -->
-<section id="lgc4">
-  <span class="sec-num">LG-04</span>
-  <h2>개발 확인 3건</h2>
-  <p class="sub">정책이 아니라 구현 확인 — 착수 블로커 없음.</p>
-
-  <div class="grid g3">
-    <div class="card"><span class="tag warn">1 · 최우선</span><h4>금액 집계 소스</h4><p style="font-size:13px;margin:0">변동항목별 금액 — 계약서 API의 <code>flxb*</code>는 금액 없는 플래그(분석정리 6.6). 계약서 API 확장 vs 결제·예약 API 병행 호출 확인. <b style="color:var(--warn-ink)">금액 직결.</b></p></div>
-    <div class="card"><span class="tag warn">2</span><h4>변동 항목 건수 제공</h4><p style="font-size:13px;margin:0">노출 조건이 <b>금액이 아니라 건수</b>(0건이면 미노출 · 1건 이상이면 0원도 노출)로 확정됨 → 합산액과 별개로 건수도 함께 내려와야 0건과 0원을 구분할 수 있음. <code>flxb*</code>가 Y/N 플래그라 건수 산출은 오히려 쉬울 수 있음 — 1번과 함께 확인.</p></div>
-    <div class="card"><span class="tag warn">3</span><h4>닷컴 직접예약 D-2</h4><p style="font-size:13px;margin:0">닷컴 직접예약 건이 현행 D-2 발송에 포함되는지 확인 → 미포함이면 배치 반영. 요구사항은 확정.</p></div>
-  </div>
-</section>
+<section id="lgc4"><span class="sec-num">LG-04</span><h2>개발 확인</h2><p class="sub">PPT 25p와 동일한 확인사항. 기획 기준과 구분하며 실제 구현이 확인된 내용은 아닙니다.</p><div class="grid g3"><div class="card dev-review"><h4>[개발 확인] 완료·복구</h4><ul class="tight"><li>세 경로의 완료 이벤트·공통 로직 확인</li><li>발송 요청/접수/성공 중 완료 판정</li><li>실패·SMS/MMS 대체·재시도·중복 처리</li><li>상태 전환과 저장의 일관성·복구</li><li>예약·여행자·차수·교부 경로 연결</li></ul></div><div class="card dev-review"><h4>[개발 확인] 원천·보존</h4><ul class="tight"><li>발송 당시 버전과 후속 열람값 일치</li><li>22개 금액 원천·통화·무항목/0원 구분</li><li>보험 경비명·약관 원문/버전 확보</li><li>이름·연락처 판별용 저장·보관·접근</li></ul></div><div class="card dev-review"><h4>[개발 확인] 상태·차수</h4><ul class="tight"><li>이전 완료본 선택·미열람 완료본 포함</li><li>배포 전 기교부·스냅샷 없음 응답</li><li>열람 여부·시각 기록/화면 제공 범위</li><li>허브 선택 차수 / 누적 이력 범위</li><li>D-2 차수 +1·복수 채널 중복 방지</li><li>고객 비교 데이터 미사용·응답 분리</li><li>관리자 조회 권한·접근 범위 확인</li></ul></div></div><p><a href="#field-open-items">항목별 추가 확인 사항</a>도 함께 확인한다.</p></section>

@@ -10,6 +10,7 @@
 <!-- include: styles/base.css -->
 <!-- include: styles/components.css -->
 <!-- include: styles/screens.css -->
+<!-- include: styles/field-spec.css -->
 </style>
 </head>
 <body>
@@ -18,7 +19,8 @@
   <div class="tb-brand"><span class="mark">H</span>{{shortTitle}}<span class="jira">{{jira}} · v{{version}}</span></div>
   <div class="tabs">
     <button class="tab-btn active" data-tab="panel-plan">기획서</button>
-    <button class="tab-btn" data-tab="panel-screens">화면정의<span class="cnt">3</span></button>
+    <button class="tab-btn" data-tab="panel-screens">화면정의<em>SC</em></button>
+    <button class="tab-btn" data-tab="panel-fields">상품·예약 데이터<em>17</em></button>
     <button class="tab-btn" data-tab="panel-history">히스토리</button>
     <button class="tab-btn" data-tab="panel-refs">근거문서</button>
   </div>
@@ -33,16 +35,15 @@
   <div class="toc-brand"><span class="mark">H</span><b>여행계약서 개선 기획서</b></div>
   <div class="toc-jira">{{jira}} · v{{version}} · {{date}}</div>
   <div class="lnb-subtabs">
-    <button class="subtab-btn lnb-subtab-btn active" data-subtab="content-improve">개선 항목<span class="cnt">5</span></button>
-    <button class="subtab-btn lnb-subtab-btn" data-subtab="content-existing">기존 로직<span class="cnt">2</span></button>
-    <button class="subtab-btn lnb-subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
+    <button class="subtab-btn lnb-subtab-btn active" data-subtab="content-improve">개선 항목<em>IM</em><span class="cnt">4</span></button>
+    <button class="subtab-btn lnb-subtab-btn" data-subtab="content-existing">기존 로직<em>AS</em><span class="cnt">2</span></button>
+    <button class="subtab-btn lnb-subtab-btn" data-subtab="content-logic">개선 로직<em>LG</em><span class="cnt">4</span></button>
   </div>
   <div class="toc-list" id="toclist-improve" data-for="content-improve">
   <a href="#imp1"><span class="n">IM-01</span>배경 · 목적</a>
   <a href="#imp2"><span class="n">IM-02</span>범위</a>
-  <a href="#imp3"><span class="n">IM-03</span>정책 확정 요약</a>
+  <a href="#imp3"><span class="n">IM-03</span>정책 요약</a>
   <a href="#imp4"><span class="n">IM-04</span>개선 항목 상세</a>
-  <a href="#imp5"><span class="n">IM-05</span>기대 효과 · AC</a>
   </div>
   <div class="toc-list" id="toclist-existing" data-for="content-existing" hidden>
   <a href="#ref1"><span class="n">AS-01</span>교부 라이프사이클</a>
@@ -52,7 +53,7 @@
   <a href="#lgc1"><span class="n">LG-01</span>변경 내역 도출 로직</a>
   <a href="#lgc2"><span class="n">LG-02</span>항목별 구현 로직</a>
   <a href="#lgc3"><span class="n">LG-03</span>변경 지점</a>
-  <a href="#lgc4"><span class="n">LG-04</span>개발 확인 3건</a>
+  <a href="#lgc4"><span class="n">LG-04</span>개발 확인</a>
   </div>
 </nav>
 
@@ -69,12 +70,13 @@
     <span><b>갱신</b> {{date}}</span>
   </div>
 </header>
+<p class="v13-notice">V1.4 · 고객 변경내역 미노출 / 하나허브 17개 항목 비교·교부완료 스냅샷 유지. Front 가격은 총 N인 경비총액 / 1인 여행경비 / 상품가 / 유류할증료 / 개인추가경비. <a href="#field-spec">하나허브 데이터 정의표 보기</a> · 경로별 완료 연동·응답 분리·관리자 접근 범위는 개발 확인.</p>
 
 <!-- ═══ 서브탭 ═══ -->
 <div class="subtab-bar">
-  <button class="subtab-btn active" data-subtab="content-improve">개선 항목<span class="cnt">5</span></button>
-  <button class="subtab-btn" data-subtab="content-existing">기존 로직 점검<span class="cnt">2</span></button>
-  <button class="subtab-btn" data-subtab="content-logic">개선 로직<span class="cnt">4</span></button>
+  <button class="subtab-btn active" data-subtab="content-improve">개선 항목<em>IM</em><span class="cnt">4</span></button>
+  <button class="subtab-btn" data-subtab="content-existing">기존 로직 점검<em>AS</em><span class="cnt">2</span></button>
+  <button class="subtab-btn" data-subtab="content-logic">개선 로직<em>LG</em><span class="cnt">4</span></button>
 </div>
 
 <div class="subtab-panel" id="content-improve">
@@ -87,7 +89,7 @@
 
 <!-- include: content/plan/improve/IM-04-개선항목상세.html -->
 
-<!-- include: content/plan/improve/IM-05-기대효과AC.html -->
+<!-- IM-05: PPT v1.3에서 삭제됨 -->
 
 </div><!-- /content-improve -->
 
@@ -142,6 +144,8 @@
 </div>
 </div><!-- /panel-screens -->
 
+<!-- include: content/field-spec.html -->
+
 <!-- ═══════════ 히스토리 탭 ═══════════ -->
 <!-- include: content/history.html -->
 
@@ -151,10 +155,11 @@
 <script>
 <!-- include: scripts/tabs.js -->
 <!-- include: scripts/subtabs.js -->
-<!-- include: scripts/ct-tabs.js -->
+
 <!-- include: scripts/hub-popup.js -->
 <!-- include: scripts/scrollspy.js -->
 <!-- include: scripts/xref.js -->
+<!-- include: scripts/field-spec.js -->
 </script>
 </body>
 </html>
